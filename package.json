@@ -5,7 +5,8 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "vite:build": "NODE_ENV=production vite build"
+    "vite:build": "NODE_ENV=production vite build",
+    "test": "vitest"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -13,12 +14,15 @@
     "@gadget-client/doc-inspector": "link:.gadget/client",
     "@gadgetinc/react": "^0.14.15",
     "@mui/material": "^5.14.17",
+    "dotenv": "^16.3.1",
     "fastify-cors": "6.0.3",
     "gadget-server": "link:.gadget/server",
     "openai": "^4.16.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "6.15.0"
+    "react-router-dom": "6.15.0",
+    "react-test-renderer": "^18.2.0",
+    "vitest": "^0.34.6"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
