@@ -8,8 +8,6 @@ export type DefaultDocumentServerSelection = {
     readonly createdAt: true;
     readonly updatedAt: true;
     readonly file: true;
-    readonly userId: true;
-    readonly user: false;
 };
 /** All the data passed to an effect or precondition within the `create` action on the `document` model. */
 export interface CreateDocumentActionContext extends AmbientContext {

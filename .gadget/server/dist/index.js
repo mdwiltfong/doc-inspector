@@ -51,6 +51,9 @@ Object.defineProperty(exports, "actionContextLocalStorage", { enumerable: true, 
 __exportStar(require("./models/User"), exports);
 __exportStar(require("./models/Session"), exports);
 __exportStar(require("./models/Document"), exports);
+__exportStar(require("./models/Threads"), exports);
+__exportStar(require("./models/Messages"), exports);
+__exportStar(require("./models/Assistants"), exports);
 /**
  * An instance of the Gadget logger
  */

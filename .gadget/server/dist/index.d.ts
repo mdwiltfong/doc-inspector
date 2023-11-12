@@ -8,7 +8,7 @@
 *  |____/ \___/ \___| |___|_| |_|___/ .__/ \___|\___|\__\___/|_|
 *                                   |_|
 *
-* Built for environment `Development` at version 239
+* Built for environment `Development` at version 460
 * Framework version: ^0.2.0
 * Edit this app here: https://doc-inspector.gadget.dev/edit
 */
@@ -31,6 +31,9 @@ export * from "./types";
 export * from "./models/User";
 export * from "./models/Session";
 export * from "./models/Document";
+export * from "./models/Threads";
+export * from "./models/Messages";
+export * from "./models/Assistants";
 /**
  * An instance of the Gadget logger
  */

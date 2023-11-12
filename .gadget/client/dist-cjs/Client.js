@@ -26,6 +26,9 @@ var import_api_client_core = require("@gadgetinc/api-client-core");
 var import_User = require("./models/User.js");
 var import_Session = require("./models/Session.js");
 var import_Document = require("./models/Document.js");
+var import_Threads = require("./models/Threads.js");
+var import_Messages = require("./models/Messages.js");
+var import_Assistants = require("./models/Assistants.js");
 var import_CurrentSession = require("./models/CurrentSession.js");
 const productionEnv = "production";
 const developmentEnv = "development";
@@ -99,6 +102,9 @@ class Client {
     this.user = new import_User.UserManager(this.connection);
     this.session = new import_Session.SessionManager(this.connection);
     this.document = new import_Document.DocumentManager(this.connection);
+    this.threads = new import_Threads.ThreadsManager(this.connection);
+    this.messages = new import_Messages.MessagesManager(this.connection);
+    this.assistants = new import_Assistants.AssistantsManager(this.connection);
     this.currentSession = new import_CurrentSession.CurrentSessionManager(this.connection);
     this.internal = {
       user: new import_api_client_core.InternalModelManager("user", this.connection, {
@@ -113,6 +119,21 @@ class Client {
       }),
       document: new import_api_client_core.InternalModelManager("document", this.connection, {
         pluralApiIdentifier: "documents",
+        // @ts-ignore
+        hasAmbiguousIdentifier: false
+      }),
+      threads: new import_api_client_core.InternalModelManager("threads", this.connection, {
+        pluralApiIdentifier: "threadss",
+        // @ts-ignore
+        hasAmbiguousIdentifier: false
+      }),
+      messages: new import_api_client_core.InternalModelManager("messages", this.connection, {
+        pluralApiIdentifier: "messagess",
+        // @ts-ignore
+        hasAmbiguousIdentifier: false
+      }),
+      assistants: new import_api_client_core.InternalModelManager("assistants", this.connection, {
+        pluralApiIdentifier: "assistantss",
         // @ts-ignore
         hasAmbiguousIdentifier: false
       })

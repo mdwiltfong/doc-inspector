@@ -27,7 +27,10 @@ var import_support = require("../support.js");
 const DefaultDocumentSelection = {
   "__typename": true,
   "createdAt": true,
-  "file": true,
+  "file": {
+    "mimeType": true,
+    "url": true
+  },
   "id": true,
   "updatedAt": true
 };

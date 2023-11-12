@@ -9,12 +9,18 @@ import type {
 import { UserManager } from "./models/User.js";
 import { SessionManager } from "./models/Session.js";
 import { DocumentManager } from "./models/Document.js";
+import { ThreadsManager } from "./models/Threads.js";
+import { MessagesManager } from "./models/Messages.js";
+import { AssistantsManager } from "./models/Assistants.js";
 import { CurrentSessionManager } from "./models/CurrentSession.js";
 
 type InternalModelManagers = {
   user: InternalModelManager;
   session: InternalModelManager;
   document: InternalModelManager;
+  threads: InternalModelManager;
+  messages: InternalModelManager;
+  assistants: InternalModelManager;
 };
 
 type ClientOptions = Omit<ApiClientOptions, "environment"> & { environment?: string };
@@ -43,6 +49,9 @@ export class Client implements AnyClient {
   user: UserManager;
   session: SessionManager;
   document: DocumentManager;
+  threads: ThreadsManager;
+  messages: MessagesManager;
+  assistants: AssistantsManager;
   currentSession: CurrentSessionManager;
 
   /**
@@ -113,6 +122,9 @@ export class Client implements AnyClient {
     this.user = new UserManager(this.connection);
     this.session = new SessionManager(this.connection);
     this.document = new DocumentManager(this.connection);
+    this.threads = new ThreadsManager(this.connection);
+    this.messages = new MessagesManager(this.connection);
+    this.assistants = new AssistantsManager(this.connection);
     this.currentSession = new CurrentSessionManager(this.connection);
 
     this.internal = {
@@ -128,6 +140,21 @@ export class Client implements AnyClient {
       }),
       document: new InternalModelManager("document", this.connection, {
       	pluralApiIdentifier: "documents",
+        // @ts-ignore
+	      hasAmbiguousIdentifier: false,
+      }),
+      threads: new InternalModelManager("threads", this.connection, {
+      	pluralApiIdentifier: "threadss",
+        // @ts-ignore
+	      hasAmbiguousIdentifier: false,
+      }),
+      messages: new InternalModelManager("messages", this.connection, {
+      	pluralApiIdentifier: "messagess",
+        // @ts-ignore
+	      hasAmbiguousIdentifier: false,
+      }),
+      assistants: new InternalModelManager("assistants", this.connection, {
+      	pluralApiIdentifier: "assistantss",
         // @ts-ignore
 	      hasAmbiguousIdentifier: false,
       }),
