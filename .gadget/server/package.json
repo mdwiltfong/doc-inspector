@@ -1,0 +1,30 @@
+{
+  "dependencies": {
+    "@fastify/request-context": "^3.0.0",
+    "@gadget-client/doc-inspector": "link:../client",
+    "@gadgetinc/api-client-core": "0.15.11",
+    "@types/node": "^18.11.9",
+    "fastify": "^3.29.0"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./ai": "./dist/ai/index.js"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "gadget": {
+    "applicationName": "Doc Inspector",
+    "environmentName": "Development",
+    "environmentVersion": "239"
+  },
+  "main": "dist/index.js",
+  "name": "gadget-server",
+  "peerDependencies": {
+    "openai": "*"
+  },
+  "private": true,
+  "scripts": {},
+  "types": "dist/index.d.ts",
+  "version": "1.239.0"
+}
