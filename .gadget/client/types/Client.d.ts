@@ -5,11 +5,17 @@ import type { DocumentNode } from 'graphql';
 import { UserManager } from "./models/User.js";
 import { SessionManager } from "./models/Session.js";
 import { DocumentManager } from "./models/Document.js";
+import { ThreadsManager } from "./models/Threads.js";
+import { MessagesManager } from "./models/Messages.js";
+import { AssistantsManager } from "./models/Assistants.js";
 import { CurrentSessionManager } from "./models/CurrentSession.js";
 type InternalModelManagers = {
     user: InternalModelManager;
     session: InternalModelManager;
     document: InternalModelManager;
+    threads: InternalModelManager;
+    messages: InternalModelManager;
+    assistants: InternalModelManager;
 };
 type ClientOptions = Omit<ApiClientOptions, "environment"> & {
     environment?: string;
@@ -22,6 +28,9 @@ export declare class Client implements AnyClient {
     user: UserManager;
     session: SessionManager;
     document: DocumentManager;
+    threads: ThreadsManager;
+    messages: MessagesManager;
+    assistants: AssistantsManager;
     currentSession: CurrentSessionManager;
     /**
     * Namespaced object for accessing models via the Gadget internal APIs, which provide lower level and higher privileged operations directly against the database. Useful for maintenance operations like migrations or correcting broken data, and for implementing the high level actions.

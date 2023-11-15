@@ -33,7 +33,10 @@ import { disambiguateActionParams } from "../support.js";
 export const DefaultDocumentSelection = {
   "__typename": true,
   "createdAt": true,
-  "file": true,
+  "file": {
+    "mimeType": true,
+    "url": true
+  },
   "id": true,
   "updatedAt": true
 } as const;

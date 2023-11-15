@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "vite:build": "NODE_ENV=production vite build",
-    "test": "vitest"
+    "test": "vitest --dir ./test/functional_tests"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",

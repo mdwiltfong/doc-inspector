@@ -254,7 +254,7 @@ export async function preventCrossShopDataAccess(params: AnyParams, record: Gadg
   }
 
   const fieldsIsBelongsToShopifyShop = Object.values(model.fields).filter(
-    (f) => f.fieldType === FieldType.BelongsTo && f.configuration.relatedModelKey === ShopifyShopKey
+    (f) => f.fieldType === (FieldType.BelongsTo as string) && f.configuration.relatedModelKey === ShopifyShopKey
   );
 
   if (fieldsIsBelongsToShopifyShop.length === 0) {
@@ -275,7 +275,7 @@ export async function preventCrossShopDataAccess(params: AnyParams, record: Gadg
       throw new MisconfiguredActionError("The selected shop relation field does not exist.");
     }
 
-    if (selectedField.fieldType !== FieldType.BelongsTo || selectedField.configuration.relatedModelKey !== ShopifyShopKey) {
+    if (selectedField.fieldType !== (FieldType.BelongsTo as string) || selectedField.configuration.relatedModelKey !== ShopifyShopKey) {
       throw new MisconfiguredActionError(
         "The selected shop relation field should be a `Belongs To` relationship to the `Shopify Shop` model."
       );

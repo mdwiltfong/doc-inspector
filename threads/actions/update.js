@@ -1,7 +1,7 @@
-import { applyParams, save, ActionOptions, CreateDocumentsActionContext } from "gadget-server";
+import { applyParams, save, ActionOptions, UpdateThreadsActionContext } from "gadget-server";
 
 /**
- * @param { CreateDocumentsActionContext } context
+ * @param { UpdateThreadsActionContext } context
  */
 export async function run({ params, record, logger, api, connections }) {
   applyParams(params, record);
@@ -9,15 +9,13 @@ export async function run({ params, record, logger, api, connections }) {
 };
 
 /**
- * @param { CreateDocumentsActionContext } context
+ * @param { UpdateThreadsActionContext } context
  */
 export async function onSuccess({ params, record, logger, api, connections }) {
-  const pdf = record;
-
-  logger.info({pdf}, "incoming PDF")
+  // Your logic goes here
 };
 
 /** @type { ActionOptions } */
 export const options = {
-  actionType: "create"
+  actionType: "update"
 };

@@ -1,6 +1,6 @@
 {
   "name": "@gadget-client/doc-inspector",
-  "version": "1.239.0",
+  "version": "1.460.0",
   "files": [
     "dist-*/",
     "types",
@@ -30,6 +30,6 @@
   "gadget": {
     "applicationName": "Doc Inspector",
     "environmentName": "Development",
-    "environmentVersion": "239"
+    "environmentVersion": "460"
   }
 }

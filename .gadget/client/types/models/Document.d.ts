@@ -3,7 +3,10 @@ import { Query, Select, DeepFilterNever, IDsList, Document, DocumentSort, Docume
 export declare const DefaultDocumentSelection: {
     readonly __typename: true;
     readonly createdAt: true;
-    readonly file: true;
+    readonly file: {
+        readonly mimeType: true;
+        readonly url: true;
+    };
     readonly id: true;
     readonly updatedAt: true;
 };

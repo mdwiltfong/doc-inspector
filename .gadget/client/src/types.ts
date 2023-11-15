@@ -58,120 +58,17 @@ export type InternalSessionRecord = Scalars["JSONObject"];
 /** Represents one document result record in internal api calls. Returns a JSON blob of all the record's fields. */
 export type InternalDocumentRecord = Scalars["JSONObject"];
 
+/** Represents one threads result record in internal api calls. Returns a JSON blob of all the record's fields. */
+export type InternalThreadsRecord = Scalars["JSONObject"];
 
+/** Represents one messages result record in internal api calls. Returns a JSON blob of all the record's fields. */
+export type InternalMessagesRecord = Scalars["JSONObject"];
 
-export type DocumentSort = {
+/** Represents one assistants result record in internal api calls. Returns a JSON blob of all the record's fields. */
+export type InternalAssistantsRecord = Scalars["JSONObject"];
 
-  /** Sort the results by the id field. Defaults to ascending (smallest value first). */
-  id?: SortOrder | null;
-
-  /** Sort the results by the createdAt field. Defaults to ascending (smallest value first). */
-  createdAt?: SortOrder | null;
-
-  /** Sort the results by the updatedAt field. Defaults to ascending (smallest value first). */
-  updatedAt?: SortOrder | null;
-
-  /** Sort the results by the file field. Defaults to ascending (smallest value first). */
-  file?: SortOrder | null;
-};
-
-
-
-export type DocumentFilter = {
-
-  AND?: (DocumentFilter | null)[];
-
-  OR?: (DocumentFilter | null)[];
-
-  NOT?: (DocumentFilter | null)[];
-
-  id?: IDFilter | null;
-
-  createdAt?: DateTimeFilter | null;
-
-  updatedAt?: DateTimeFilter | null;
-
-  file?: StringFilter | null;
-
-  user?: IDFilter | null;
-
-  userId?: IDFilter | null;
-};
-
-
-
-export type IDFilter = {
-
-  equals?: (Scalars['GadgetID'] | null) | null;
-
-  notEquals?: (Scalars['GadgetID'] | null) | null;
-
-  isSet?: (Scalars['Boolean'] | null) | null;
-
-  in?: ((Scalars['GadgetID'] | null) | null)[];
-
-  notIn?: ((Scalars['GadgetID'] | null) | null)[];
-
-  lessThan?: (Scalars['GadgetID'] | null) | null;
-
-  lessThanOrEqual?: (Scalars['GadgetID'] | null) | null;
-
-  greaterThan?: (Scalars['GadgetID'] | null) | null;
-
-  greaterThanOrEqual?: (Scalars['GadgetID'] | null) | null;
-};
-
-
-
-export type DateTimeFilter = {
-
-  equals?: Date | Scalars['ISO8601DateString'] | null;
-
-  notEquals?: Date | Scalars['ISO8601DateString'] | null;
-
-  isSet?: (Scalars['Boolean'] | null) | null;
-
-  in?: (Date | Scalars['ISO8601DateString'] | null)[];
-
-  notIn?: (Date | Scalars['ISO8601DateString'] | null)[];
-
-  lessThan?: Date | Scalars['ISO8601DateString'] | null;
-
-  lessThanOrEqual?: Date | Scalars['ISO8601DateString'] | null;
-
-  greaterThan?: Date | Scalars['ISO8601DateString'] | null;
-
-  greaterThanOrEqual?: Date | Scalars['ISO8601DateString'] | null;
-
-  before?: Date | Scalars['ISO8601DateString'] | null;
-
-  after?: Date | Scalars['ISO8601DateString'] | null;
-};
-
-
-
-export type StringFilter = {
-
-  equals?: (Scalars['String'] | null) | null;
-
-  notEquals?: (Scalars['String'] | null) | null;
-
-  isSet?: (Scalars['Boolean'] | null) | null;
-
-  in?: ((Scalars['String'] | null) | null)[];
-
-  notIn?: ((Scalars['String'] | null) | null)[];
-
-  lessThan?: (Scalars['String'] | null) | null;
-
-  lessThanOrEqual?: (Scalars['String'] | null) | null;
-
-  greaterThan?: (Scalars['String'] | null) | null;
-
-  greaterThanOrEqual?: (Scalars['String'] | null) | null;
-
-  startsWith?: (Scalars['String'] | null) | null;
-};
+/** The `Upload` scalar type represents a file upload. */
+export type Upload = any;
 
 
 
@@ -261,6 +158,81 @@ export type UserFilter = {
 
 
 
+export type IDFilter = {
+
+  equals?: (Scalars['GadgetID'] | null) | null;
+
+  notEquals?: (Scalars['GadgetID'] | null) | null;
+
+  isSet?: (Scalars['Boolean'] | null) | null;
+
+  in?: ((Scalars['GadgetID'] | null) | null)[];
+
+  notIn?: ((Scalars['GadgetID'] | null) | null)[];
+
+  lessThan?: (Scalars['GadgetID'] | null) | null;
+
+  lessThanOrEqual?: (Scalars['GadgetID'] | null) | null;
+
+  greaterThan?: (Scalars['GadgetID'] | null) | null;
+
+  greaterThanOrEqual?: (Scalars['GadgetID'] | null) | null;
+};
+
+
+
+export type DateTimeFilter = {
+
+  equals?: Date | Scalars['ISO8601DateString'] | null;
+
+  notEquals?: Date | Scalars['ISO8601DateString'] | null;
+
+  isSet?: (Scalars['Boolean'] | null) | null;
+
+  in?: (Date | Scalars['ISO8601DateString'] | null)[];
+
+  notIn?: (Date | Scalars['ISO8601DateString'] | null)[];
+
+  lessThan?: Date | Scalars['ISO8601DateString'] | null;
+
+  lessThanOrEqual?: Date | Scalars['ISO8601DateString'] | null;
+
+  greaterThan?: Date | Scalars['ISO8601DateString'] | null;
+
+  greaterThanOrEqual?: Date | Scalars['ISO8601DateString'] | null;
+
+  before?: Date | Scalars['ISO8601DateString'] | null;
+
+  after?: Date | Scalars['ISO8601DateString'] | null;
+};
+
+
+
+export type StringFilter = {
+
+  equals?: (Scalars['String'] | null) | null;
+
+  notEquals?: (Scalars['String'] | null) | null;
+
+  isSet?: (Scalars['Boolean'] | null) | null;
+
+  in?: ((Scalars['String'] | null) | null)[];
+
+  notIn?: ((Scalars['String'] | null) | null)[];
+
+  lessThan?: (Scalars['String'] | null) | null;
+
+  lessThanOrEqual?: (Scalars['String'] | null) | null;
+
+  greaterThan?: (Scalars['String'] | null) | null;
+
+  greaterThanOrEqual?: (Scalars['String'] | null) | null;
+
+  startsWith?: (Scalars['String'] | null) | null;
+};
+
+
+
 export type BooleanFilter = {
 
   isSet?: (Scalars['Boolean'] | null) | null;
@@ -268,6 +240,217 @@ export type BooleanFilter = {
   equals?: (Scalars['Boolean'] | null) | null;
 
   notEquals?: (Scalars['Boolean'] | null) | null;
+};
+
+
+
+export type DocumentSort = {
+
+  /** Sort the results by the id field. Defaults to ascending (smallest value first). */
+  id?: SortOrder | null;
+
+  /** Sort the results by the createdAt field. Defaults to ascending (smallest value first). */
+  createdAt?: SortOrder | null;
+
+  /** Sort the results by the updatedAt field. Defaults to ascending (smallest value first). */
+  updatedAt?: SortOrder | null;
+};
+
+
+
+export type DocumentFilter = {
+
+  AND?: (DocumentFilter | null)[];
+
+  OR?: (DocumentFilter | null)[];
+
+  NOT?: (DocumentFilter | null)[];
+
+  id?: IDFilter | null;
+
+  createdAt?: DateTimeFilter | null;
+
+  updatedAt?: DateTimeFilter | null;
+};
+
+
+
+export type ThreadsSort = {
+
+  /** Sort the results by the id field. Defaults to ascending (smallest value first). */
+  id?: SortOrder | null;
+
+  /** Sort the results by the createdAt field. Defaults to ascending (smallest value first). */
+  createdAt?: SortOrder | null;
+
+  /** Sort the results by the updatedAt field. Defaults to ascending (smallest value first). */
+  updatedAt?: SortOrder | null;
+
+  /** Sort the results by the metadata field. Defaults to ascending (smallest value first). */
+  metadata?: SortOrder | null;
+};
+
+
+
+export type ThreadsFilter = {
+
+  AND?: (ThreadsFilter | null)[];
+
+  OR?: (ThreadsFilter | null)[];
+
+  NOT?: (ThreadsFilter | null)[];
+
+  id?: IDFilter | null;
+
+  createdAt?: DateTimeFilter | null;
+
+  updatedAt?: DateTimeFilter | null;
+
+  metadata?: JSONFilter | null;
+};
+
+
+
+export type JSONFilter = {
+
+  isSet?: (Scalars['Boolean'] | null) | null;
+
+  equals?: (Scalars['JSON'] | null) | null;
+
+  in?: ((Scalars['JSON'] | null) | null)[];
+
+  notIn?: ((Scalars['JSON'] | null) | null)[];
+
+  notEquals?: (Scalars['JSON'] | null) | null;
+
+  matches?: (Scalars['JSON'] | null) | null;
+};
+
+
+
+export type MessagesSort = {
+
+  /** Sort the results by the id field. Defaults to ascending (smallest value first). */
+  id?: SortOrder | null;
+
+  /** Sort the results by the createdAt field. Defaults to ascending (smallest value first). */
+  createdAt?: SortOrder | null;
+
+  /** Sort the results by the updatedAt field. Defaults to ascending (smallest value first). */
+  updatedAt?: SortOrder | null;
+
+  /** Sort the results by the thread_id field. Defaults to ascending (smallest value first). */
+  thread_id?: SortOrder | null;
+
+  /** Sort the results by the role field. Defaults to ascending (smallest value first). */
+  role?: SortOrder | null;
+
+  /** Sort the results by the content field. Defaults to ascending (smallest value first). */
+  content?: SortOrder | null;
+
+  /** Sort the results by the file_ids field. Defaults to ascending (smallest value first). */
+  file_ids?: SortOrder | null;
+
+  /** Sort the results by the assistant_id field. Defaults to ascending (smallest value first). */
+  assistant_id?: SortOrder | null;
+
+  /** Sort the results by the run_id field. Defaults to ascending (smallest value first). */
+  run_id?: SortOrder | null;
+};
+
+
+
+export type MessagesFilter = {
+
+  AND?: (MessagesFilter | null)[];
+
+  OR?: (MessagesFilter | null)[];
+
+  NOT?: (MessagesFilter | null)[];
+
+  id?: IDFilter | null;
+
+  createdAt?: DateTimeFilter | null;
+
+  updatedAt?: DateTimeFilter | null;
+
+  thread_id?: StringFilter | null;
+
+  role?: StringFilter | null;
+
+  content?: StringFilter | null;
+
+  file_ids?: StringFilter | null;
+
+  assistant_id?: StringFilter | null;
+
+  run_id?: StringFilter | null;
+};
+
+
+
+export type AssistantsSort = {
+
+  /** Sort the results by the id field. Defaults to ascending (smallest value first). */
+  id?: SortOrder | null;
+
+  /** Sort the results by the createdAt field. Defaults to ascending (smallest value first). */
+  createdAt?: SortOrder | null;
+
+  /** Sort the results by the updatedAt field. Defaults to ascending (smallest value first). */
+  updatedAt?: SortOrder | null;
+
+  /** Sort the results by the name field. Defaults to ascending (smallest value first). */
+  name?: SortOrder | null;
+
+  /** Sort the results by the description field. Defaults to ascending (smallest value first). */
+  description?: SortOrder | null;
+
+  /** Sort the results by the model field. Defaults to ascending (smallest value first). */
+  model?: SortOrder | null;
+
+  /** Sort the results by the instructions field. Defaults to ascending (smallest value first). */
+  instructions?: SortOrder | null;
+
+  /** Sort the results by the tools field. Defaults to ascending (smallest value first). */
+  tools?: SortOrder | null;
+
+  /** Sort the results by the file_ids field. Defaults to ascending (smallest value first). */
+  file_ids?: SortOrder | null;
+
+  /** Sort the results by the external_id field. Defaults to ascending (smallest value first). */
+  external_id?: SortOrder | null;
+};
+
+
+
+export type AssistantsFilter = {
+
+  AND?: (AssistantsFilter | null)[];
+
+  OR?: (AssistantsFilter | null)[];
+
+  NOT?: (AssistantsFilter | null)[];
+
+  id?: IDFilter | null;
+
+  createdAt?: DateTimeFilter | null;
+
+  updatedAt?: DateTimeFilter | null;
+
+  name?: StringFilter | null;
+
+  description?: StringFilter | null;
+
+  model?: StringFilter | null;
+
+  instructions?: StringFilter | null;
+
+  tools?: StringFilter | null;
+
+  file_ids?: StringFilter | null;
+
+  external_id?: StringFilter | null;
 };
 
 
@@ -316,218 +499,8 @@ export type UpdateUserInput = {
 
   lastSignedIn?: Date | Scalars['ISO8601DateString'] | null;
 
-  documents?: (DocumentHasManyInput | null)[];
-};
-
-
-
-export type DocumentHasManyInput = {
-
-  create?: NestedDocumentCreateInput | null;
-
-  update?: NestedDocumentUpdateInput | null;
-
-  delete?: NestedDocumentDeleteInput | null;
-
-  /** Creates, updates, or deletes existing records in the database as needed to arrive at the list of records specified. */
-  _converge?: ConvergeDocumentInput | null;
-};
-
-
-
-export type NestedDocumentCreateInput = {
-
-  file?: (Scalars['String'] | null) | null;
-
-  user?: UserBelongsToInput | null;
-};
-
-
-
-export type UserBelongsToInput = {
-
-  signUp?: NestedUserSignUpInput | null;
-
-  signIn?: NestedUserSignInInput | null;
-
-  signOut?: NestedUserSignOutInput | null;
-
-  update?: NestedUserUpdateInput | null;
-
-  delete?: NestedUserDeleteInput | null;
-
-  sendVerifyEmail?: NestedUserSendVerifyEmailInput | null;
-
-  verifyEmail?: NestedUserVerifyEmailInput | null;
-
-  sendResetPassword?: NestedUserSendResetPasswordInput | null;
-
-  resetPassword?: NestedUserResetPasswordInput | null;
-
-  changePassword?: NestedUserChangePasswordInput | null;
-
-  /** Existing ID of another record, which you would like to associate this record with */
-  _link?: (Scalars['GadgetID'] | null) | null;
-};
-
-
-
-export type NestedUserSignUpInput = {
-
-  email?: (Scalars['String'] | null) | null;
-
-  password?: (Scalars['String'] | null) | null;
-};
-
-
-
-export type NestedUserSignInInput = {
-
-  email?: (Scalars['String'] | null) | null;
-
-  password?: (Scalars['String'] | null) | null;
-};
-
-
-
-export type NestedUserSignOutInput = {
-
-  id: (Scalars['GadgetID'] | null);
-};
-
-
-
-export type NestedUserUpdateInput = {
-
-  resetPasswordTokenExpiration?: Date | Scalars['ISO8601DateString'] | null;
-
-  emailVerificationTokenExpiration?: Date | Scalars['ISO8601DateString'] | null;
-
-  googleProfileId?: (Scalars['String'] | null) | null;
-
-  email?: (Scalars['String'] | null) | null;
-
-  resetPasswordToken?: (Scalars['String'] | null) | null;
-
-  password?: (Scalars['String'] | null) | null;
-
-  lastName?: (Scalars['String'] | null) | null;
-
-  googleImageUrl?: (Scalars['String'] | null) | null;
-
-  emailVerificationToken?: (Scalars['String'] | null) | null;
-
-  emailVerified?: (Scalars['Boolean'] | null) | null;
-
-  firstName?: (Scalars['String'] | null) | null;
-
-  lastSignedIn?: Date | Scalars['ISO8601DateString'] | null;
-
-  documents?: (DocumentHasManyInput | null)[];
-
-  id: (Scalars['GadgetID'] | null);
-};
-
-
-
-export type NestedUserDeleteInput = {
-
-  id: (Scalars['GadgetID'] | null);
-};
-
-
-
-export type NestedUserSendVerifyEmailInput = {
-
-  email?: (Scalars['String'] | null) | null;
-};
-
-
-
-export type NestedUserVerifyEmailInput = {
-
-  code?: (Scalars['String'] | null) | null;
-};
-
-
-
-export type NestedUserSendResetPasswordInput = {
-
-  email?: (Scalars['String'] | null) | null;
-};
-
-
-
-export type NestedUserResetPasswordInput = {
-
-  password?: (Scalars['String'] | null) | null;
-
-  code?: (Scalars['String'] | null) | null;
-};
-
-
-
-export type NestedUserChangePasswordInput = {
-
-  id: (Scalars['GadgetID'] | null);
-
-  currentPassword?: (Scalars['String'] | null) | null;
-
-  newPassword?: (Scalars['String'] | null) | null;
-};
-
-
-
-export type NestedDocumentUpdateInput = {
-
-  file?: (Scalars['String'] | null) | null;
-
-  user?: UserBelongsToInput | null;
-
-  id: (Scalars['GadgetID'] | null);
-};
-
-
-
-export type NestedDocumentDeleteInput = {
-
-  id: (Scalars['GadgetID'] | null);
-};
-
-
-
-export type ConvergeDocumentInput = {
-
-  /** The new list of records to converge to */
-  values: (ConvergeDocumentValues | null)[];
-
-  /** An optional partial set of action api identifiers to use when creating, updating, and deleting records to converge to the new list. */
-  actions?: ConvergeActionMap | null;
-};
-
-
-
-export type ConvergeDocumentValues = {
-
-  id?: (Scalars['GadgetID'] | null) | null;
-
-  file?: (Scalars['String'] | null) | null;
-
-  user?: UserBelongsToInput | null;
-};
-
-
-
-export type ConvergeActionMap = {
-
-  /** One of the model action's API identifiers. Specifies which action to use to create new records that are in the set of specified records but not yet in the database. Defaults to the action named `create` if it exists. */
-  create?: (Scalars['String'] | null) | null;
-
-  /** One of the model action's API identifiers. Specifies which action to use to update new records that are in the set of specified records and already in the database, but maybe have different field values. Defaults to the action named `update` if it exists. */
-  update?: (Scalars['String'] | null) | null;
-
-  /** One of the model action's API identifiers. Specifies which action to use to delete records that are not in the set of specified records but exist in the database. Defaults to the action named `delete` if it exists. */
-  delete?: (Scalars['String'] | null) | null;
+  /** The field documents is misconfigured and can't be given as input. Please correct any problems with the field in order to access it. */
+  documents?: (Scalars['GadgetMisconfiguredField'] | null) | null;
 };
 
 
@@ -584,9 +557,30 @@ export type BulkChangePasswordUsersInput = {
 
 export type CreateDocumentInput = {
 
-  file?: (Scalars['String'] | null) | null;
+  file?: StoredFileInput | null;
+};
 
-  user?: UserBelongsToInput | null;
+
+
+export type StoredFileInput = {
+
+  /** Sets the file contents using this string, interpreting the string as base64 encoded bytes. This is useful for creating files quickly and easily if you have the file contents available already, but, it doesn't support files larger than 10MB, and is slower to process for the backend. Using multipart file uploads or direct-to-storage file uploads is preferable. */
+  base64?: (Scalars['String'] | null) | null;
+
+  /** Sets the file contents using binary bytes sent along side a GraphQL mutation as a multipart POST request. Gadget expects this multipart POST request to be formatted according to the GraphQL multipart request spec defined at https://github.com/jaydenseric/graphql-multipart-request-spec. Sending files as a multipart POST requests is supported natively by the generated Gadget JS client using File objects as variables in API calls. This method supports files up to 100MB. */
+  file?: (Scalars['Upload'] | null) | null;
+
+  /** Sets the file contents by fetching a remote URL and saving a copy to cloud storage. File downloads happen as the request is processed so they can be validated, which means large files can take some time to download from the existing URL. If the file can't be fetched from this URL, the action will fail. */
+  copyURL?: (Scalars['URL'] | null) | null;
+
+  /** Sets the file contents using a token from a separate upload request made with the Gadget storage service. Uploading files while a user is completing the rest of a form gives a great user experience and supports much larger files, but requires client side code to complete the upload, and then pass the returned token for this field. */
+  directUploadToken?: (Scalars['String'] | null) | null;
+
+  /** Sets this file's mime type, which will then be used when serving the file during read requests as the `Content-Type` HTTP header. If not set, Gadget will infer a content type based on the file's contents. */
+  mimeType?: (Scalars['String'] | null) | null;
+
+  /** Sets this file's stored name, which will then be used as the file name when serving the file during read requests. If not set, Gadget will infer a filename if possible. */
+  fileName?: (Scalars['String'] | null) | null;
 };
 
 
@@ -600,9 +594,7 @@ export type BulkCreateDocumentsInput = {
 
 export type UpdateDocumentInput = {
 
-  file?: (Scalars['String'] | null) | null;
-
-  user?: UserBelongsToInput | null;
+  file?: StoredFileInput | null;
 };
 
 
@@ -610,6 +602,140 @@ export type UpdateDocumentInput = {
 export type BulkUpdateDocumentsInput = {
 
   document?: UpdateDocumentInput | null;
+
+  id: (Scalars['GadgetID'] | null);
+};
+
+
+
+export type CreateThreadsInput = {
+
+  metadata?: (Scalars['JSON'] | null) | null;
+};
+
+
+
+export type BulkCreateThreadsInput = {
+
+  threads?: CreateThreadsInput | null;
+};
+
+
+
+export type UpdateThreadsInput = {
+
+  metadata?: (Scalars['JSON'] | null) | null;
+};
+
+
+
+export type BulkUpdateThreadsInput = {
+
+  threads?: UpdateThreadsInput | null;
+
+  id: (Scalars['GadgetID'] | null);
+};
+
+
+
+export type CreateMessagesInput = {
+
+  thread_id?: (Scalars['String'] | null) | null;
+
+  role?: (Scalars['String'] | null) | null;
+
+  content?: (Scalars['String'] | null) | null;
+
+  file_ids?: (Scalars['String'] | null) | null;
+
+  assistant_id?: (Scalars['String'] | null) | null;
+
+  run_id?: (Scalars['String'] | null) | null;
+};
+
+
+
+export type BulkCreateMessagesInput = {
+
+  messages?: CreateMessagesInput | null;
+};
+
+
+
+export type UpdateMessagesInput = {
+
+  thread_id?: (Scalars['String'] | null) | null;
+
+  role?: (Scalars['String'] | null) | null;
+
+  content?: (Scalars['String'] | null) | null;
+
+  file_ids?: (Scalars['String'] | null) | null;
+
+  assistant_id?: (Scalars['String'] | null) | null;
+
+  run_id?: (Scalars['String'] | null) | null;
+};
+
+
+
+export type BulkUpdateMessagesInput = {
+
+  messages?: UpdateMessagesInput | null;
+
+  id: (Scalars['GadgetID'] | null);
+};
+
+
+
+export type CreateAssistantsInput = {
+
+  name?: (Scalars['String'] | null) | null;
+
+  description?: (Scalars['String'] | null) | null;
+
+  model?: (Scalars['String'] | null) | null;
+
+  instructions?: (Scalars['String'] | null) | null;
+
+  tools?: (Scalars['String'] | null) | null;
+
+  file_ids?: (Scalars['String'] | null) | null;
+
+  external_id?: (Scalars['String'] | null) | null;
+};
+
+
+
+export type BulkCreateAssistantsInput = {
+
+  assistants?: CreateAssistantsInput | null;
+};
+
+
+
+export type UpdateAssistantsInput = {
+
+  name?: (Scalars['String'] | null) | null;
+
+  description?: (Scalars['String'] | null) | null;
+
+  model?: (Scalars['String'] | null) | null;
+
+  instructions?: (Scalars['String'] | null) | null;
+
+  tools?: (Scalars['String'] | null) | null;
+
+  file_ids?: (Scalars['String'] | null) | null;
+
+  external_id?: (Scalars['String'] | null) | null;
+};
+
+
+
+export type BulkUpdateAssistantsInput = {
+
+  assistants?: UpdateAssistantsInput | null;
 
   id: (Scalars['GadgetID'] | null);
 };
@@ -654,6 +780,9 @@ export type InternalUserInput = {
   roles?: ((Scalars['String'] | null))[];
 
   lastSignedIn?: Date | Scalars['ISO8601DateString'] | null;
+
+  /** The field documents is misconfigured and can't be given as input. Please correct any problems with the field in order to access it. */
+  documents?: (Scalars['GadgetMisconfiguredField'] | null) | null;
 };
 
 
@@ -703,9 +832,100 @@ export type InternalDocumentInput = {
 
   updatedAt?: Date | Scalars['ISO8601DateString'] | null;
 
-  file?: (Scalars['String'] | null) | null;
+  file?: InternalStoredFileInput | null;
+};
 
-  user?: InternalBelongsToInput | null;
+
+
+export type InternalStoredFileInput = {
+
+  /** An opaque identifier used by Gadget internally to uniquely identify this stored file */
+  storageToken: (Scalars['String'] | null);
+
+  /** Byte size to report in API calls */
+  byteSize: (Scalars['Int'] | null);
+
+  /** File mime type to use when serving the file or making resize operations available */
+  mimeType: (Scalars['String'] | null);
+
+  /** Sets this file's stored name, which will then be used when serving the file during read requests. If not set, Gadget will infer a filename if possible. */
+  fileName: (Scalars['String'] | null);
+
+  /** Has no effect. Convenience property to allow sending an internal metadata blob back to the Internal API, but doesn't do anything. URLs generated by Gadget expire and are not stored. */
+  url?: (Scalars['String'] | null) | null;
+};
+
+
+
+export type InternalThreadsInput = {
+
+  state?: (Scalars['RecordState'] | null) | null;
+
+  stateHistory?: (Scalars['RecordState'] | null) | null;
+
+  id?: (Scalars['GadgetID'] | null) | null;
+
+  createdAt?: Date | Scalars['ISO8601DateString'] | null;
+
+  updatedAt?: Date | Scalars['ISO8601DateString'] | null;
+
+  metadata?: (Scalars['JSON'] | null) | null;
+};
+
+
+
+export type InternalMessagesInput = {
+
+  state?: (Scalars['RecordState'] | null) | null;
+
+  stateHistory?: (Scalars['RecordState'] | null) | null;
+
+  id?: (Scalars['GadgetID'] | null) | null;
+
+  createdAt?: Date | Scalars['ISO8601DateString'] | null;
+
+  updatedAt?: Date | Scalars['ISO8601DateString'] | null;
+
+  thread_id?: (Scalars['String'] | null) | null;
+
+  role?: (Scalars['String'] | null) | null;
+
+  content?: (Scalars['String'] | null) | null;
+
+  file_ids?: (Scalars['String'] | null) | null;
+
+  assistant_id?: (Scalars['String'] | null) | null;
+
+  run_id?: (Scalars['String'] | null) | null;
+};
+
+
+
+export type InternalAssistantsInput = {
+
+  state?: (Scalars['RecordState'] | null) | null;
+
+  stateHistory?: (Scalars['RecordState'] | null) | null;
+
+  id?: (Scalars['GadgetID'] | null) | null;
+
+  createdAt?: Date | Scalars['ISO8601DateString'] | null;
+
+  updatedAt?: Date | Scalars['ISO8601DateString'] | null;
+
+  name?: (Scalars['String'] | null) | null;
+
+  description?: (Scalars['String'] | null) | null;
+
+  model?: (Scalars['String'] | null) | null;
+
+  instructions?: (Scalars['String'] | null) | null;
+
+  tools?: (Scalars['String'] | null) | null;
+
+  file_ids?: (Scalars['String'] | null) | null;
+
+  external_id?: (Scalars['String'] | null) | null;
 };
 
 
@@ -733,6 +953,8 @@ export interface Scalars {
   EmailAddress: string;
   /** A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt. */
   URL: string;
+  /** The field holding this value is currently misconfigured and can't be selected or updated. Check the problems on the field to fix this error. */
+  GadgetMisconfiguredField: never;
   /** The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. */
   Int: number;
   /** Instructions for a client to turn raw transport types (like strings) into useful client side types (like Dates). Unstable and not intended for developer use. */
@@ -1505,6 +1727,18 @@ export type Query = {
 
   documents: DocumentConnection;
 
+  threads: (Threads | null);
+
+  threadss: ThreadsConnection;
+
+  messages: (Messages | null);
+
+  messagess: MessagesConnection;
+
+  assistants: (Assistants | null);
+
+  assistantss: AssistantsConnection;
+
   internal: (InternalQueries | null);
 
   currentSession: (Session | null);
@@ -1527,6 +1761,18 @@ export type AvailableQuerySelection = {
   document?: AvailableDocumentSelection;
 
   documents?: AvailableDocumentConnectionSelection;
+
+  threads?: AvailableThreadsSelection;
+
+  threadss?: AvailableThreadsConnectionSelection;
+
+  messages?: AvailableMessagesSelection;
+
+  messagess?: AvailableMessagesConnectionSelection;
+
+  assistants?: AvailableAssistantsSelection;
+
+  assistantss?: AvailableAssistantsConnectionSelection;
 
   internal?: AvailableInternalQueriesSelection;
 
@@ -1572,7 +1818,8 @@ export type User = {
 
   lastSignedIn: (Scalars['DateTime'] | null);
 
-  documents: DocumentConnection;
+  /** The field documents is misconfigured and can't be accessed. Please correct any problems with the field in order to access it. */
+  documents: (Scalars['GadgetMisconfiguredField'] | null);
 
   /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
   _all: Scalars['JSONObject'];
@@ -1617,7 +1864,8 @@ export type AvailableUserSelection = {
 
   lastSignedIn?: boolean | null | undefined;
 
-  documents?: AvailableDocumentConnectionSelection;
+  /** The field documents is misconfigured and can't be accessed. Please correct any problems with the field in order to access it. */
+  documents?: boolean | null | undefined;
 
   /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
   _all?: boolean | null | undefined;
@@ -1647,146 +1895,6 @@ export type AvailableRoleSelection = {
 
   /** The human readable name for this role. Can be changed. */
   name?: boolean | null | undefined;
-};
-
-
-/** A connection to a list of Document items. */
-export type DocumentConnection = {
-
-  __typename: 'DocumentConnection';
-
-  /** A list of edges. */
-  edges: DocumentEdge[];
-
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-};
-
-
-
-export type AvailableDocumentConnectionSelection = {
-
-  __typename?: boolean | null | undefined;
-
-  /** A list of edges. */
-  edges?: AvailableDocumentEdgeSelection;
-
-  /** Information to aid in pagination. */
-  pageInfo?: AvailablePageInfoSelection;
-};
-
-
-/** An edge in a Document connection. */
-export type DocumentEdge = {
-
-  __typename: 'DocumentEdge';
-
-  /** The item at the end of the edge */
-  node: Document;
-
-  /** A cursor for use in pagination */
-  cursor: Scalars['String'];
-};
-
-
-
-export type AvailableDocumentEdgeSelection = {
-
-  __typename?: boolean | null | undefined;
-
-  /** The item at the end of the edge */
-  node?: AvailableDocumentSelection;
-
-  /** A cursor for use in pagination */
-  cursor?: boolean | null | undefined;
-};
-
-
-
-export type Document = {
-
-  __typename: 'Document';
-
-  /** The globally unique, unchanging identifier for this record. Assigned and managed by Gadget. */
-  id: Scalars['GadgetID'];
-
-  /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
-  createdAt: Scalars['DateTime'];
-
-  /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
-  updatedAt: Scalars['DateTime'];
-
-  file: Scalars['String'];
-
-  user: (User | null);
-
-  userId: (Scalars['GadgetID'] | null);
-
-  /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
-  _all: Scalars['JSONObject'];
-};
-
-
-
-export type AvailableDocumentSelection = {
-
-  __typename?: boolean | null | undefined;
-
-  /** The globally unique, unchanging identifier for this record. Assigned and managed by Gadget. */
-  id?: boolean | null | undefined;
-
-  /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
-  createdAt?: boolean | null | undefined;
-
-  /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
-  updatedAt?: boolean | null | undefined;
-
-  file?: boolean | null | undefined;
-
-  user?: AvailableUserSelection;
-
-  userId?: boolean | null | undefined;
-
-  /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
-  _all?: boolean | null | undefined;
-};
-
-
-/** Information about pagination in a connection. */
-export type PageInfo = {
-
-  __typename: 'PageInfo';
-
-  /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
-
-  /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
-
-  /** When paginating backwards, the cursor to continue. */
-  startCursor: (Scalars['String'] | null);
-
-  /** When paginating forwards, the cursor to continue. */
-  endCursor: (Scalars['String'] | null);
-};
-
-
-
-export type AvailablePageInfoSelection = {
-
-  __typename?: boolean | null | undefined;
-
-  /** When paginating forwards, are there more items? */
-  hasNextPage?: boolean | null | undefined;
-
-  /** When paginating backwards, are there more items? */
-  hasPreviousPage?: boolean | null | undefined;
-
-  /** When paginating backwards, the cursor to continue. */
-  startCursor?: boolean | null | undefined;
-
-  /** When paginating forwards, the cursor to continue. */
-  endCursor?: boolean | null | undefined;
 };
 
 
@@ -1839,6 +1947,44 @@ export type AvailableUserEdgeSelection = {
 
   /** A cursor for use in pagination */
   cursor?: boolean | null | undefined;
+};
+
+
+/** Information about pagination in a connection. */
+export type PageInfo = {
+
+  __typename: 'PageInfo';
+
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean'];
+
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean'];
+
+  /** When paginating backwards, the cursor to continue. */
+  startCursor: (Scalars['String'] | null);
+
+  /** When paginating forwards, the cursor to continue. */
+  endCursor: (Scalars['String'] | null);
+};
+
+
+
+export type AvailablePageInfoSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** When paginating forwards, are there more items? */
+  hasNextPage?: boolean | null | undefined;
+
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage?: boolean | null | undefined;
+
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: boolean | null | undefined;
+
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: boolean | null | undefined;
 };
 
 
@@ -1941,6 +2087,470 @@ export type AvailableSessionEdgeSelection = {
 
 
 
+export type Document = {
+
+  __typename: 'Document';
+
+  /** The globally unique, unchanging identifier for this record. Assigned and managed by Gadget. */
+  id: Scalars['GadgetID'];
+
+  /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
+  createdAt: Scalars['DateTime'];
+
+  /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
+  updatedAt: Scalars['DateTime'];
+
+  file: StoredFile;
+
+  /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
+  _all: Scalars['JSONObject'];
+};
+
+
+
+export type AvailableDocumentSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** The globally unique, unchanging identifier for this record. Assigned and managed by Gadget. */
+  id?: boolean | null | undefined;
+
+  /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
+  createdAt?: boolean | null | undefined;
+
+  /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
+  updatedAt?: boolean | null | undefined;
+
+  file?: AvailableStoredFileSelection;
+
+  /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
+  _all?: boolean | null | undefined;
+};
+
+
+/** One file that has been stored and attached to a record */
+export type StoredFile = {
+
+  __typename: 'StoredFile';
+
+  /** The URL to retrieve the attached file. Gets the original, unmodified file. */
+  url: Scalars['String'];
+
+  /** The content type of the file. */
+  mimeType: Scalars['String'];
+
+  /** The size of this file in bytes. */
+  byteSize: Scalars['Int'];
+
+  /** The size of this file in bytes. */
+  humanSize: Scalars['String'];
+
+  /** The file name of this file. */
+  fileName: Scalars['String'];
+};
+
+
+
+export type AvailableStoredFileSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** The URL to retrieve the attached file. Gets the original, unmodified file. */
+  url?: boolean | null | undefined;
+
+  /** The content type of the file. */
+  mimeType?: boolean | null | undefined;
+
+  /** The size of this file in bytes. */
+  byteSize?: boolean | null | undefined;
+
+  /** The size of this file in bytes. */
+  humanSize?: boolean | null | undefined;
+
+  /** The file name of this file. */
+  fileName?: boolean | null | undefined;
+};
+
+
+/** A connection to a list of Document items. */
+export type DocumentConnection = {
+
+  __typename: 'DocumentConnection';
+
+  /** A list of edges. */
+  edges: DocumentEdge[];
+
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+
+
+export type AvailableDocumentConnectionSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** A list of edges. */
+  edges?: AvailableDocumentEdgeSelection;
+
+  /** Information to aid in pagination. */
+  pageInfo?: AvailablePageInfoSelection;
+};
+
+
+/** An edge in a Document connection. */
+export type DocumentEdge = {
+
+  __typename: 'DocumentEdge';
+
+  /** The item at the end of the edge */
+  node: Document;
+
+  /** A cursor for use in pagination */
+  cursor: Scalars['String'];
+};
+
+
+
+export type AvailableDocumentEdgeSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** The item at the end of the edge */
+  node?: AvailableDocumentSelection;
+
+  /** A cursor for use in pagination */
+  cursor?: boolean | null | undefined;
+};
+
+
+
+export type Threads = {
+
+  __typename: 'Threads';
+
+  /** The globally unique, unchanging identifier for this record. Assigned and managed by Gadget. */
+  id: Scalars['GadgetID'];
+
+  /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
+  createdAt: Scalars['DateTime'];
+
+  /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
+  updatedAt: Scalars['DateTime'];
+
+  metadata: (Scalars['JSON'] | null);
+
+  /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
+  _all: Scalars['JSONObject'];
+};
+
+
+
+export type AvailableThreadsSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** The globally unique, unchanging identifier for this record. Assigned and managed by Gadget. */
+  id?: boolean | null | undefined;
+
+  /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
+  createdAt?: boolean | null | undefined;
+
+  /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
+  updatedAt?: boolean | null | undefined;
+
+  metadata?: boolean | null | undefined;
+
+  /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
+  _all?: boolean | null | undefined;
+};
+
+
+/** A connection to a list of Threads items. */
+export type ThreadsConnection = {
+
+  __typename: 'ThreadsConnection';
+
+  /** A list of edges. */
+  edges: ThreadsEdge[];
+
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+
+
+export type AvailableThreadsConnectionSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** A list of edges. */
+  edges?: AvailableThreadsEdgeSelection;
+
+  /** Information to aid in pagination. */
+  pageInfo?: AvailablePageInfoSelection;
+};
+
+
+/** An edge in a Threads connection. */
+export type ThreadsEdge = {
+
+  __typename: 'ThreadsEdge';
+
+  /** The item at the end of the edge */
+  node: Threads;
+
+  /** A cursor for use in pagination */
+  cursor: Scalars['String'];
+};
+
+
+
+export type AvailableThreadsEdgeSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** The item at the end of the edge */
+  node?: AvailableThreadsSelection;
+
+  /** A cursor for use in pagination */
+  cursor?: boolean | null | undefined;
+};
+
+
+
+export type Messages = {
+
+  __typename: 'Messages';
+
+  /** The globally unique, unchanging identifier for this record. Assigned and managed by Gadget. */
+  id: Scalars['GadgetID'];
+
+  /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
+  createdAt: Scalars['DateTime'];
+
+  /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
+  updatedAt: Scalars['DateTime'];
+
+  thread_id: (Scalars['String'] | null);
+
+  role: (Scalars['String'] | null);
+
+  content: (Scalars['String'] | null);
+
+  file_ids: (Scalars['String'] | null);
+
+  assistant_id: (Scalars['String'] | null);
+
+  run_id: (Scalars['String'] | null);
+
+  /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
+  _all: Scalars['JSONObject'];
+};
+
+
+
+export type AvailableMessagesSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** The globally unique, unchanging identifier for this record. Assigned and managed by Gadget. */
+  id?: boolean | null | undefined;
+
+  /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
+  createdAt?: boolean | null | undefined;
+
+  /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
+  updatedAt?: boolean | null | undefined;
+
+  thread_id?: boolean | null | undefined;
+
+  role?: boolean | null | undefined;
+
+  content?: boolean | null | undefined;
+
+  file_ids?: boolean | null | undefined;
+
+  assistant_id?: boolean | null | undefined;
+
+  run_id?: boolean | null | undefined;
+
+  /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
+  _all?: boolean | null | undefined;
+};
+
+
+/** A connection to a list of Messages items. */
+export type MessagesConnection = {
+
+  __typename: 'MessagesConnection';
+
+  /** A list of edges. */
+  edges: MessagesEdge[];
+
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+
+
+export type AvailableMessagesConnectionSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** A list of edges. */
+  edges?: AvailableMessagesEdgeSelection;
+
+  /** Information to aid in pagination. */
+  pageInfo?: AvailablePageInfoSelection;
+};
+
+
+/** An edge in a Messages connection. */
+export type MessagesEdge = {
+
+  __typename: 'MessagesEdge';
+
+  /** The item at the end of the edge */
+  node: Messages;
+
+  /** A cursor for use in pagination */
+  cursor: Scalars['String'];
+};
+
+
+
+export type AvailableMessagesEdgeSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** The item at the end of the edge */
+  node?: AvailableMessagesSelection;
+
+  /** A cursor for use in pagination */
+  cursor?: boolean | null | undefined;
+};
+
+
+
+export type Assistants = {
+
+  __typename: 'Assistants';
+
+  /** The globally unique, unchanging identifier for this record. Assigned and managed by Gadget. */
+  id: Scalars['GadgetID'];
+
+  /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
+  createdAt: Scalars['DateTime'];
+
+  /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
+  updatedAt: Scalars['DateTime'];
+
+  name: (Scalars['String'] | null);
+
+  description: (Scalars['String'] | null);
+
+  model: (Scalars['String'] | null);
+
+  instructions: (Scalars['String'] | null);
+
+  tools: (Scalars['String'] | null);
+
+  file_ids: (Scalars['String'] | null);
+
+  external_id: (Scalars['String'] | null);
+
+  /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
+  _all: Scalars['JSONObject'];
+};
+
+
+
+export type AvailableAssistantsSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** The globally unique, unchanging identifier for this record. Assigned and managed by Gadget. */
+  id?: boolean | null | undefined;
+
+  /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
+  createdAt?: boolean | null | undefined;
+
+  /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
+  updatedAt?: boolean | null | undefined;
+
+  name?: boolean | null | undefined;
+
+  description?: boolean | null | undefined;
+
+  model?: boolean | null | undefined;
+
+  instructions?: boolean | null | undefined;
+
+  tools?: boolean | null | undefined;
+
+  file_ids?: boolean | null | undefined;
+
+  external_id?: boolean | null | undefined;
+
+  /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
+  _all?: boolean | null | undefined;
+};
+
+
+/** A connection to a list of Assistants items. */
+export type AssistantsConnection = {
+
+  __typename: 'AssistantsConnection';
+
+  /** A list of edges. */
+  edges: AssistantsEdge[];
+
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+
+
+export type AvailableAssistantsConnectionSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** A list of edges. */
+  edges?: AvailableAssistantsEdgeSelection;
+
+  /** Information to aid in pagination. */
+  pageInfo?: AvailablePageInfoSelection;
+};
+
+
+/** An edge in a Assistants connection. */
+export type AssistantsEdge = {
+
+  __typename: 'AssistantsEdge';
+
+  /** The item at the end of the edge */
+  node: Assistants;
+
+  /** A cursor for use in pagination */
+  cursor: Scalars['String'];
+};
+
+
+
+export type AvailableAssistantsEdgeSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** The item at the end of the edge */
+  node?: AvailableAssistantsSelection;
+
+  /** A cursor for use in pagination */
+  cursor?: boolean | null | undefined;
+};
+
+
+
 export type InternalQueries = {
 
   __typename: 'InternalQueries';
@@ -1956,6 +2566,18 @@ export type InternalQueries = {
   document: (InternalDocumentRecord | null);
 
   listDocument: InternalDocumentRecordConnection;
+
+  threads: (InternalThreadsRecord | null);
+
+  listThreads: InternalThreadsRecordConnection;
+
+  messages: (InternalMessagesRecord | null);
+
+  listMessages: InternalMessagesRecordConnection;
+
+  assistants: (InternalAssistantsRecord | null);
+
+  listAssistants: InternalAssistantsRecordConnection;
 
   /** Currently open platform transaction details, or null if no transaction is open */
   currentTransactionDetails: (Scalars['JSONObject'] | null);
@@ -1978,6 +2600,18 @@ export type AvailableInternalQueriesSelection = {
   document?: boolean | null | undefined;
 
   listDocument?: AvailableInternalDocumentRecordConnectionSelection;
+
+  threads?: boolean | null | undefined;
+
+  listThreads?: AvailableInternalThreadsRecordConnectionSelection;
+
+  messages?: boolean | null | undefined;
+
+  listMessages?: AvailableInternalMessagesRecordConnectionSelection;
+
+  assistants?: boolean | null | undefined;
+
+  listAssistants?: AvailableInternalAssistantsRecordConnectionSelection;
 
   /** Currently open platform transaction details, or null if no transaction is open */
   currentTransactionDetails?: boolean | null | undefined;
@@ -2129,6 +2763,162 @@ export type InternalDocumentRecordEdge = {
 
 
 export type AvailableInternalDocumentRecordEdgeSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** The item at the end of the edge */
+  node?: boolean | null | undefined;
+
+  /** A cursor for use in pagination */
+  cursor?: boolean | null | undefined;
+};
+
+
+/** A connection to a list of InternalThreadsRecord items. */
+export type InternalThreadsRecordConnection = {
+
+  __typename: 'InternalThreadsRecordConnection';
+
+  /** A list of edges. */
+  edges: InternalThreadsRecordEdge[];
+
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+
+
+export type AvailableInternalThreadsRecordConnectionSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** A list of edges. */
+  edges?: AvailableInternalThreadsRecordEdgeSelection;
+
+  /** Information to aid in pagination. */
+  pageInfo?: AvailablePageInfoSelection;
+};
+
+
+/** An edge in a InternalThreadsRecord connection. */
+export type InternalThreadsRecordEdge = {
+
+  __typename: 'InternalThreadsRecordEdge';
+
+  /** The item at the end of the edge */
+  node: InternalThreadsRecord;
+
+  /** A cursor for use in pagination */
+  cursor: Scalars['String'];
+};
+
+
+
+export type AvailableInternalThreadsRecordEdgeSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** The item at the end of the edge */
+  node?: boolean | null | undefined;
+
+  /** A cursor for use in pagination */
+  cursor?: boolean | null | undefined;
+};
+
+
+/** A connection to a list of InternalMessagesRecord items. */
+export type InternalMessagesRecordConnection = {
+
+  __typename: 'InternalMessagesRecordConnection';
+
+  /** A list of edges. */
+  edges: InternalMessagesRecordEdge[];
+
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+
+
+export type AvailableInternalMessagesRecordConnectionSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** A list of edges. */
+  edges?: AvailableInternalMessagesRecordEdgeSelection;
+
+  /** Information to aid in pagination. */
+  pageInfo?: AvailablePageInfoSelection;
+};
+
+
+/** An edge in a InternalMessagesRecord connection. */
+export type InternalMessagesRecordEdge = {
+
+  __typename: 'InternalMessagesRecordEdge';
+
+  /** The item at the end of the edge */
+  node: InternalMessagesRecord;
+
+  /** A cursor for use in pagination */
+  cursor: Scalars['String'];
+};
+
+
+
+export type AvailableInternalMessagesRecordEdgeSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** The item at the end of the edge */
+  node?: boolean | null | undefined;
+
+  /** A cursor for use in pagination */
+  cursor?: boolean | null | undefined;
+};
+
+
+/** A connection to a list of InternalAssistantsRecord items. */
+export type InternalAssistantsRecordConnection = {
+
+  __typename: 'InternalAssistantsRecordConnection';
+
+  /** A list of edges. */
+  edges: InternalAssistantsRecordEdge[];
+
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+
+
+export type AvailableInternalAssistantsRecordConnectionSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** A list of edges. */
+  edges?: AvailableInternalAssistantsRecordEdgeSelection;
+
+  /** Information to aid in pagination. */
+  pageInfo?: AvailablePageInfoSelection;
+};
+
+
+/** An edge in a InternalAssistantsRecord connection. */
+export type InternalAssistantsRecordEdge = {
+
+  __typename: 'InternalAssistantsRecordEdge';
+
+  /** The item at the end of the edge */
+  node: InternalAssistantsRecord;
+
+  /** A cursor for use in pagination */
+  cursor: Scalars['String'];
+};
+
+
+
+export type AvailableInternalAssistantsRecordEdgeSelection = {
 
   __typename?: boolean | null | undefined;
 
@@ -2347,6 +3137,42 @@ export type Mutation = {
 
   bulkDeleteDocuments: (BulkDeleteDocumentsResult | null);
 
+  createThreads: (CreateThreadsResult | null);
+
+  bulkCreateThreads: (BulkCreateThreadsResult | null);
+
+  updateThreads: (UpdateThreadsResult | null);
+
+  bulkUpdateThreads: (BulkUpdateThreadsResult | null);
+
+  deleteThreads: (DeleteThreadsResult | null);
+
+  bulkDeleteThreads: (BulkDeleteThreadsResult | null);
+
+  createMessages: (CreateMessagesResult | null);
+
+  bulkCreateMessages: (BulkCreateMessagesResult | null);
+
+  updateMessages: (UpdateMessagesResult | null);
+
+  bulkUpdateMessages: (BulkUpdateMessagesResult | null);
+
+  deleteMessages: (DeleteMessagesResult | null);
+
+  bulkDeleteMessages: (BulkDeleteMessagesResult | null);
+
+  createAssistants: (CreateAssistantsResult | null);
+
+  bulkCreateAssistants: (BulkCreateAssistantsResult | null);
+
+  updateAssistants: (UpdateAssistantsResult | null);
+
+  bulkUpdateAssistants: (BulkUpdateAssistantsResult | null);
+
+  deleteAssistants: (DeleteAssistantsResult | null);
+
+  bulkDeleteAssistants: (BulkDeleteAssistantsResult | null);
+
   internal: (InternalMutations | null);
 };
 
@@ -2407,6 +3233,42 @@ export type AvailableMutationSelection = {
   deleteDocument?: AvailableDeleteDocumentResultSelection;
 
   bulkDeleteDocuments?: AvailableBulkDeleteDocumentsResultSelection;
+
+  createThreads?: AvailableCreateThreadsResultSelection;
+
+  bulkCreateThreads?: AvailableBulkCreateThreadsResultSelection;
+
+  updateThreads?: AvailableUpdateThreadsResultSelection;
+
+  bulkUpdateThreads?: AvailableBulkUpdateThreadsResultSelection;
+
+  deleteThreads?: AvailableDeleteThreadsResultSelection;
+
+  bulkDeleteThreads?: AvailableBulkDeleteThreadsResultSelection;
+
+  createMessages?: AvailableCreateMessagesResultSelection;
+
+  bulkCreateMessages?: AvailableBulkCreateMessagesResultSelection;
+
+  updateMessages?: AvailableUpdateMessagesResultSelection;
+
+  bulkUpdateMessages?: AvailableBulkUpdateMessagesResultSelection;
+
+  deleteMessages?: AvailableDeleteMessagesResultSelection;
+
+  bulkDeleteMessages?: AvailableBulkDeleteMessagesResultSelection;
+
+  createAssistants?: AvailableCreateAssistantsResultSelection;
+
+  bulkCreateAssistants?: AvailableBulkCreateAssistantsResultSelection;
+
+  updateAssistants?: AvailableUpdateAssistantsResultSelection;
+
+  bulkUpdateAssistants?: AvailableBulkUpdateAssistantsResultSelection;
+
+  deleteAssistants?: AvailableDeleteAssistantsResultSelection;
+
+  bulkDeleteAssistants?: AvailableBulkDeleteAssistantsResultSelection;
 
   internal?: AvailableInternalMutationsSelection;
 };
@@ -3147,6 +4009,498 @@ export type AvailableBulkDeleteDocumentsResultSelection = {
 
 
 
+export type CreateThreadsResult = {
+
+  __typename: 'CreateThreadsResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  threads: (Threads | null);
+};
+
+
+
+export type AvailableCreateThreadsResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  threads?: AvailableThreadsSelection;
+};
+
+
+/** The output when running the create on the threads model in bulk. */
+export type BulkCreateThreadsResult = {
+
+  __typename: 'BulkCreateThreadsResult';
+
+  /** Boolean describing if all the bulk actions succeeded or not */
+  success: Scalars['Boolean'];
+
+  /** Aggregated list of errors that any bulk action encountered while processing */
+  errors: ExecutionError[];
+
+  /** The list of all changed threads records by each sent bulk action. Returned in the same order as the input bulk action params. */
+  threadss: (Threads | null)[];
+};
+
+
+
+export type AvailableBulkCreateThreadsResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** Boolean describing if all the bulk actions succeeded or not */
+  success?: boolean | null | undefined;
+
+  /** Aggregated list of errors that any bulk action encountered while processing */
+  errors?: AvailableExecutionErrorSelection;
+
+  /** The list of all changed threads records by each sent bulk action. Returned in the same order as the input bulk action params. */
+  threadss?: AvailableThreadsSelection;
+};
+
+
+
+export type UpdateThreadsResult = {
+
+  __typename: 'UpdateThreadsResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  threads: (Threads | null);
+};
+
+
+
+export type AvailableUpdateThreadsResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  threads?: AvailableThreadsSelection;
+};
+
+
+/** The output when running the update on the threads model in bulk. */
+export type BulkUpdateThreadsResult = {
+
+  __typename: 'BulkUpdateThreadsResult';
+
+  /** Boolean describing if all the bulk actions succeeded or not */
+  success: Scalars['Boolean'];
+
+  /** Aggregated list of errors that any bulk action encountered while processing */
+  errors: ExecutionError[];
+
+  /** The list of all changed threads records by each sent bulk action. Returned in the same order as the input bulk action params. */
+  threadss: (Threads | null)[];
+};
+
+
+
+export type AvailableBulkUpdateThreadsResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** Boolean describing if all the bulk actions succeeded or not */
+  success?: boolean | null | undefined;
+
+  /** Aggregated list of errors that any bulk action encountered while processing */
+  errors?: AvailableExecutionErrorSelection;
+
+  /** The list of all changed threads records by each sent bulk action. Returned in the same order as the input bulk action params. */
+  threadss?: AvailableThreadsSelection;
+};
+
+
+
+export type DeleteThreadsResult = {
+
+  __typename: 'DeleteThreadsResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+};
+
+
+
+export type AvailableDeleteThreadsResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+};
+
+
+/** The output when running the delete on the threads model in bulk. */
+export type BulkDeleteThreadsResult = {
+
+  __typename: 'BulkDeleteThreadsResult';
+
+  /** Boolean describing if all the bulk actions succeeded or not */
+  success: Scalars['Boolean'];
+
+  /** Aggregated list of errors that any bulk action encountered while processing */
+  errors: ExecutionError[];
+};
+
+
+
+export type AvailableBulkDeleteThreadsResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** Boolean describing if all the bulk actions succeeded or not */
+  success?: boolean | null | undefined;
+
+  /** Aggregated list of errors that any bulk action encountered while processing */
+  errors?: AvailableExecutionErrorSelection;
+};
+
+
+
+export type CreateMessagesResult = {
+
+  __typename: 'CreateMessagesResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  messages: (Messages | null);
+};
+
+
+
+export type AvailableCreateMessagesResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  messages?: AvailableMessagesSelection;
+};
+
+
+/** The output when running the create on the messages model in bulk. */
+export type BulkCreateMessagesResult = {
+
+  __typename: 'BulkCreateMessagesResult';
+
+  /** Boolean describing if all the bulk actions succeeded or not */
+  success: Scalars['Boolean'];
+
+  /** Aggregated list of errors that any bulk action encountered while processing */
+  errors: ExecutionError[];
+
+  /** The list of all changed messages records by each sent bulk action. Returned in the same order as the input bulk action params. */
+  messagess: (Messages | null)[];
+};
+
+
+
+export type AvailableBulkCreateMessagesResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** Boolean describing if all the bulk actions succeeded or not */
+  success?: boolean | null | undefined;
+
+  /** Aggregated list of errors that any bulk action encountered while processing */
+  errors?: AvailableExecutionErrorSelection;
+
+  /** The list of all changed messages records by each sent bulk action. Returned in the same order as the input bulk action params. */
+  messagess?: AvailableMessagesSelection;
+};
+
+
+
+export type UpdateMessagesResult = {
+
+  __typename: 'UpdateMessagesResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  messages: (Messages | null);
+};
+
+
+
+export type AvailableUpdateMessagesResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  messages?: AvailableMessagesSelection;
+};
+
+
+/** The output when running the update on the messages model in bulk. */
+export type BulkUpdateMessagesResult = {
+
+  __typename: 'BulkUpdateMessagesResult';
+
+  /** Boolean describing if all the bulk actions succeeded or not */
+  success: Scalars['Boolean'];
+
+  /** Aggregated list of errors that any bulk action encountered while processing */
+  errors: ExecutionError[];
+
+  /** The list of all changed messages records by each sent bulk action. Returned in the same order as the input bulk action params. */
+  messagess: (Messages | null)[];
+};
+
+
+
+export type AvailableBulkUpdateMessagesResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** Boolean describing if all the bulk actions succeeded or not */
+  success?: boolean | null | undefined;
+
+  /** Aggregated list of errors that any bulk action encountered while processing */
+  errors?: AvailableExecutionErrorSelection;
+
+  /** The list of all changed messages records by each sent bulk action. Returned in the same order as the input bulk action params. */
+  messagess?: AvailableMessagesSelection;
+};
+
+
+
+export type DeleteMessagesResult = {
+
+  __typename: 'DeleteMessagesResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+};
+
+
+
+export type AvailableDeleteMessagesResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+};
+
+
+/** The output when running the delete on the messages model in bulk. */
+export type BulkDeleteMessagesResult = {
+
+  __typename: 'BulkDeleteMessagesResult';
+
+  /** Boolean describing if all the bulk actions succeeded or not */
+  success: Scalars['Boolean'];
+
+  /** Aggregated list of errors that any bulk action encountered while processing */
+  errors: ExecutionError[];
+};
+
+
+
+export type AvailableBulkDeleteMessagesResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** Boolean describing if all the bulk actions succeeded or not */
+  success?: boolean | null | undefined;
+
+  /** Aggregated list of errors that any bulk action encountered while processing */
+  errors?: AvailableExecutionErrorSelection;
+};
+
+
+
+export type CreateAssistantsResult = {
+
+  __typename: 'CreateAssistantsResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  assistants: (Assistants | null);
+};
+
+
+
+export type AvailableCreateAssistantsResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  assistants?: AvailableAssistantsSelection;
+};
+
+
+/** The output when running the create on the assistants model in bulk. */
+export type BulkCreateAssistantsResult = {
+
+  __typename: 'BulkCreateAssistantsResult';
+
+  /** Boolean describing if all the bulk actions succeeded or not */
+  success: Scalars['Boolean'];
+
+  /** Aggregated list of errors that any bulk action encountered while processing */
+  errors: ExecutionError[];
+
+  /** The list of all changed assistants records by each sent bulk action. Returned in the same order as the input bulk action params. */
+  assistantss: (Assistants | null)[];
+};
+
+
+
+export type AvailableBulkCreateAssistantsResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** Boolean describing if all the bulk actions succeeded or not */
+  success?: boolean | null | undefined;
+
+  /** Aggregated list of errors that any bulk action encountered while processing */
+  errors?: AvailableExecutionErrorSelection;
+
+  /** The list of all changed assistants records by each sent bulk action. Returned in the same order as the input bulk action params. */
+  assistantss?: AvailableAssistantsSelection;
+};
+
+
+
+export type UpdateAssistantsResult = {
+
+  __typename: 'UpdateAssistantsResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  assistants: (Assistants | null);
+};
+
+
+
+export type AvailableUpdateAssistantsResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  assistants?: AvailableAssistantsSelection;
+};
+
+
+/** The output when running the update on the assistants model in bulk. */
+export type BulkUpdateAssistantsResult = {
+
+  __typename: 'BulkUpdateAssistantsResult';
+
+  /** Boolean describing if all the bulk actions succeeded or not */
+  success: Scalars['Boolean'];
+
+  /** Aggregated list of errors that any bulk action encountered while processing */
+  errors: ExecutionError[];
+
+  /** The list of all changed assistants records by each sent bulk action. Returned in the same order as the input bulk action params. */
+  assistantss: (Assistants | null)[];
+};
+
+
+
+export type AvailableBulkUpdateAssistantsResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** Boolean describing if all the bulk actions succeeded or not */
+  success?: boolean | null | undefined;
+
+  /** Aggregated list of errors that any bulk action encountered while processing */
+  errors?: AvailableExecutionErrorSelection;
+
+  /** The list of all changed assistants records by each sent bulk action. Returned in the same order as the input bulk action params. */
+  assistantss?: AvailableAssistantsSelection;
+};
+
+
+
+export type DeleteAssistantsResult = {
+
+  __typename: 'DeleteAssistantsResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+};
+
+
+
+export type AvailableDeleteAssistantsResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+};
+
+
+/** The output when running the delete on the assistants model in bulk. */
+export type BulkDeleteAssistantsResult = {
+
+  __typename: 'BulkDeleteAssistantsResult';
+
+  /** Boolean describing if all the bulk actions succeeded or not */
+  success: Scalars['Boolean'];
+
+  /** Aggregated list of errors that any bulk action encountered while processing */
+  errors: ExecutionError[];
+};
+
+
+
+export type AvailableBulkDeleteAssistantsResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** Boolean describing if all the bulk actions succeeded or not */
+  success?: boolean | null | undefined;
+
+  /** Aggregated list of errors that any bulk action encountered while processing */
+  errors?: AvailableExecutionErrorSelection;
+};
+
+
+
 export type InternalMutations = {
 
   __typename: 'InternalMutations';
@@ -3215,6 +4569,54 @@ export type InternalMutations = {
   triggerUpdateDocument: (UpdateDocumentResult | null);
 
   triggerDeleteDocument: (DeleteDocumentResult | null);
+
+  createThreads: (InternalCreateThreadsResult | null);
+
+  updateThreads: (InternalUpdateThreadsResult | null);
+
+  deleteThreads: (InternalDeleteThreadsResult | null);
+
+  deleteManyThreads: (InternalDeleteManyThreadsResult | null);
+
+  bulkCreateThreadss: (InternalBulkCreateThreadssResult | null);
+
+  triggerCreateThreads: (CreateThreadsResult | null);
+
+  triggerUpdateThreads: (UpdateThreadsResult | null);
+
+  triggerDeleteThreads: (DeleteThreadsResult | null);
+
+  createMessages: (InternalCreateMessagesResult | null);
+
+  updateMessages: (InternalUpdateMessagesResult | null);
+
+  deleteMessages: (InternalDeleteMessagesResult | null);
+
+  deleteManyMessages: (InternalDeleteManyMessagesResult | null);
+
+  bulkCreateMessagess: (InternalBulkCreateMessagessResult | null);
+
+  triggerCreateMessages: (CreateMessagesResult | null);
+
+  triggerUpdateMessages: (UpdateMessagesResult | null);
+
+  triggerDeleteMessages: (DeleteMessagesResult | null);
+
+  createAssistants: (InternalCreateAssistantsResult | null);
+
+  updateAssistants: (InternalUpdateAssistantsResult | null);
+
+  deleteAssistants: (InternalDeleteAssistantsResult | null);
+
+  deleteManyAssistants: (InternalDeleteManyAssistantsResult | null);
+
+  bulkCreateAssistantss: (InternalBulkCreateAssistantssResult | null);
+
+  triggerCreateAssistants: (CreateAssistantsResult | null);
+
+  triggerUpdateAssistants: (UpdateAssistantsResult | null);
+
+  triggerDeleteAssistants: (DeleteAssistantsResult | null);
 };
 
 
@@ -3287,6 +4689,54 @@ export type AvailableInternalMutationsSelection = {
   triggerUpdateDocument?: AvailableUpdateDocumentResultSelection;
 
   triggerDeleteDocument?: AvailableDeleteDocumentResultSelection;
+
+  createThreads?: AvailableInternalCreateThreadsResultSelection;
+
+  updateThreads?: AvailableInternalUpdateThreadsResultSelection;
+
+  deleteThreads?: AvailableInternalDeleteThreadsResultSelection;
+
+  deleteManyThreads?: AvailableInternalDeleteManyThreadsResultSelection;
+
+  bulkCreateThreadss?: AvailableInternalBulkCreateThreadssResultSelection;
+
+  triggerCreateThreads?: AvailableCreateThreadsResultSelection;
+
+  triggerUpdateThreads?: AvailableUpdateThreadsResultSelection;
+
+  triggerDeleteThreads?: AvailableDeleteThreadsResultSelection;
+
+  createMessages?: AvailableInternalCreateMessagesResultSelection;
+
+  updateMessages?: AvailableInternalUpdateMessagesResultSelection;
+
+  deleteMessages?: AvailableInternalDeleteMessagesResultSelection;
+
+  deleteManyMessages?: AvailableInternalDeleteManyMessagesResultSelection;
+
+  bulkCreateMessagess?: AvailableInternalBulkCreateMessagessResultSelection;
+
+  triggerCreateMessages?: AvailableCreateMessagesResultSelection;
+
+  triggerUpdateMessages?: AvailableUpdateMessagesResultSelection;
+
+  triggerDeleteMessages?: AvailableDeleteMessagesResultSelection;
+
+  createAssistants?: AvailableInternalCreateAssistantsResultSelection;
+
+  updateAssistants?: AvailableInternalUpdateAssistantsResultSelection;
+
+  deleteAssistants?: AvailableInternalDeleteAssistantsResultSelection;
+
+  deleteManyAssistants?: AvailableInternalDeleteManyAssistantsResultSelection;
+
+  bulkCreateAssistantss?: AvailableInternalBulkCreateAssistantssResultSelection;
+
+  triggerCreateAssistants?: AvailableCreateAssistantsResultSelection;
+
+  triggerUpdateAssistants?: AvailableUpdateAssistantsResultSelection;
+
+  triggerDeleteAssistants?: AvailableDeleteAssistantsResultSelection;
 };
 
 
@@ -3691,6 +5141,384 @@ export type AvailableInternalBulkCreateDocumentsResultSelection = {
   errors?: AvailableExecutionErrorSelection;
 
   documents?: boolean | null | undefined;
+};
+
+
+
+export type InternalCreateThreadsResult = {
+
+  __typename: 'InternalCreateThreadsResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  threads: (InternalThreadsRecord | null);
+};
+
+
+
+export type AvailableInternalCreateThreadsResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  threads?: boolean | null | undefined;
+};
+
+
+
+export type InternalUpdateThreadsResult = {
+
+  __typename: 'InternalUpdateThreadsResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  threads: (InternalThreadsRecord | null);
+};
+
+
+
+export type AvailableInternalUpdateThreadsResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  threads?: boolean | null | undefined;
+};
+
+
+
+export type InternalDeleteThreadsResult = {
+
+  __typename: 'InternalDeleteThreadsResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  threads: (InternalThreadsRecord | null);
+};
+
+
+
+export type AvailableInternalDeleteThreadsResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  threads?: boolean | null | undefined;
+};
+
+
+
+export type InternalDeleteManyThreadsResult = {
+
+  __typename: 'InternalDeleteManyThreadsResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+};
+
+
+
+export type AvailableInternalDeleteManyThreadsResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+};
+
+
+
+export type InternalBulkCreateThreadssResult = {
+
+  __typename: 'InternalBulkCreateThreadssResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  threadss: (InternalThreadsRecord | null)[];
+};
+
+
+
+export type AvailableInternalBulkCreateThreadssResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  threadss?: boolean | null | undefined;
+};
+
+
+
+export type InternalCreateMessagesResult = {
+
+  __typename: 'InternalCreateMessagesResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  messages: (InternalMessagesRecord | null);
+};
+
+
+
+export type AvailableInternalCreateMessagesResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  messages?: boolean | null | undefined;
+};
+
+
+
+export type InternalUpdateMessagesResult = {
+
+  __typename: 'InternalUpdateMessagesResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  messages: (InternalMessagesRecord | null);
+};
+
+
+
+export type AvailableInternalUpdateMessagesResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  messages?: boolean | null | undefined;
+};
+
+
+
+export type InternalDeleteMessagesResult = {
+
+  __typename: 'InternalDeleteMessagesResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  messages: (InternalMessagesRecord | null);
+};
+
+
+
+export type AvailableInternalDeleteMessagesResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  messages?: boolean | null | undefined;
+};
+
+
+
+export type InternalDeleteManyMessagesResult = {
+
+  __typename: 'InternalDeleteManyMessagesResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+};
+
+
+
+export type AvailableInternalDeleteManyMessagesResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+};
+
+
+
+export type InternalBulkCreateMessagessResult = {
+
+  __typename: 'InternalBulkCreateMessagessResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  messagess: (InternalMessagesRecord | null)[];
+};
+
+
+
+export type AvailableInternalBulkCreateMessagessResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  messagess?: boolean | null | undefined;
+};
+
+
+
+export type InternalCreateAssistantsResult = {
+
+  __typename: 'InternalCreateAssistantsResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  assistants: (InternalAssistantsRecord | null);
+};
+
+
+
+export type AvailableInternalCreateAssistantsResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  assistants?: boolean | null | undefined;
+};
+
+
+
+export type InternalUpdateAssistantsResult = {
+
+  __typename: 'InternalUpdateAssistantsResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  assistants: (InternalAssistantsRecord | null);
+};
+
+
+
+export type AvailableInternalUpdateAssistantsResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  assistants?: boolean | null | undefined;
+};
+
+
+
+export type InternalDeleteAssistantsResult = {
+
+  __typename: 'InternalDeleteAssistantsResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  assistants: (InternalAssistantsRecord | null);
+};
+
+
+
+export type AvailableInternalDeleteAssistantsResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  assistants?: boolean | null | undefined;
+};
+
+
+
+export type InternalDeleteManyAssistantsResult = {
+
+  __typename: 'InternalDeleteManyAssistantsResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+};
+
+
+
+export type AvailableInternalDeleteManyAssistantsResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+};
+
+
+
+export type InternalBulkCreateAssistantssResult = {
+
+  __typename: 'InternalBulkCreateAssistantssResult';
+
+  success: Scalars['Boolean'];
+
+  errors: ExecutionError[];
+
+  assistantss: (InternalAssistantsRecord | null)[];
+};
+
+
+
+export type AvailableInternalBulkCreateAssistantssResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  assistantss?: boolean | null | undefined;
 };
 
 
