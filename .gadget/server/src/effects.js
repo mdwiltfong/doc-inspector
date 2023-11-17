@@ -45,6 +45,9 @@ _export(exports, {
     shopifySync: function() {
         return shopifySync;
     },
+    abortSync: function() {
+        return abortSync;
+    },
     preventCrossShopDataAccess: function() {
         return preventCrossShopDataAccess;
     },
@@ -200,6 +203,28 @@ async function shopifySync(params, record) {
         }
     } else {
         throw new _errors.InvalidActionInputError("Models must be an array of api identifiers");
+    }
+}
+async function abortSync(params, record) {
+    const context = getActionContextFromLocalStorage();
+    const effectAPIs = context.effectAPIs;
+    const syncRecord = (0, _utils.assert)(record, "a record is required to abort a shop sync");
+    const syncId = (0, _utils.assert)(syncRecord.id, "a sync id is required to start a sync");
+    if (!params.errorMessage) {
+        record.errorMessage = "Sync aborted";
+    }
+    _globals.Globals.logger.info({
+        userVisible: true,
+        connectionSyncId: syncId
+    }, "aborting sync");
+    try {
+        await effectAPIs.abortSync(syncId.toString());
+    } catch (error) {
+        _globals.Globals.logger.error({
+            error,
+            connectionSyncId: syncId
+        }, "an error occurred aborting sync");
+        throw error;
     }
 }
 async function preventCrossShopDataAccess(params, record, options) {

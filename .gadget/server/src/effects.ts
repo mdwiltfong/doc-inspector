@@ -202,6 +202,28 @@ export async function shopifySync(params: AnyParams, record: GadgetRecord<any>) 
   }
 }
 
+export async function abortSync(params: AnyParams, record: GadgetRecord<any>) {
+  const context = getActionContextFromLocalStorage();
+  const effectAPIs = context.effectAPIs;
+
+  const syncRecord: { id: bigint } = assert(record, "a record is required to abort a shop sync");
+
+  const syncId = assert(syncRecord.id, "a sync id is required to start a sync");
+
+  if (!params.errorMessage) {
+    record.errorMessage = "Sync aborted";
+  }
+
+  Globals.logger.info({ userVisible: true, connectionSyncId: syncId }, "aborting sync");
+
+  try {
+    await effectAPIs.abortSync(syncId.toString());
+  } catch (error) {
+    Globals.logger.error({ error, connectionSyncId: syncId }, "an error occurred aborting sync");
+    throw error;
+  }
+}
+
 /**
  * Enforce that the given record is only accessible by the current shop. For multi-tenant Shopify applications, this is key for enforcing data can only be accessed by the shop that owns it.
  *

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FieldType = exports.legacySuccessfulAuthentication = exports.legacyUnsetUser = exports.legacySetUser = exports.globalShopifySync = exports.finishBulkOperation = exports.preventCrossShopDataAccess = exports.shopifySync = exports.transitionState = exports.ShopifySellingPlanGroupProductState = exports.ShopifySellingPlanGroupProductVariantState = exports.ShopifyBulkOperationState = exports.ShopifySyncState = exports.ShopifyShopState = exports.deleteRecord = exports.save = exports.applyParams = exports.createGadgetRecord = void 0;
+exports.FieldType = exports.legacySuccessfulAuthentication = exports.legacyUnsetUser = exports.legacySetUser = exports.globalShopifySync = exports.finishBulkOperation = exports.preventCrossShopDataAccess = exports.abortSync = exports.shopifySync = exports.transitionState = exports.ShopifySellingPlanGroupProductState = exports.ShopifySellingPlanGroupProductVariantState = exports.ShopifyBulkOperationState = exports.ShopifySyncState = exports.ShopifyShopState = exports.deleteRecord = exports.save = exports.applyParams = exports.createGadgetRecord = void 0;
 const api_client_core_1 = require("@gadgetinc/api-client-core");
 const errors_1 = require("./errors");
 const globals_1 = require("./globals");
@@ -153,6 +153,24 @@ async function shopifySync(params, record) {
     }
 }
 exports.shopifySync = shopifySync;
+async function abortSync(params, record) {
+    const context = getActionContextFromLocalStorage();
+    const effectAPIs = context.effectAPIs;
+    const syncRecord = (0, utils_1.assert)(record, "a record is required to abort a shop sync");
+    const syncId = (0, utils_1.assert)(syncRecord.id, "a sync id is required to start a sync");
+    if (!params.errorMessage) {
+        record.errorMessage = "Sync aborted";
+    }
+    globals_1.Globals.logger.info({ userVisible: true, connectionSyncId: syncId }, "aborting sync");
+    try {
+        await effectAPIs.abortSync(syncId.toString());
+    }
+    catch (error) {
+        globals_1.Globals.logger.error({ error, connectionSyncId: syncId }, "an error occurred aborting sync");
+        throw error;
+    }
+}
+exports.abortSync = abortSync;
 /**
  * Enforce that the given record is only accessible by the current shop. For multi-tenant Shopify applications, this is key for enforcing data can only be accessed by the shop that owns it.
  *

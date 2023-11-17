@@ -27,8 +27,8 @@ export class OpenAIAssistant {
       console.log(error);
     }
   }
-  async createThread() {
-    this.#thread = await openai.beta.threads.create();
+  static async createThread() {
+    return await openai.beta.threads.create();
   }
   async addMessageToThread(role, content) {
     return await openai.beta.threads.messages.create({
@@ -48,5 +48,30 @@ export class OpenAIAssistant {
   }
   get tools() {
     return this.#tools;
+  }
+}
+
+export class Thread {
+  #external_thread_id;
+  #created_at;
+  constructor(external_thread_id, created_at) {
+    this.#external_thread_id = external_thread_id;
+    this.#created_at = created_at;
+  }
+  static async createThread() {
+    const newThread = await openai.beta.threads.create();
+    return new Thread(newThread.id, newThread.created_at);
+  }
+  static async retrieveThread(threadId) {
+    return await openai.beta.threads.retrieve(threadId);
+  }
+  static async addMessageToThread(threadId, content) {
+    return await openai.beta.threads.messages.create(threadId, {
+      role: "user",
+      content,
+    });
+  }
+  get external_thread_id() {
+    return this.#external_thread_id;
   }
 }

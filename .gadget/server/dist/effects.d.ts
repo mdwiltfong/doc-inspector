@@ -64,6 +64,7 @@ export declare function transitionState(record: GadgetRecord<any>, transition: {
     to: string | Record<string, string>;
 }): void;
 export declare function shopifySync(params: AnyParams, record: GadgetRecord<any>): Promise<void>;
+export declare function abortSync(params: AnyParams, record: GadgetRecord<any>): Promise<void>;
 /**
  * Enforce that the given record is only accessible by the current shop. For multi-tenant Shopify applications, this is key for enforcing data can only be accessed by the shop that owns it.
  *

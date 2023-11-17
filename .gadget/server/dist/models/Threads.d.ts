@@ -8,6 +8,7 @@ export type DefaultThreadsServerSelection = {
     readonly createdAt: true;
     readonly updatedAt: true;
     readonly metadata: true;
+    readonly external_id: true;
 };
 /** All the data passed to an effect or precondition within the `create` action on the `threads` model. */
 export interface CreateThreadsActionContext extends AmbientContext {
