@@ -13,6 +13,6 @@ export default async function route({
   logger,
   connections,
 }) {
-  await api.threads.create();
-  await reply.status(200).send({ message: "Thread created" });
+  const newThread = await api.threads.create();
+  await reply.status(200).send({ thread: newThread });
 }
