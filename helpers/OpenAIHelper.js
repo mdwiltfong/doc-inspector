@@ -65,6 +65,12 @@ export class Thread {
   static async retrieveThread(threadId) {
     return await openai.beta.threads.retrieve(threadId);
   }
+  static async addMessageToThread(threadId, content) {
+    return await openai.beta.threads.messages.create(threadId, {
+      role: "user",
+      content,
+    });
+  }
   get external_thread_id() {
     return this.#external_thread_id;
   }
