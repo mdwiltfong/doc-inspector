@@ -288,6 +288,9 @@ export type ThreadsSort = {
 
   /** Sort the results by the metadata field. Defaults to ascending (smallest value first). */
   metadata?: SortOrder | null;
+
+  /** Sort the results by the external_id field. Defaults to ascending (smallest value first). */
+  external_id?: SortOrder | null;
 };
 
 
@@ -307,6 +310,8 @@ export type ThreadsFilter = {
   updatedAt?: DateTimeFilter | null;
 
   metadata?: JSONFilter | null;
+
+  external_id?: StringFilter | null;
 };
 
 
@@ -611,6 +616,8 @@ export type BulkUpdateDocumentsInput = {
 export type CreateThreadsInput = {
 
   metadata?: (Scalars['JSON'] | null) | null;
+
+  external_id?: (Scalars['String'] | null) | null;
 };
 
 
@@ -625,6 +632,8 @@ export type BulkCreateThreadsInput = {
 export type UpdateThreadsInput = {
 
   metadata?: (Scalars['JSON'] | null) | null;
+
+  external_id?: (Scalars['String'] | null) | null;
 };
 
 
@@ -870,6 +879,8 @@ export type InternalThreadsInput = {
   updatedAt?: Date | Scalars['ISO8601DateString'] | null;
 
   metadata?: (Scalars['JSON'] | null) | null;
+
+  external_id?: (Scalars['String'] | null) | null;
 };
 
 
@@ -2240,6 +2251,8 @@ export type Threads = {
 
   metadata: (Scalars['JSON'] | null);
 
+  external_id: (Scalars['String'] | null);
+
   /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
   _all: Scalars['JSONObject'];
 };
@@ -2260,6 +2273,8 @@ export type AvailableThreadsSelection = {
   updatedAt?: boolean | null | undefined;
 
   metadata?: boolean | null | undefined;
+
+  external_id?: boolean | null | undefined;
 
   /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
   _all?: boolean | null | undefined;

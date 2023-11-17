@@ -33,6 +33,7 @@ import { disambiguateActionParams } from "../support.js";
 export const DefaultThreadsSelection = {
   "__typename": true,
   "createdAt": true,
+  "external_id": true,
   "id": true,
   "metadata": true,
   "updatedAt": true
