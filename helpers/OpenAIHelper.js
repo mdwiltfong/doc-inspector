@@ -6,48 +6,68 @@ const OPENAI_BASE_URL = "https://api.openai.com/v1/assistants/";
 export class OpenAIAssistant {
   #default_prompt =
     "You are a helpful, friendly assistant. With the document provided, you will help humans answer their questions about this document. You will not stray from the information in this document. If you do not know the answer, you will say so. If there is a request that is outside the context of this document you will inform the human that you can not answer the question.";
-  #assistant_name = "DocInspector";
+  #assistant_name;
   #tools = [{ type: "retrieval" }];
   #model;
   #thread;
   #instructions;
-  constructor(model = "gpt-3.5-turbo-1106", instructions = "") {
+  #gadgetId;
+  #openAIId;
+  constructor(model = "gpt-3.5-turbo-1106", instructions = "", openAIId = "") {
     this.#model = model;
     this.#instructions = instructions;
   }
-  async createAssistant() {
+  static async createAssistant(
+    assistantName = "DocInspector",
+    instructions = "",
+    model = "gpt-3.5-turbo-1106"
+  ) {
     try {
-      return await openai.beta.assistants.create({
-        name: this.#assistant_name,
-        instructions: this.#instructions,
+      const newAssistant = await openai.beta.assistants.create({
+        name: assistantName,
+        instructions: instructions,
         tools: [{ type: "retrieval" }],
-        model: this.#model,
+        model: model,
+      });
+      return new OpenAIAssistant(model, instructions, newAssistant.id);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  static async retrieveAssistant(assistantId) {
+    try {
+      const assistant = await openai.beta.assistants.retrieve(assistantId);
+      return new OpenAIAssistant(
+        assistant.model,
+        assistant.instructions,
+        assistant.id
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async uploadFile(fileStream) {
+    try {
+      const file = await openai.files.create({
+        purpose: "assistants",
+        file: fileStream,
+      });
+      return await openai.beta.assistants.files.create(this.#openAIId, {
+        file_id: file.id,
       });
     } catch (error) {
       console.log(error);
     }
   }
-  static async createThread() {
-    return await openai.beta.threads.create();
-  }
-  async addMessageToThread(role, content) {
-    return await openai.beta.threads.messages.create({
-      thread: this.#thread.id,
-      role: "user",
-      content: content,
-    });
-  }
-  async runThread(instructions = "") {
-    return await openai.beta.threads.runs.create(this.#thread.id, instructions);
-  }
-  async uploadFile(fileName) {
-    return await openai.files.create({
-      purpose: "answers",
-      file: file,
-    });
-  }
   get tools() {
     return this.#tools;
+  }
+  get openAIId() {
+    return this.#openAIId;
+  }
+  get gadgetId() {
+    return this.#gadgetId;
   }
 }
 
