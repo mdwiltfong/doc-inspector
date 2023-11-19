@@ -91,6 +91,9 @@ export class Thread {
       content,
     });
   }
+  async getMessages() {
+    return await openai.beta.threads.messages.list(this.#external_thread_id);
+  }
   get external_thread_id() {
     return this.#external_thread_id;
   }
