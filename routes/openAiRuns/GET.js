@@ -1,5 +1,5 @@
 import { RouteContext } from "gadget-server";
-
+import { Run } from "../../helpers/OpenAIHelper";
 /**
  * Route handler for POST chat
  *
@@ -13,10 +13,8 @@ export default async function route({
   logger,
   connections,
 }) {
-  const { instructions, model } = request.body;
-  const newAssistant = await api.assistants.create({
-    name: "DocInspector",
-    instructions: instructions,
-  });
-  await reply.status(200).send({ assistant: newAssistant });
+  const { runId, threadId } = request.query;
+  const storedThread = await api.threads.findById(threadId);
+  const retrievedRun=await Run.retrieveRunStatus(runId, storedThread.openAiId)
+  await reply.status(200).send({ runStatus:retrievedRun.status  });
 }

@@ -1,5 +1,5 @@
 import { GadgetConnection, GadgetRecord, GadgetRecordList, DefaultSelection, LimitToKnownKeys, Selectable } from "@gadgetinc/api-client-core";
-import { Query, Select, DeepFilterNever, IDsList, Messages, MessagesSort, MessagesFilter, AvailableMessagesSelection, CreateMessagesInput, UpdateMessagesInput } from "../types.js";
+import { Query, Select, DeepFilterNever, IDsList, Messages, MessagesSort, MessagesFilter, AvailableMessagesSelection } from "../types.js";
 export declare const DefaultMessagesSelection: {
     readonly __typename: true;
     readonly assistant_id: true;
@@ -73,41 +73,18 @@ export interface UpdateMessagesOptions {
     select?: AvailableMessagesSelection;
 }
 export interface DeleteMessagesOptions {
+    /** Select fields other than the defaults of the record to return */
+    select?: AvailableMessagesSelection;
 }
-/**
- * The fully-qualified, expanded form of the inputs for executing this action.
- * The flattened style should be preferred over this style, but for models with ambiguous API identifiers, this style can be used to remove any ambiguity.
- **/
-export type FullyQualifiedCreateMessagesVariables = {
-    messages?: CreateMessagesInput;
-};
-/**
- * The inputs for executing create on messages.
- * This is the flattened style of inputs, suitable for general use, and should be preferred.
- **/
-export type CreateMessagesVariables = CreateMessagesInput;
 /**
  * The return value from executing create on messages.
  * "Is a GadgetRecord of the model's type."
  **/
 export type CreateMessagesResult<Options extends CreateMessagesOptions> = SelectedMessagesOrDefault<Options> extends void ? void : GadgetRecord<SelectedMessagesOrDefault<Options>>;
 /**
-  * Executes the create action. Accepts the parameters for the action via the `variables` argument. Runs the action and returns a Promise for the updated record.
+  * Executes the create action on one record specified by `id`. Runs the action and returns a Promise for the updated record.
   */
-declare function createMessages<Options extends CreateMessagesOptions>(variables: CreateMessagesVariables, options?: LimitToKnownKeys<Options, CreateMessagesOptions>): Promise<CreateMessagesResult<Options>>;
-declare function createMessages<Options extends CreateMessagesOptions>(variables: FullyQualifiedCreateMessagesVariables, options?: LimitToKnownKeys<Options, CreateMessagesOptions>): Promise<CreateMessagesResult<Options>>;
-/**
- * The fully-qualified, expanded form of the inputs for executing this action.
- * The flattened style should be preferred over this style, but for models with ambiguous API identifiers, this style can be used to remove any ambiguity.
- **/
-export type FullyQualifiedUpdateMessagesVariables = {
-    messages?: UpdateMessagesInput;
-};
-/**
- * The inputs for executing update on messages.
- * This is the flattened style of inputs, suitable for general use, and should be preferred.
- **/
-export type UpdateMessagesVariables = UpdateMessagesInput;
+declare function createMessages<Options extends CreateMessagesOptions>(id: string, options?: LimitToKnownKeys<Options, CreateMessagesOptions>): Promise<CreateMessagesResult<Options>>;
 /**
  * The return value from executing update on messages.
  * "Is a GadgetRecord of the model's type."
@@ -116,15 +93,14 @@ export type UpdateMessagesResult<Options extends UpdateMessagesOptions> = Select
 /**
   * Executes the update action on one record specified by `id`. Runs the action and returns a Promise for the updated record.
   */
-declare function updateMessages<Options extends UpdateMessagesOptions>(id: string, variables: UpdateMessagesVariables, options?: LimitToKnownKeys<Options, UpdateMessagesOptions>): Promise<UpdateMessagesResult<Options>>;
-declare function updateMessages<Options extends UpdateMessagesOptions>(id: string, variables: FullyQualifiedUpdateMessagesVariables, options?: LimitToKnownKeys<Options, UpdateMessagesOptions>): Promise<UpdateMessagesResult<Options>>;
+declare function updateMessages<Options extends UpdateMessagesOptions>(id: string, options?: LimitToKnownKeys<Options, UpdateMessagesOptions>): Promise<UpdateMessagesResult<Options>>;
 /**
  * The return value from executing delete on messages.
- * "Is void because this action deletes the record"
+ * "Is a GadgetRecord of the model's type."
  **/
-export type DeleteMessagesResult<Options extends DeleteMessagesOptions> = void extends void ? void : GadgetRecord<SelectedMessagesOrDefault<Options>>;
+export type DeleteMessagesResult<Options extends DeleteMessagesOptions> = SelectedMessagesOrDefault<Options> extends void ? void : GadgetRecord<SelectedMessagesOrDefault<Options>>;
 /**
-  * Executes the delete action on one record specified by `id`. Deletes the record on the server. Returns a Promise that resolves if the delete succeeds.
+  * Executes the delete action on one record specified by `id`. Runs the action and returns a Promise for the updated record.
   */
 declare function deleteMessages<Options extends DeleteMessagesOptions>(id: string, options?: LimitToKnownKeys<Options, DeleteMessagesOptions>): Promise<DeleteMessagesResult<Options>>;
 /** All the actions available at the collection level and record level for "messages" */
@@ -223,25 +199,27 @@ export declare class MessagesManager {
         selectionType: AvailableMessagesSelection;
         optionsType: CreateMessagesOptions;
         schemaType: Query["messages"];
-        variablesType: ((FullyQualifiedCreateMessagesVariables | CreateMessagesVariables)) | undefined;
+        variablesType: ({
+            id: string;
+        } & {}) | undefined;
         variables: {
-            "messages": {
-                required: false;
-                type: "CreateMessagesInput";
+            id: {
+                required: true;
+                type: "GadgetID";
             };
         };
         hasAmbiguousIdentifier: false;
         /** @deprecated -- effects are dead, long live AAC */
-        hasCreateOrUpdateEffect: true;
+        hasCreateOrUpdateEffect: false;
         paramOnlyVariables: [];
         hasReturnType: false;
-        acceptsModelInput: true;
+        acceptsModelInput: false;
     };
     /**
 * Executes the bulkCreate action with the given inputs.
 */
     bulkCreate: {
-        <Options extends CreateMessagesOptions>(inputs: (FullyQualifiedCreateMessagesVariables | CreateMessagesVariables)[], options?: LimitToKnownKeys<Options, CreateMessagesOptions>): Promise<CreateMessagesResult<Options>[]>;
+        <Options extends CreateMessagesOptions>(ids: string[], options?: LimitToKnownKeys<Options, CreateMessagesOptions>): Promise<CreateMessagesResult<Options>[]>;
         type: "action";
         operationName: "bulkCreateMessages";
         namespace: null;
@@ -252,11 +230,11 @@ export declare class MessagesManager {
         selectionType: AvailableMessagesSelection;
         optionsType: CreateMessagesOptions;
         schemaType: Query["messages"];
-        variablesType: (FullyQualifiedCreateMessagesVariables | CreateMessagesVariables)[];
+        variablesType: IDsList | undefined;
         variables: {
-            inputs: {
+            ids: {
                 required: true;
-                type: "[BulkCreateMessagesInput!]";
+                type: "[GadgetID!]";
             };
         };
         hasReturnType: boolean;
@@ -275,31 +253,25 @@ export declare class MessagesManager {
         schemaType: Query["messages"];
         variablesType: ({
             id: string;
-        } & (FullyQualifiedUpdateMessagesVariables | UpdateMessagesVariables)) | undefined;
+        } & {}) | undefined;
         variables: {
             id: {
                 required: true;
                 type: "GadgetID";
             };
-            "messages": {
-                required: false;
-                type: "UpdateMessagesInput";
-            };
         };
         hasAmbiguousIdentifier: false;
         /** @deprecated -- effects are dead, long live AAC */
-        hasCreateOrUpdateEffect: true;
+        hasCreateOrUpdateEffect: false;
         paramOnlyVariables: [];
         hasReturnType: false;
-        acceptsModelInput: true;
+        acceptsModelInput: false;
     };
     /**
 * Executes the bulkUpdate action with the given inputs.
 */
     bulkUpdate: {
-        <Options extends UpdateMessagesOptions>(inputs: (FullyQualifiedUpdateMessagesVariables | UpdateMessagesVariables & {
-            id: string;
-        })[], options?: LimitToKnownKeys<Options, UpdateMessagesOptions>): Promise<UpdateMessagesResult<Options>[]>;
+        <Options extends UpdateMessagesOptions>(ids: string[], options?: LimitToKnownKeys<Options, UpdateMessagesOptions>): Promise<UpdateMessagesResult<Options>[]>;
         type: "action";
         operationName: "bulkUpdateMessages";
         namespace: null;
@@ -310,13 +282,11 @@ export declare class MessagesManager {
         selectionType: AvailableMessagesSelection;
         optionsType: UpdateMessagesOptions;
         schemaType: Query["messages"];
-        variablesType: (FullyQualifiedUpdateMessagesVariables | UpdateMessagesVariables & {
-            id: string;
-        })[];
+        variablesType: IDsList | undefined;
         variables: {
-            inputs: {
+            ids: {
                 required: true;
-                type: "[BulkUpdateMessagesInput!]";
+                type: "[GadgetID!]";
             };
         };
         hasReturnType: boolean;
@@ -329,10 +299,10 @@ export declare class MessagesManager {
         modelApiIdentifier: "messages";
         modelSelectionField: "messages";
         isBulk: false;
-        defaultSelection: null;
-        selectionType: Record<string, never>;
+        defaultSelection: typeof DefaultMessagesSelection;
+        selectionType: AvailableMessagesSelection;
         optionsType: DeleteMessagesOptions;
-        schemaType: null;
+        schemaType: Query["messages"];
         variablesType: ({
             id: string;
         } & {}) | undefined;
@@ -350,7 +320,7 @@ export declare class MessagesManager {
         acceptsModelInput: false;
     };
     /**
-* Executes the bulkDelete action with the given inputs. Deletes the records on the server.
+* Executes the bulkDelete action with the given inputs.
 */
     bulkDelete: {
         <Options extends DeleteMessagesOptions>(ids: string[], options?: LimitToKnownKeys<Options, DeleteMessagesOptions>): Promise<DeleteMessagesResult<Options>[]>;
@@ -360,10 +330,10 @@ export declare class MessagesManager {
         modelApiIdentifier: "messages";
         modelSelectionField: "messages";
         isBulk: true;
-        defaultSelection: null;
-        selectionType: Record<string, never>;
+        defaultSelection: typeof DefaultMessagesSelection;
+        selectionType: AvailableMessagesSelection;
         optionsType: DeleteMessagesOptions;
-        schemaType: null;
+        schemaType: Query["messages"];
         variablesType: IDsList | undefined;
         variables: {
             ids: {

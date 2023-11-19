@@ -3,14 +3,11 @@ import { Query, Select, DeepFilterNever, IDsList, Assistants, AssistantsSort, As
 export declare const DefaultAssistantsSelection: {
     readonly __typename: true;
     readonly createdAt: true;
-    readonly description: true;
-    readonly external_id: true;
     readonly file_ids: true;
     readonly id: true;
     readonly instructions: true;
-    readonly model: true;
     readonly name: true;
-    readonly tools: true;
+    readonly openAiId: true;
     readonly updatedAt: true;
 };
 /**

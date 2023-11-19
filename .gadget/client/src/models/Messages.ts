@@ -23,8 +23,6 @@ import {
       MessagesSort,
       MessagesFilter,
       AvailableMessagesSelection,
-      CreateMessagesInput,
-      UpdateMessagesInput,
   
 } from "../types.js";
 
@@ -123,6 +121,8 @@ export interface UpdateMessagesOptions {
 
 
 export interface DeleteMessagesOptions {
+  /** Select fields other than the defaults of the record to return */
+  select?: AvailableMessagesSelection;
 };
 
 
@@ -131,22 +131,6 @@ const pluralApiIdentifier = "messagess";
 
 
     
-  /**
-   * The fully-qualified, expanded form of the inputs for executing this action.
-   * The flattened style should be preferred over this style, but for models with ambiguous API identifiers, this style can be used to remove any ambiguity.
-   **/
-  export type FullyQualifiedCreateMessagesVariables = {
-          messages?: CreateMessagesInput,
-      }
-
-  /**
-   * The inputs for executing create on messages.
-   * This is the flattened style of inputs, suitable for general use, and should be preferred.
-   **/
-
-    export type CreateMessagesVariables = CreateMessagesInput;
-
-
 
 /**
  * The return value from executing create on messages.
@@ -158,21 +142,12 @@ export type CreateMessagesResult<Options extends CreateMessagesOptions> =
 
 
 /**
-  * Executes the create action. Accepts the parameters for the action via the `variables` argument. Runs the action and returns a Promise for the updated record.
+  * Executes the create action on one record specified by `id`. Runs the action and returns a Promise for the updated record.
   */
-
-// Flat style overload
-async function createMessages<Options extends CreateMessagesOptions>(
-  
-    variables: CreateMessagesVariables,
-
-  options?: LimitToKnownKeys<Options, CreateMessagesOptions>
-): Promise<CreateMessagesResult<Options>>;
 
 // Fully qualified, nested api identifier overload
 async function createMessages<Options extends CreateMessagesOptions>(
-  
-      variables: FullyQualifiedCreateMessagesVariables,
+  id: string,
   
   options?: LimitToKnownKeys<Options, CreateMessagesOptions>
 ): Promise<CreateMessagesResult<Options>>;
@@ -180,16 +155,10 @@ async function createMessages<Options extends CreateMessagesOptions>(
 // Function implementation
 async function createMessages<Options extends CreateMessagesOptions>(
   this: MessagesManager,
-  
-      variables: CreateMessagesVariables | FullyQualifiedCreateMessagesVariables,
+  id: string,
   
   options?: LimitToKnownKeys<Options, CreateMessagesOptions>
 ): Promise<CreateMessagesResult<Options>> {
-    const newVariables = disambiguateActionParams(
-      this["create"],
-       undefined,
-      variables
-    );
 
   return (await actionRunner<SelectedMessagesOrDefault<Options>>(
     this,
@@ -199,12 +168,12 @@ async function createMessages<Options extends CreateMessagesOptions>(
     apiIdentifier,
     false,
     {
-                    "messages": {
-          value: newVariables.messages,
-          required: false,
-          type: "CreateMessagesInput",
+              id: {
+          value: id,
+          required: true,
+          type: "GadgetID",
         },
-          },
+                },
     options,
     null,
     false
@@ -213,22 +182,6 @@ async function createMessages<Options extends CreateMessagesOptions>(
 
   
     
-  /**
-   * The fully-qualified, expanded form of the inputs for executing this action.
-   * The flattened style should be preferred over this style, but for models with ambiguous API identifiers, this style can be used to remove any ambiguity.
-   **/
-  export type FullyQualifiedUpdateMessagesVariables = {
-          messages?: UpdateMessagesInput,
-      }
-
-  /**
-   * The inputs for executing update on messages.
-   * This is the flattened style of inputs, suitable for general use, and should be preferred.
-   **/
-
-    export type UpdateMessagesVariables = UpdateMessagesInput;
-
-
 
 /**
  * The return value from executing update on messages.
@@ -243,18 +196,9 @@ export type UpdateMessagesResult<Options extends UpdateMessagesOptions> =
   * Executes the update action on one record specified by `id`. Runs the action and returns a Promise for the updated record.
   */
 
-// Flat style overload
-async function updateMessages<Options extends UpdateMessagesOptions>(
-  id: string,
-    variables: UpdateMessagesVariables,
-
-  options?: LimitToKnownKeys<Options, UpdateMessagesOptions>
-): Promise<UpdateMessagesResult<Options>>;
-
 // Fully qualified, nested api identifier overload
 async function updateMessages<Options extends UpdateMessagesOptions>(
   id: string,
-      variables: FullyQualifiedUpdateMessagesVariables,
   
   options?: LimitToKnownKeys<Options, UpdateMessagesOptions>
 ): Promise<UpdateMessagesResult<Options>>;
@@ -263,15 +207,9 @@ async function updateMessages<Options extends UpdateMessagesOptions>(
 async function updateMessages<Options extends UpdateMessagesOptions>(
   this: MessagesManager,
   id: string,
-      variables: UpdateMessagesVariables | FullyQualifiedUpdateMessagesVariables,
   
   options?: LimitToKnownKeys<Options, UpdateMessagesOptions>
 ): Promise<UpdateMessagesResult<Options>> {
-    const newVariables = disambiguateActionParams(
-      this["update"],
-       id,
-      variables
-    );
 
   return (await actionRunner<SelectedMessagesOrDefault<Options>>(
     this,
@@ -286,12 +224,7 @@ async function updateMessages<Options extends UpdateMessagesOptions>(
           required: true,
           type: "GadgetID",
         },
-                    "messages": {
-          value: newVariables.messages,
-          required: false,
-          type: "UpdateMessagesInput",
-        },
-          },
+                },
     options,
     null,
     false
@@ -303,15 +236,15 @@ async function updateMessages<Options extends UpdateMessagesOptions>(
 
 /**
  * The return value from executing delete on messages.
- * "Is void because this action deletes the record"
+ * "Is a GadgetRecord of the model's type."
  **/
 export type DeleteMessagesResult<Options extends DeleteMessagesOptions> =
-  void extends void ? void : GadgetRecord<SelectedMessagesOrDefault<Options>>
+  SelectedMessagesOrDefault<Options> extends void ? void : GadgetRecord<SelectedMessagesOrDefault<Options>>
 ;
 
 
 /**
-  * Executes the delete action on one record specified by `id`. Deletes the record on the server. Returns a Promise that resolves if the delete succeeds.
+  * Executes the delete action on one record specified by `id`. Runs the action and returns a Promise for the updated record.
   */
 
 // Fully qualified, nested api identifier overload
@@ -329,10 +262,10 @@ async function deleteMessages<Options extends DeleteMessagesOptions>(
   options?: LimitToKnownKeys<Options, DeleteMessagesOptions>
 ): Promise<DeleteMessagesResult<Options>> {
 
-  return (await actionRunner<void>(
+  return (await actionRunner<SelectedMessagesOrDefault<Options>>(
     this,
     "deleteMessages",
-    null,
+    DefaultMessagesSelection,
     apiIdentifier,
     apiIdentifier,
     false,
@@ -624,281 +557,6 @@ findById: {
     isBulk: false,
     defaultSelection: DefaultMessagesSelection,
     variables: {
-      "messages": {
-        required: false,
-        type: "CreateMessagesInput",
-      },
-    },
-    hasAmbiguousIdentifier: false,
-    /** @deprecated -- effects are dead, long live AAC */
-    hasCreateOrUpdateEffect: true,
-    paramOnlyVariables: [],
-    hasReturnType: false,
-    acceptsModelInput: true,
-  } as unknown as {
-    type: "action";
-    operationName: "createMessages";
-    namespace: null;
-    modelApiIdentifier: "messages";
-    modelSelectionField: "messages";
-    isBulk: false;
-    defaultSelection: typeof DefaultMessagesSelection;
-    selectionType: AvailableMessagesSelection;
-    optionsType: CreateMessagesOptions;
-    schemaType:  Query["messages"];
-
-    variablesType: (
-
-      (
-        FullyQualifiedCreateMessagesVariables          | CreateMessagesVariables      )
-    ) | undefined;
-    variables: {
-                    "messages": {
-          required: false;
-          type: "CreateMessagesInput";
-        };
-          };
-    hasAmbiguousIdentifier: false;
-    /** @deprecated -- effects are dead, long live AAC */
-    hasCreateOrUpdateEffect: true;
-    paramOnlyVariables: [];
-    hasReturnType: false;
-    acceptsModelInput: true;
-  }
-)
-
-  
-      /**
-  * Executes the bulkCreate action with the given inputs.
-  */
-  bulkCreate: {
-    <Options extends CreateMessagesOptions>(
-        inputs: (FullyQualifiedCreateMessagesVariables | CreateMessagesVariables)[],
-      options?: LimitToKnownKeys<Options, CreateMessagesOptions>
-    ): Promise<CreateMessagesResult<Options>[]>;
-    type: "action";
-    operationName: "bulkCreateMessages";
-    namespace: null;
-    modelApiIdentifier: "messages";
-    modelSelectionField: "messages";
-    isBulk: true;
-    defaultSelection: typeof DefaultMessagesSelection;
-    selectionType: AvailableMessagesSelection;
-    optionsType: CreateMessagesOptions;
-    schemaType: Query["messages"];
-    variablesType: (FullyQualifiedCreateMessagesVariables | CreateMessagesVariables)[];
-    variables: {
-        inputs: {
-          required: true;
-          type: "[BulkCreateMessagesInput!]";
-        };
-      };
-    hasReturnType: boolean;
-    acceptsModelInput: boolean;
-  } = Object.assign(
-    async <Options extends CreateMessagesOptions>(
-        inputs: (FullyQualifiedCreateMessagesVariables | CreateMessagesVariables)[],
-      options?: LimitToKnownKeys<Options, CreateMessagesOptions>
-    ) => {
-        const fullyQualifiedInputs = inputs.map(input =>
-          disambiguateActionParams(
-            this["create"],
-            undefined,
-            input
-          )
-        );
-      
-      return (await actionRunner<any>(
-        this,
-        "bulkCreateMessages",
-        DefaultMessagesSelection,
-        "messages",
-        "messages",
-        true,
-          {
-            inputs: {
-              value: fullyQualifiedInputs,
-              ...this["bulkCreate"].variables["inputs"]
-            }
-          }
-,
-        options,
-        null,
-        false
-      )) as any[];
-    },
-    {
-      type: "action",
-      operationName: "bulkCreateMessages",
-      namespace: null,
-      modelApiIdentifier: apiIdentifier,
-      modelSelectionField: "messages",
-      isBulk: true,
-      defaultSelection: DefaultMessagesSelection,
-      variables: {
-        inputs: {
-          required: true,
-          type: "[BulkCreateMessagesInput!]",
-        },
-      },
-      hasReturnType: false,
-      acceptsModelInput: true,
-    } as any
-  );
-
-  
-    update = Object.assign(updateMessages,
-  {
-    type: "action",
-    operationName: "updateMessages",
-    namespace: null,
-    modelApiIdentifier: apiIdentifier,
-    modelSelectionField: apiIdentifier,
-    isBulk: false,
-    defaultSelection: DefaultMessagesSelection,
-    variables: {
-      id: {
-        required: true,
-        type: "GadgetID",
-      },
-      "messages": {
-        required: false,
-        type: "UpdateMessagesInput",
-      },
-    },
-    hasAmbiguousIdentifier: false,
-    /** @deprecated -- effects are dead, long live AAC */
-    hasCreateOrUpdateEffect: true,
-    paramOnlyVariables: [],
-    hasReturnType: false,
-    acceptsModelInput: true,
-  } as unknown as {
-    type: "action";
-    operationName: "updateMessages";
-    namespace: null;
-    modelApiIdentifier: "messages";
-    modelSelectionField: "messages";
-    isBulk: false;
-    defaultSelection: typeof DefaultMessagesSelection;
-    selectionType: AvailableMessagesSelection;
-    optionsType: UpdateMessagesOptions;
-    schemaType:  Query["messages"];
-
-    variablesType: (
-        { id: string } &
-
-      (
-        FullyQualifiedUpdateMessagesVariables          | UpdateMessagesVariables      )
-    ) | undefined;
-    variables: {
-              id: {
-          required: true;
-          type: "GadgetID";
-        };
-                    "messages": {
-          required: false;
-          type: "UpdateMessagesInput";
-        };
-          };
-    hasAmbiguousIdentifier: false;
-    /** @deprecated -- effects are dead, long live AAC */
-    hasCreateOrUpdateEffect: true;
-    paramOnlyVariables: [];
-    hasReturnType: false;
-    acceptsModelInput: true;
-  }
-)
-
-  
-      /**
-  * Executes the bulkUpdate action with the given inputs.
-  */
-  bulkUpdate: {
-    <Options extends UpdateMessagesOptions>(
-        inputs: (FullyQualifiedUpdateMessagesVariables | UpdateMessagesVariables & { id: string })[],
-      options?: LimitToKnownKeys<Options, UpdateMessagesOptions>
-    ): Promise<UpdateMessagesResult<Options>[]>;
-    type: "action";
-    operationName: "bulkUpdateMessages";
-    namespace: null;
-    modelApiIdentifier: "messages";
-    modelSelectionField: "messages";
-    isBulk: true;
-    defaultSelection: typeof DefaultMessagesSelection;
-    selectionType: AvailableMessagesSelection;
-    optionsType: UpdateMessagesOptions;
-    schemaType: Query["messages"];
-    variablesType: (FullyQualifiedUpdateMessagesVariables | UpdateMessagesVariables & { id: string })[];
-    variables: {
-        inputs: {
-          required: true;
-          type: "[BulkUpdateMessagesInput!]";
-        };
-      };
-    hasReturnType: boolean;
-    acceptsModelInput: boolean;
-  } = Object.assign(
-    async <Options extends UpdateMessagesOptions>(
-        inputs: (FullyQualifiedUpdateMessagesVariables | UpdateMessagesVariables & { id: string })[],
-      options?: LimitToKnownKeys<Options, UpdateMessagesOptions>
-    ) => {
-        const fullyQualifiedInputs = inputs.map(input =>
-          disambiguateActionParams(
-            this["update"],
-            undefined,
-            input
-          )
-        );
-      
-      return (await actionRunner<any>(
-        this,
-        "bulkUpdateMessages",
-        DefaultMessagesSelection,
-        "messages",
-        "messages",
-        true,
-          {
-            inputs: {
-              value: fullyQualifiedInputs,
-              ...this["bulkUpdate"].variables["inputs"]
-            }
-          }
-,
-        options,
-        null,
-        false
-      )) as any[];
-    },
-    {
-      type: "action",
-      operationName: "bulkUpdateMessages",
-      namespace: null,
-      modelApiIdentifier: apiIdentifier,
-      modelSelectionField: "messages",
-      isBulk: true,
-      defaultSelection: DefaultMessagesSelection,
-      variables: {
-        inputs: {
-          required: true,
-          type: "[BulkUpdateMessagesInput!]",
-        },
-      },
-      hasReturnType: false,
-      acceptsModelInput: true,
-    } as any
-  );
-
-  
-    delete = Object.assign(deleteMessages,
-  {
-    type: "action",
-    operationName: "deleteMessages",
-    namespace: null,
-    modelApiIdentifier: apiIdentifier,
-    modelSelectionField: apiIdentifier,
-    isBulk: false,
-    defaultSelection: null,
-    variables: {
       id: {
         required: true,
         type: "GadgetID",
@@ -912,15 +570,15 @@ findById: {
     acceptsModelInput: false,
   } as unknown as {
     type: "action";
-    operationName: "deleteMessages";
+    operationName: "createMessages";
     namespace: null;
     modelApiIdentifier: "messages";
     modelSelectionField: "messages";
     isBulk: false;
-    defaultSelection: null;
-    selectionType: Record<string, never>;
-    optionsType: DeleteMessagesOptions;
-    schemaType:  null ;
+    defaultSelection: typeof DefaultMessagesSelection;
+    selectionType: AvailableMessagesSelection;
+    optionsType: CreateMessagesOptions;
+    schemaType:  Query["messages"];
 
     variablesType: (
         { id: string } &
@@ -944,7 +602,259 @@ findById: {
 
   
       /**
-  * Executes the bulkDelete action with the given inputs. Deletes the records on the server.
+  * Executes the bulkCreate action with the given inputs.
+  */
+  bulkCreate: {
+    <Options extends CreateMessagesOptions>(
+        ids: string[],
+      options?: LimitToKnownKeys<Options, CreateMessagesOptions>
+    ): Promise<CreateMessagesResult<Options>[]>;
+    type: "action";
+    operationName: "bulkCreateMessages";
+    namespace: null;
+    modelApiIdentifier: "messages";
+    modelSelectionField: "messages";
+    isBulk: true;
+    defaultSelection: typeof DefaultMessagesSelection;
+    selectionType: AvailableMessagesSelection;
+    optionsType: CreateMessagesOptions;
+    schemaType: Query["messages"];
+    variablesType: IDsList | undefined;
+    variables: {
+        ids: {
+          required: true;
+          type: "[GadgetID!]";
+        };
+      };
+    hasReturnType: boolean;
+    acceptsModelInput: boolean;
+  } = Object.assign(
+    async <Options extends CreateMessagesOptions>(
+        ids: string[],
+      options?: LimitToKnownKeys<Options, CreateMessagesOptions>
+    ) => {
+
+      return (await actionRunner<any>(
+        this,
+        "bulkCreateMessages",
+        DefaultMessagesSelection,
+        "messages",
+        "messages",
+        true,
+          {
+            ids: {
+              value: ids,
+              ...this["bulkCreate"].variables["ids"]
+            }
+          }
+,
+        options,
+        null,
+        false
+      )) as any[];
+    },
+    {
+      type: "action",
+      operationName: "bulkCreateMessages",
+      namespace: null,
+      modelApiIdentifier: apiIdentifier,
+      modelSelectionField: "messages",
+      isBulk: true,
+      defaultSelection: DefaultMessagesSelection,
+      variables: {
+        ids: {
+          required: true,
+          type: "[GadgetID!]",
+        },
+      },
+      hasReturnType: false,
+      acceptsModelInput: false,
+    } as any
+  );
+
+  
+    update = Object.assign(updateMessages,
+  {
+    type: "action",
+    operationName: "updateMessages",
+    namespace: null,
+    modelApiIdentifier: apiIdentifier,
+    modelSelectionField: apiIdentifier,
+    isBulk: false,
+    defaultSelection: DefaultMessagesSelection,
+    variables: {
+      id: {
+        required: true,
+        type: "GadgetID",
+      },
+    },
+    hasAmbiguousIdentifier: false,
+    /** @deprecated -- effects are dead, long live AAC */
+    hasCreateOrUpdateEffect: false,
+    paramOnlyVariables: [],
+    hasReturnType: false,
+    acceptsModelInput: false,
+  } as unknown as {
+    type: "action";
+    operationName: "updateMessages";
+    namespace: null;
+    modelApiIdentifier: "messages";
+    modelSelectionField: "messages";
+    isBulk: false;
+    defaultSelection: typeof DefaultMessagesSelection;
+    selectionType: AvailableMessagesSelection;
+    optionsType: UpdateMessagesOptions;
+    schemaType:  Query["messages"];
+
+    variablesType: (
+        { id: string } &
+
+        {}
+    ) | undefined;
+    variables: {
+              id: {
+          required: true;
+          type: "GadgetID";
+        };
+                };
+    hasAmbiguousIdentifier: false;
+    /** @deprecated -- effects are dead, long live AAC */
+    hasCreateOrUpdateEffect: false;
+    paramOnlyVariables: [];
+    hasReturnType: false;
+    acceptsModelInput: false;
+  }
+)
+
+  
+      /**
+  * Executes the bulkUpdate action with the given inputs.
+  */
+  bulkUpdate: {
+    <Options extends UpdateMessagesOptions>(
+        ids: string[],
+      options?: LimitToKnownKeys<Options, UpdateMessagesOptions>
+    ): Promise<UpdateMessagesResult<Options>[]>;
+    type: "action";
+    operationName: "bulkUpdateMessages";
+    namespace: null;
+    modelApiIdentifier: "messages";
+    modelSelectionField: "messages";
+    isBulk: true;
+    defaultSelection: typeof DefaultMessagesSelection;
+    selectionType: AvailableMessagesSelection;
+    optionsType: UpdateMessagesOptions;
+    schemaType: Query["messages"];
+    variablesType: IDsList | undefined;
+    variables: {
+        ids: {
+          required: true;
+          type: "[GadgetID!]";
+        };
+      };
+    hasReturnType: boolean;
+    acceptsModelInput: boolean;
+  } = Object.assign(
+    async <Options extends UpdateMessagesOptions>(
+        ids: string[],
+      options?: LimitToKnownKeys<Options, UpdateMessagesOptions>
+    ) => {
+
+      return (await actionRunner<any>(
+        this,
+        "bulkUpdateMessages",
+        DefaultMessagesSelection,
+        "messages",
+        "messages",
+        true,
+          {
+            ids: {
+              value: ids,
+              ...this["bulkUpdate"].variables["ids"]
+            }
+          }
+,
+        options,
+        null,
+        false
+      )) as any[];
+    },
+    {
+      type: "action",
+      operationName: "bulkUpdateMessages",
+      namespace: null,
+      modelApiIdentifier: apiIdentifier,
+      modelSelectionField: "messages",
+      isBulk: true,
+      defaultSelection: DefaultMessagesSelection,
+      variables: {
+        ids: {
+          required: true,
+          type: "[GadgetID!]",
+        },
+      },
+      hasReturnType: false,
+      acceptsModelInput: false,
+    } as any
+  );
+
+  
+    delete = Object.assign(deleteMessages,
+  {
+    type: "action",
+    operationName: "deleteMessages",
+    namespace: null,
+    modelApiIdentifier: apiIdentifier,
+    modelSelectionField: apiIdentifier,
+    isBulk: false,
+    defaultSelection: DefaultMessagesSelection,
+    variables: {
+      id: {
+        required: true,
+        type: "GadgetID",
+      },
+    },
+    hasAmbiguousIdentifier: false,
+    /** @deprecated -- effects are dead, long live AAC */
+    hasCreateOrUpdateEffect: false,
+    paramOnlyVariables: [],
+    hasReturnType: false,
+    acceptsModelInput: false,
+  } as unknown as {
+    type: "action";
+    operationName: "deleteMessages";
+    namespace: null;
+    modelApiIdentifier: "messages";
+    modelSelectionField: "messages";
+    isBulk: false;
+    defaultSelection: typeof DefaultMessagesSelection;
+    selectionType: AvailableMessagesSelection;
+    optionsType: DeleteMessagesOptions;
+    schemaType:  Query["messages"];
+
+    variablesType: (
+        { id: string } &
+
+        {}
+    ) | undefined;
+    variables: {
+              id: {
+          required: true;
+          type: "GadgetID";
+        };
+                };
+    hasAmbiguousIdentifier: false;
+    /** @deprecated -- effects are dead, long live AAC */
+    hasCreateOrUpdateEffect: false;
+    paramOnlyVariables: [];
+    hasReturnType: false;
+    acceptsModelInput: false;
+  }
+)
+
+  
+      /**
+  * Executes the bulkDelete action with the given inputs.
   */
   bulkDelete: {
     <Options extends DeleteMessagesOptions>(
@@ -957,10 +867,10 @@ findById: {
     modelApiIdentifier: "messages";
     modelSelectionField: "messages";
     isBulk: true;
-    defaultSelection: null;
-    selectionType: Record<string, never>;
+    defaultSelection: typeof DefaultMessagesSelection;
+    selectionType: AvailableMessagesSelection;
     optionsType: DeleteMessagesOptions;
-    schemaType: null;
+    schemaType: Query["messages"];
     variablesType: IDsList | undefined;
     variables: {
         ids: {
@@ -979,7 +889,7 @@ findById: {
       return (await actionRunner<any>(
         this,
         "bulkDeleteMessages",
-        null,
+        DefaultMessagesSelection,
         "messages",
         "messages",
         true,
@@ -1002,7 +912,7 @@ findById: {
       modelApiIdentifier: apiIdentifier,
       modelSelectionField: "messages",
       isBulk: true,
-      defaultSelection: null,
+      defaultSelection: DefaultMessagesSelection,
       variables: {
         ids: {
           required: true,

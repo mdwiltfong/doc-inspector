@@ -13,10 +13,11 @@ export default async function route({
   logger,
   connections,
 }) {
-  const { instructions, model } = request.body;
-  const newAssistant = await api.assistants.create({
-    name: "DocInspector",
-    instructions: instructions,
+  const { assistantId } = request.params;
+  const newThread = await api.threads.create({
+    external_assistant_id: {
+      _link:assistantId
+    }
   });
-  await reply.status(200).send({ assistant: newAssistant });
+  await reply.status(200).send({ thread: newThread });
 }

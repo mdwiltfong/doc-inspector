@@ -4,7 +4,6 @@ import {
   findOneRunner,
   findOneByFieldRunner
 } from "@gadgetinc/api-client-core";
-import { disambiguateActionParams } from "../support.js";
 const DefaultMessagesSelection = {
   "__typename": true,
   "assistant_id": true,
@@ -27,12 +26,7 @@ const DefaultMessagesSelection = {
 ;
 const apiIdentifier = "messages";
 const pluralApiIdentifier = "messagess";
-async function createMessages(variables, options) {
-  const newVariables = disambiguateActionParams(
-    this["create"],
-    void 0,
-    variables
-  );
+async function createMessages(id, options) {
   return await actionRunner(
     this,
     "createMessages",
@@ -41,10 +35,10 @@ async function createMessages(variables, options) {
     apiIdentifier,
     false,
     {
-      "messages": {
-        value: newVariables.messages,
-        required: false,
-        type: "CreateMessagesInput"
+      id: {
+        value: id,
+        required: true,
+        type: "GadgetID"
       }
     },
     options,
@@ -52,12 +46,7 @@ async function createMessages(variables, options) {
     false
   );
 }
-async function updateMessages(id, variables, options) {
-  const newVariables = disambiguateActionParams(
-    this["update"],
-    id,
-    variables
-  );
+async function updateMessages(id, options) {
   return await actionRunner(
     this,
     "updateMessages",
@@ -70,11 +59,6 @@ async function updateMessages(id, variables, options) {
         value: id,
         required: true,
         type: "GadgetID"
-      },
-      "messages": {
-        value: newVariables.messages,
-        required: false,
-        type: "UpdateMessagesInput"
       }
     },
     options,
@@ -86,7 +70,7 @@ async function deleteMessages(id, options) {
   return await actionRunner(
     this,
     "deleteMessages",
-    null,
+    DefaultMessagesSelection,
     apiIdentifier,
     apiIdentifier,
     false,
@@ -249,31 +233,24 @@ class MessagesManager {
         isBulk: false,
         defaultSelection: DefaultMessagesSelection,
         variables: {
-          "messages": {
-            required: false,
-            type: "CreateMessagesInput"
+          id: {
+            required: true,
+            type: "GadgetID"
           }
         },
         hasAmbiguousIdentifier: false,
         /** @deprecated -- effects are dead, long live AAC */
-        hasCreateOrUpdateEffect: true,
+        hasCreateOrUpdateEffect: false,
         paramOnlyVariables: [],
         hasReturnType: false,
-        acceptsModelInput: true
+        acceptsModelInput: false
       }
     );
     /**
     * Executes the bulkCreate action with the given inputs.
     */
     this.bulkCreate = Object.assign(
-      async (inputs, options) => {
-        const fullyQualifiedInputs = inputs.map(
-          (input) => disambiguateActionParams(
-            this["create"],
-            void 0,
-            input
-          )
-        );
+      async (ids, options) => {
         return await actionRunner(
           this,
           "bulkCreateMessages",
@@ -282,9 +259,9 @@ class MessagesManager {
           "messages",
           true,
           {
-            inputs: {
-              value: fullyQualifiedInputs,
-              ...this["bulkCreate"].variables["inputs"]
+            ids: {
+              value: ids,
+              ...this["bulkCreate"].variables["ids"]
             }
           },
           options,
@@ -301,13 +278,13 @@ class MessagesManager {
         isBulk: true,
         defaultSelection: DefaultMessagesSelection,
         variables: {
-          inputs: {
+          ids: {
             required: true,
-            type: "[BulkCreateMessagesInput!]"
+            type: "[GadgetID!]"
           }
         },
         hasReturnType: false,
-        acceptsModelInput: true
+        acceptsModelInput: false
       }
     );
     this.update = Object.assign(
@@ -324,32 +301,21 @@ class MessagesManager {
           id: {
             required: true,
             type: "GadgetID"
-          },
-          "messages": {
-            required: false,
-            type: "UpdateMessagesInput"
           }
         },
         hasAmbiguousIdentifier: false,
         /** @deprecated -- effects are dead, long live AAC */
-        hasCreateOrUpdateEffect: true,
+        hasCreateOrUpdateEffect: false,
         paramOnlyVariables: [],
         hasReturnType: false,
-        acceptsModelInput: true
+        acceptsModelInput: false
       }
     );
     /**
     * Executes the bulkUpdate action with the given inputs.
     */
     this.bulkUpdate = Object.assign(
-      async (inputs, options) => {
-        const fullyQualifiedInputs = inputs.map(
-          (input) => disambiguateActionParams(
-            this["update"],
-            void 0,
-            input
-          )
-        );
+      async (ids, options) => {
         return await actionRunner(
           this,
           "bulkUpdateMessages",
@@ -358,9 +324,9 @@ class MessagesManager {
           "messages",
           true,
           {
-            inputs: {
-              value: fullyQualifiedInputs,
-              ...this["bulkUpdate"].variables["inputs"]
+            ids: {
+              value: ids,
+              ...this["bulkUpdate"].variables["ids"]
             }
           },
           options,
@@ -377,13 +343,13 @@ class MessagesManager {
         isBulk: true,
         defaultSelection: DefaultMessagesSelection,
         variables: {
-          inputs: {
+          ids: {
             required: true,
-            type: "[BulkUpdateMessagesInput!]"
+            type: "[GadgetID!]"
           }
         },
         hasReturnType: false,
-        acceptsModelInput: true
+        acceptsModelInput: false
       }
     );
     this.delete = Object.assign(
@@ -395,7 +361,7 @@ class MessagesManager {
         modelApiIdentifier: apiIdentifier,
         modelSelectionField: apiIdentifier,
         isBulk: false,
-        defaultSelection: null,
+        defaultSelection: DefaultMessagesSelection,
         variables: {
           id: {
             required: true,
@@ -411,14 +377,14 @@ class MessagesManager {
       }
     );
     /**
-    * Executes the bulkDelete action with the given inputs. Deletes the records on the server.
+    * Executes the bulkDelete action with the given inputs.
     */
     this.bulkDelete = Object.assign(
       async (ids, options) => {
         return await actionRunner(
           this,
           "bulkDeleteMessages",
-          null,
+          DefaultMessagesSelection,
           "messages",
           "messages",
           true,
@@ -440,7 +406,7 @@ class MessagesManager {
         modelApiIdentifier: apiIdentifier,
         modelSelectionField: "messages",
         isBulk: true,
-        defaultSelection: null,
+        defaultSelection: DefaultMessagesSelection,
         variables: {
           ids: {
             required: true,

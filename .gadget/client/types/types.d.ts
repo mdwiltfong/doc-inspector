@@ -166,8 +166,8 @@ export type ThreadsSort = {
     updatedAt?: SortOrder | null;
     /** Sort the results by the metadata field. Defaults to ascending (smallest value first). */
     metadata?: SortOrder | null;
-    /** Sort the results by the external_id field. Defaults to ascending (smallest value first). */
-    external_id?: SortOrder | null;
+    /** Sort the results by the openAiId field. Defaults to ascending (smallest value first). */
+    openAiId?: SortOrder | null;
 };
 export type ThreadsFilter = {
     AND?: (ThreadsFilter | null)[];
@@ -177,7 +177,9 @@ export type ThreadsFilter = {
     createdAt?: DateTimeFilter | null;
     updatedAt?: DateTimeFilter | null;
     metadata?: JSONFilter | null;
-    external_id?: StringFilter | null;
+    external_assistant_id?: IDFilter | null;
+    external_assistant_idId?: IDFilter | null;
+    openAiId?: StringFilter | null;
 };
 export type JSONFilter = {
     isSet?: (Scalars['Boolean'] | null) | null;
@@ -228,20 +230,14 @@ export type AssistantsSort = {
     createdAt?: SortOrder | null;
     /** Sort the results by the updatedAt field. Defaults to ascending (smallest value first). */
     updatedAt?: SortOrder | null;
-    /** Sort the results by the name field. Defaults to ascending (smallest value first). */
-    name?: SortOrder | null;
-    /** Sort the results by the description field. Defaults to ascending (smallest value first). */
-    description?: SortOrder | null;
-    /** Sort the results by the model field. Defaults to ascending (smallest value first). */
-    model?: SortOrder | null;
-    /** Sort the results by the instructions field. Defaults to ascending (smallest value first). */
-    instructions?: SortOrder | null;
-    /** Sort the results by the tools field. Defaults to ascending (smallest value first). */
-    tools?: SortOrder | null;
     /** Sort the results by the file_ids field. Defaults to ascending (smallest value first). */
     file_ids?: SortOrder | null;
-    /** Sort the results by the external_id field. Defaults to ascending (smallest value first). */
-    external_id?: SortOrder | null;
+    /** Sort the results by the openAiId field. Defaults to ascending (smallest value first). */
+    openAiId?: SortOrder | null;
+    /** Sort the results by the name field. Defaults to ascending (smallest value first). */
+    name?: SortOrder | null;
+    /** Sort the results by the instructions field. Defaults to ascending (smallest value first). */
+    instructions?: SortOrder | null;
 };
 export type AssistantsFilter = {
     AND?: (AssistantsFilter | null)[];
@@ -250,13 +246,10 @@ export type AssistantsFilter = {
     id?: IDFilter | null;
     createdAt?: DateTimeFilter | null;
     updatedAt?: DateTimeFilter | null;
-    name?: StringFilter | null;
-    description?: StringFilter | null;
-    model?: StringFilter | null;
-    instructions?: StringFilter | null;
-    tools?: StringFilter | null;
     file_ids?: StringFilter | null;
-    external_id?: StringFilter | null;
+    openAiId?: StringFilter | null;
+    name?: StringFilter | null;
+    instructions?: StringFilter | null;
 };
 export type BulkSignUpUsersInput = {
     email?: (Scalars['String'] | null) | null;
@@ -333,62 +326,113 @@ export type BulkUpdateDocumentsInput = {
 };
 export type CreateThreadsInput = {
     metadata?: (Scalars['JSON'] | null) | null;
-    external_id?: (Scalars['String'] | null) | null;
+    external_assistant_id?: AssistantsBelongsToInput | null;
+    openAiId?: (Scalars['String'] | null) | null;
+    /** The field runs is misconfigured and can't be given as input. Please correct any problems with the field in order to access it. */
+    runs?: (Scalars['GadgetMisconfiguredField'] | null) | null;
+};
+export type AssistantsBelongsToInput = {
+    create?: NestedAssistantsCreateInput | null;
+    update?: NestedAssistantsUpdateInput | null;
+    delete?: NestedAssistantsDeleteInput | null;
+    /** Existing ID of another record, which you would like to associate this record with */
+    _link?: (Scalars['GadgetID'] | null) | null;
+};
+export type NestedAssistantsCreateInput = {
+    file_ids?: (Scalars['String'] | null) | null;
+    openAiId?: (Scalars['String'] | null) | null;
+    thread_id?: (ThreadsHasManyInput | null)[];
+    name?: (Scalars['String'] | null) | null;
+    instructions?: (Scalars['String'] | null) | null;
+};
+export type ThreadsHasManyInput = {
+    create?: NestedThreadsCreateInput | null;
+    update?: NestedThreadsUpdateInput | null;
+    delete?: NestedThreadsDeleteInput | null;
+    /** Creates, updates, or deletes existing records in the database as needed to arrive at the list of records specified. */
+    _converge?: ConvergeThreadsInput | null;
+};
+export type NestedThreadsCreateInput = {
+    metadata?: (Scalars['JSON'] | null) | null;
+    external_assistant_id?: AssistantsBelongsToInput | null;
+    openAiId?: (Scalars['String'] | null) | null;
+    /** The field runs is misconfigured and can't be given as input. Please correct any problems with the field in order to access it. */
+    runs?: (Scalars['GadgetMisconfiguredField'] | null) | null;
+};
+export type NestedThreadsUpdateInput = {
+    metadata?: (Scalars['JSON'] | null) | null;
+    external_assistant_id?: AssistantsBelongsToInput | null;
+    openAiId?: (Scalars['String'] | null) | null;
+    /** The field runs is misconfigured and can't be given as input. Please correct any problems with the field in order to access it. */
+    runs?: (Scalars['GadgetMisconfiguredField'] | null) | null;
+    id: (Scalars['GadgetID'] | null);
+};
+export type NestedThreadsDeleteInput = {
+    id: (Scalars['GadgetID'] | null);
+};
+export type ConvergeThreadsInput = {
+    /** The new list of records to converge to */
+    values: (ConvergeThreadsValues | null)[];
+    /** An optional partial set of action api identifiers to use when creating, updating, and deleting records to converge to the new list. */
+    actions?: ConvergeActionMap | null;
+};
+export type ConvergeThreadsValues = {
+    id?: (Scalars['GadgetID'] | null) | null;
+    metadata?: (Scalars['JSON'] | null) | null;
+    external_assistant_id?: AssistantsBelongsToInput | null;
+    openAiId?: (Scalars['String'] | null) | null;
+    /** The field runs is misconfigured and can't be given as input. Please correct any problems with the field in order to access it. */
+    runs?: (Scalars['GadgetMisconfiguredField'] | null) | null;
+};
+export type ConvergeActionMap = {
+    /** One of the model action's API identifiers. Specifies which action to use to create new records that are in the set of specified records but not yet in the database. Defaults to the action named `create` if it exists. */
+    create?: (Scalars['String'] | null) | null;
+    /** One of the model action's API identifiers. Specifies which action to use to update new records that are in the set of specified records and already in the database, but maybe have different field values. Defaults to the action named `update` if it exists. */
+    update?: (Scalars['String'] | null) | null;
+    /** One of the model action's API identifiers. Specifies which action to use to delete records that are not in the set of specified records but exist in the database. Defaults to the action named `delete` if it exists. */
+    delete?: (Scalars['String'] | null) | null;
+};
+export type NestedAssistantsUpdateInput = {
+    file_ids?: (Scalars['String'] | null) | null;
+    openAiId?: (Scalars['String'] | null) | null;
+    thread_id?: (ThreadsHasManyInput | null)[];
+    name?: (Scalars['String'] | null) | null;
+    instructions?: (Scalars['String'] | null) | null;
+    id: (Scalars['GadgetID'] | null);
+};
+export type NestedAssistantsDeleteInput = {
+    id: (Scalars['GadgetID'] | null);
 };
 export type BulkCreateThreadsInput = {
     threads?: CreateThreadsInput | null;
 };
 export type UpdateThreadsInput = {
     metadata?: (Scalars['JSON'] | null) | null;
-    external_id?: (Scalars['String'] | null) | null;
+    external_assistant_id?: AssistantsBelongsToInput | null;
+    openAiId?: (Scalars['String'] | null) | null;
+    /** The field runs is misconfigured and can't be given as input. Please correct any problems with the field in order to access it. */
+    runs?: (Scalars['GadgetMisconfiguredField'] | null) | null;
 };
 export type BulkUpdateThreadsInput = {
     threads?: UpdateThreadsInput | null;
     id: (Scalars['GadgetID'] | null);
 };
-export type CreateMessagesInput = {
-    thread_id?: (Scalars['String'] | null) | null;
-    role?: (Scalars['String'] | null) | null;
-    content?: (Scalars['String'] | null) | null;
-    file_ids?: (Scalars['String'] | null) | null;
-    assistant_id?: (Scalars['String'] | null) | null;
-    run_id?: (Scalars['String'] | null) | null;
-};
-export type BulkCreateMessagesInput = {
-    messages?: CreateMessagesInput | null;
-};
-export type UpdateMessagesInput = {
-    thread_id?: (Scalars['String'] | null) | null;
-    role?: (Scalars['String'] | null) | null;
-    content?: (Scalars['String'] | null) | null;
-    file_ids?: (Scalars['String'] | null) | null;
-    assistant_id?: (Scalars['String'] | null) | null;
-    run_id?: (Scalars['String'] | null) | null;
-};
-export type BulkUpdateMessagesInput = {
-    messages?: UpdateMessagesInput | null;
-    id: (Scalars['GadgetID'] | null);
-};
 export type CreateAssistantsInput = {
-    name?: (Scalars['String'] | null) | null;
-    description?: (Scalars['String'] | null) | null;
-    model?: (Scalars['String'] | null) | null;
-    instructions?: (Scalars['String'] | null) | null;
-    tools?: (Scalars['String'] | null) | null;
     file_ids?: (Scalars['String'] | null) | null;
-    external_id?: (Scalars['String'] | null) | null;
+    openAiId?: (Scalars['String'] | null) | null;
+    thread_id?: (ThreadsHasManyInput | null)[];
+    name?: (Scalars['String'] | null) | null;
+    instructions?: (Scalars['String'] | null) | null;
 };
 export type BulkCreateAssistantsInput = {
     assistants?: CreateAssistantsInput | null;
 };
 export type UpdateAssistantsInput = {
-    name?: (Scalars['String'] | null) | null;
-    description?: (Scalars['String'] | null) | null;
-    model?: (Scalars['String'] | null) | null;
-    instructions?: (Scalars['String'] | null) | null;
-    tools?: (Scalars['String'] | null) | null;
     file_ids?: (Scalars['String'] | null) | null;
-    external_id?: (Scalars['String'] | null) | null;
+    openAiId?: (Scalars['String'] | null) | null;
+    thread_id?: (ThreadsHasManyInput | null)[];
+    name?: (Scalars['String'] | null) | null;
+    instructions?: (Scalars['String'] | null) | null;
 };
 export type BulkUpdateAssistantsInput = {
     assistants?: UpdateAssistantsInput | null;
@@ -460,7 +504,10 @@ export type InternalThreadsInput = {
     createdAt?: Date | Scalars['ISO8601DateString'] | null;
     updatedAt?: Date | Scalars['ISO8601DateString'] | null;
     metadata?: (Scalars['JSON'] | null) | null;
-    external_id?: (Scalars['String'] | null) | null;
+    external_assistant_id?: InternalBelongsToInput | null;
+    openAiId?: (Scalars['String'] | null) | null;
+    /** The field runs is misconfigured and can't be given as input. Please correct any problems with the field in order to access it. */
+    runs?: (Scalars['GadgetMisconfiguredField'] | null) | null;
 };
 export type InternalMessagesInput = {
     state?: (Scalars['RecordState'] | null) | null;
@@ -481,13 +528,10 @@ export type InternalAssistantsInput = {
     id?: (Scalars['GadgetID'] | null) | null;
     createdAt?: Date | Scalars['ISO8601DateString'] | null;
     updatedAt?: Date | Scalars['ISO8601DateString'] | null;
-    name?: (Scalars['String'] | null) | null;
-    description?: (Scalars['String'] | null) | null;
-    model?: (Scalars['String'] | null) | null;
-    instructions?: (Scalars['String'] | null) | null;
-    tools?: (Scalars['String'] | null) | null;
     file_ids?: (Scalars['String'] | null) | null;
-    external_id?: (Scalars['String'] | null) | null;
+    openAiId?: (Scalars['String'] | null) | null;
+    name?: (Scalars['String'] | null) | null;
+    instructions?: (Scalars['String'] | null) | null;
 };
 /** All built-in and custom scalars, mapped to their actual values */
 export interface Scalars {
@@ -1228,7 +1272,11 @@ export type Threads = {
     /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
     updatedAt: Scalars['DateTime'];
     metadata: (Scalars['JSON'] | null);
-    external_id: (Scalars['String'] | null);
+    external_assistant_id: Assistants;
+    external_assistant_idId: Scalars['GadgetID'];
+    openAiId: (Scalars['String'] | null);
+    /** The field runs is misconfigured and can't be accessed. Please correct any problems with the field in order to access it. */
+    runs: (Scalars['GadgetMisconfiguredField'] | null);
     /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
     _all: Scalars['JSONObject'];
 };
@@ -1241,7 +1289,43 @@ export type AvailableThreadsSelection = {
     /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
     updatedAt?: boolean | null | undefined;
     metadata?: boolean | null | undefined;
-    external_id?: boolean | null | undefined;
+    external_assistant_id?: AvailableAssistantsSelection;
+    external_assistant_idId?: boolean | null | undefined;
+    openAiId?: boolean | null | undefined;
+    /** The field runs is misconfigured and can't be accessed. Please correct any problems with the field in order to access it. */
+    runs?: boolean | null | undefined;
+    /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
+    _all?: boolean | null | undefined;
+};
+export type Assistants = {
+    __typename: 'Assistants';
+    /** The globally unique, unchanging identifier for this record. Assigned and managed by Gadget. */
+    id: Scalars['GadgetID'];
+    /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
+    createdAt: Scalars['DateTime'];
+    /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
+    updatedAt: Scalars['DateTime'];
+    file_ids: (Scalars['String'] | null);
+    openAiId: (Scalars['String'] | null);
+    thread_id: ThreadsConnection;
+    name: (Scalars['String'] | null);
+    instructions: (Scalars['String'] | null);
+    /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
+    _all: Scalars['JSONObject'];
+};
+export type AvailableAssistantsSelection = {
+    __typename?: boolean | null | undefined;
+    /** The globally unique, unchanging identifier for this record. Assigned and managed by Gadget. */
+    id?: boolean | null | undefined;
+    /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
+    createdAt?: boolean | null | undefined;
+    /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
+    updatedAt?: boolean | null | undefined;
+    file_ids?: boolean | null | undefined;
+    openAiId?: boolean | null | undefined;
+    thread_id?: AvailableThreadsConnectionSelection;
+    name?: boolean | null | undefined;
+    instructions?: boolean | null | undefined;
     /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
     _all?: boolean | null | undefined;
 };
@@ -1338,42 +1422,6 @@ export type AvailableMessagesEdgeSelection = {
     node?: AvailableMessagesSelection;
     /** A cursor for use in pagination */
     cursor?: boolean | null | undefined;
-};
-export type Assistants = {
-    __typename: 'Assistants';
-    /** The globally unique, unchanging identifier for this record. Assigned and managed by Gadget. */
-    id: Scalars['GadgetID'];
-    /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
-    createdAt: Scalars['DateTime'];
-    /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
-    updatedAt: Scalars['DateTime'];
-    name: (Scalars['String'] | null);
-    description: (Scalars['String'] | null);
-    model: (Scalars['String'] | null);
-    instructions: (Scalars['String'] | null);
-    tools: (Scalars['String'] | null);
-    file_ids: (Scalars['String'] | null);
-    external_id: (Scalars['String'] | null);
-    /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
-    _all: Scalars['JSONObject'];
-};
-export type AvailableAssistantsSelection = {
-    __typename?: boolean | null | undefined;
-    /** The globally unique, unchanging identifier for this record. Assigned and managed by Gadget. */
-    id?: boolean | null | undefined;
-    /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
-    createdAt?: boolean | null | undefined;
-    /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
-    updatedAt?: boolean | null | undefined;
-    name?: boolean | null | undefined;
-    description?: boolean | null | undefined;
-    model?: boolean | null | undefined;
-    instructions?: boolean | null | undefined;
-    tools?: boolean | null | undefined;
-    file_ids?: boolean | null | undefined;
-    external_id?: boolean | null | undefined;
-    /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
-    _all?: boolean | null | undefined;
 };
 /** A connection to a list of Assistants items. */
 export type AssistantsConnection = {
@@ -2335,11 +2383,13 @@ export type DeleteMessagesResult = {
     __typename: 'DeleteMessagesResult';
     success: Scalars['Boolean'];
     errors: ExecutionError[];
+    messages: (Messages | null);
 };
 export type AvailableDeleteMessagesResultSelection = {
     __typename?: boolean | null | undefined;
     success?: boolean | null | undefined;
     errors?: AvailableExecutionErrorSelection;
+    messages?: AvailableMessagesSelection;
 };
 /** The output when running the delete on the messages model in bulk. */
 export type BulkDeleteMessagesResult = {
@@ -2348,6 +2398,8 @@ export type BulkDeleteMessagesResult = {
     success: Scalars['Boolean'];
     /** Aggregated list of errors that any bulk action encountered while processing */
     errors: ExecutionError[];
+    /** The list of all changed messages records by each sent bulk action. Returned in the same order as the input bulk action params. */
+    messagess: (Messages | null)[];
 };
 export type AvailableBulkDeleteMessagesResultSelection = {
     __typename?: boolean | null | undefined;
@@ -2355,6 +2407,8 @@ export type AvailableBulkDeleteMessagesResultSelection = {
     success?: boolean | null | undefined;
     /** Aggregated list of errors that any bulk action encountered while processing */
     errors?: AvailableExecutionErrorSelection;
+    /** The list of all changed messages records by each sent bulk action. Returned in the same order as the input bulk action params. */
+    messagess?: AvailableMessagesSelection;
 };
 export type CreateAssistantsResult = {
     __typename: 'CreateAssistantsResult';

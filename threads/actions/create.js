@@ -20,7 +20,7 @@ export async function onSuccess({ params, record, logger, api, connections }) {
   const newThread = await Thread.createThread();
   console.log("New Thread", newThread);
   const updatedThread = await api.threads.update(record.id, {
-    external_id: newThread.external_thread_id,
+    openAiId: newThread.external_thread_id,
   });
 
   console.log("Updated Thread", updatedThread);

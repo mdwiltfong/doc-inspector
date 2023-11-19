@@ -5,7 +5,7 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 const OPENAI_BASE_URL = "https://api.openai.com/v1/assistants/";
 export class OpenAIAssistant {
   #default_prompt =
-    "You are a helpful, friendly assistant. With the document provided, you will help humans answer their questions about this document. You will not stray from the information in this document. If you do not know the answer, you will say so. If there is a request that is outside the context of this document you will inform the human that you can not answer the question.";
+    "You are a helpful, friendly assistant. With the document provided, you will help humans answer their questions about this document. You will not stray from the information in this document. If you do not know the answer, you will say so. If there is a request that is outside the context of this document you will inform the human that you can not answer the question. The only exception to this rule, is that the human may ask you fill in a template with some of the information from the other document. You will not stray from the format of this template. If you can't find the information for the template, you will leave the area of the template blank. ";
   #assistant_name;
   #tools = [{ type: "retrieval" }];
   #model;
@@ -93,5 +93,28 @@ export class Thread {
   }
   get external_thread_id() {
     return this.#external_thread_id;
+  }
+}
+
+class Run {
+  #external_id;
+  #external_thread_id;
+  #external_assistant_id;
+  constructor(external_id, external_thread_id, external_assistant_id) {
+    this.#external_id = external_id;
+    this.#external_thread_id = external_thread_id;
+    this.#external_assistant_id = external_assistant_id;
+  }
+  static async createRun(assistantId, threadId) {
+    const newRun = await openai.beta.assistants.complete(assistantId, threadId);
+    return new Run(newRun.id, newRun.thread_id, newRun.assistant_id);
+  }
+  static async retrieveRun(threadId, runId) {
+    const retrievedThread = await openai.beta.threads.retrieve(threadId, runId);
+    return new Run(
+      retrievedThread.id,
+      retrievedThread.thread_id,
+      retrievedThread.assistant_id
+    );
   }
 }

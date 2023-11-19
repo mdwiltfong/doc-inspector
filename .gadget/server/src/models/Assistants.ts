@@ -8,13 +8,11 @@ export type DefaultAssistantsServerSelection = {
       readonly id: true;
       readonly createdAt: true;
       readonly updatedAt: true;
-      readonly name: true;
-      readonly description: true;
-      readonly model: true;
-      readonly instructions: true;
-      readonly tools: true;
       readonly file_ids: true;
-      readonly external_id: true;
+      readonly openAiId: true;
+      readonly thread_id: false;
+      readonly name: true;
+      readonly instructions: true;
   };
 
   
