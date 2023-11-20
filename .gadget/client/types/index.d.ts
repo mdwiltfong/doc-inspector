@@ -1,14 +1,14 @@
 /**
 * This is the Gadget API client library for:
 *
-*   ____               ___                           _
-*  |  _ \  ___   ___  |_ _|_ __  ___ _ __   ___  ___| |_ ___  _ __
-*  | | | |/ _ \ / __|  | || '_ \/ __| '_ \ / _ \/ __| __/ _ \| '__|
-*  | |_| | (_) | (__   | || | | \__ \ |_) |  __/ (__| || (_) | |
-*  |____/ \___/ \___| |___|_| |_|___/ .__/ \___|\___|\__\___/|_|
-*                                   |_|
+*       _                 _                           _
+*    __| | ___   ___     (_)_ __  ___ _ __   ___  ___| |_ ___  _ __
+*   / _` |/ _ \ / __|____| | '_ \/ __| '_ \ / _ \/ __| __/ _ \| '__|
+*  | (_| | (_) | (_|_____| | | | \__ \ |_) |  __/ (__| || (_) | |
+*   \__,_|\___/ \___|    |_|_| |_|___/ .__/ \___|\___|\__\___/|_|
+*                                    |_|
 *
-* Built for environment "Development" at version 498
+* Built for environment "Development" at version 1410
 * API docs: https://docs.gadget.dev/api/doc-inspector
 * Edit this app here: https://doc-inspector.gadget.app/edit
 */

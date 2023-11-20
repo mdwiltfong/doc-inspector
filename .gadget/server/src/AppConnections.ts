@@ -14,7 +14,7 @@
 
 
 /**
- * A map from connection name to instantiated connection object for all the connections in Doc Inspector
+ * A map from connection name to instantiated connection object for all the connections in doc-inspector
  */
 export interface AppConnections {
   /** An instantiated API client object for the OpenAI connection. */

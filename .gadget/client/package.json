@@ -1,6 +1,6 @@
 {
   "name": "@gadget-client/doc-inspector",
-  "version": "1.498.0",
+  "version": "1.1410.0",
   "files": [
     "dist-*/",
     "types",
@@ -28,8 +28,8 @@
     "typecheck": "tsc --noEmit"
   },
   "gadget": {
-    "applicationName": "Doc Inspector",
+    "applicationName": "doc-inspector",
     "environmentName": "Development",
-    "environmentVersion": "498"
+    "environmentVersion": "1410"
   }
 }

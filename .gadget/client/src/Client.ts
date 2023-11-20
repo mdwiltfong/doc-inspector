@@ -41,7 +41,7 @@ const getImplicitEnv = () => {
 }
 
 /**
- * Root object used for interacting with the "Doc Inspector" API. `Client` has `query` and `mutation` functions for executing raw GraphQL queries and mutations, as well as `ModelManager` objects for manipulating models with a JavaScript API. Client also wraps a `connection`, which implements the transport layer if you need access to that.
+ * Root object used for interacting with the "doc-inspector" API. `Client` has `query` and `mutation` functions for executing raw GraphQL queries and mutations, as well as `ModelManager` objects for manipulating models with a JavaScript API. Client also wraps a `connection`, which implements the transport layer if you need access to that.
  * */
 export class Client implements AnyClient {
   connection: GadgetConnection;

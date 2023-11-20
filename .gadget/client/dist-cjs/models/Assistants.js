@@ -27,14 +27,11 @@ var import_support = require("../support.js");
 const DefaultAssistantsSelection = {
   "__typename": true,
   "createdAt": true,
-  "description": true,
-  "external_id": true,
   "file_ids": true,
   "id": true,
   "instructions": true,
-  "model": true,
   "name": true,
-  "tools": true,
+  "openAiId": true,
   "updatedAt": true
 };
 ;

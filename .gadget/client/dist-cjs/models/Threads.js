@@ -27,9 +27,9 @@ var import_support = require("../support.js");
 const DefaultThreadsSelection = {
   "__typename": true,
   "createdAt": true,
-  "external_id": true,
   "id": true,
   "metadata": true,
+  "openAiId": true,
   "updatedAt": true
 };
 ;

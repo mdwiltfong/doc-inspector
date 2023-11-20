@@ -5,49 +5,69 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 const OPENAI_BASE_URL = "https://api.openai.com/v1/assistants/";
 export class OpenAIAssistant {
   #default_prompt =
-    "You are a helpful, friendly assistant. With the document provided, you will help humans answer their questions about this document. You will not stray from the information in this document. If you do not know the answer, you will say so. If there is a request that is outside the context of this document you will inform the human that you can not answer the question.";
-  #assistant_name = "DocInspector";
+    "You are a helpful, friendly assistant. With the document provided, you will help humans answer their questions about this document. You will not stray from the information in this document. If you do not know the answer, you will say so. If there is a request that is outside the context of this document you will inform the human that you can not answer the question. The only exception to this rule, is that the human may ask you fill in a template with some of the information from the other document. You will not stray from the format of this template. If you can't find the information for the template, you will leave the area of the template blank. ";
+  #assistant_name;
   #tools = [{ type: "retrieval" }];
   #model;
   #thread;
   #instructions;
-  constructor(model = "gpt-3.5-turbo-1106", instructions = "") {
+  #gadgetId;
+  #openAIId;
+  constructor(model = "gpt-3.5-turbo-1106", instructions = "", openAIId = "") {
     this.#model = model;
     this.#instructions = instructions;
   }
-  async createAssistant() {
+  static async createAssistant(
+    assistantName = "DocInspector",
+    instructions = "",
+    model = "gpt-3.5-turbo-1106"
+  ) {
     try {
-      return await openai.beta.assistants.create({
-        name: this.#assistant_name,
-        instructions: this.#instructions,
+      const newAssistant = await openai.beta.assistants.create({
+        name: assistantName,
+        instructions: instructions,
         tools: [{ type: "retrieval" }],
-        model: this.#model,
+        model: model,
+      });
+      return new OpenAIAssistant(model, instructions, newAssistant.id);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  static async retrieveAssistant(assistantId) {
+    try {
+      const assistant = await openai.beta.assistants.retrieve(assistantId);
+      return new OpenAIAssistant(
+        assistant.model,
+        assistant.instructions,
+        assistant.id
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async uploadFile(fileStream) {
+    try {
+      const file = await openai.files.create({
+        purpose: "assistants",
+        file: fileStream,
+      });
+      return await openai.beta.assistants.files.create(this.#openAIId, {
+        file_id: file.id,
       });
     } catch (error) {
       console.log(error);
     }
   }
-  static async createThread() {
-    return await openai.beta.threads.create();
-  }
-  async addMessageToThread(role, content) {
-    return await openai.beta.threads.messages.create({
-      thread: this.#thread.id,
-      role: "user",
-      content: content,
-    });
-  }
-  async runThread(instructions = "") {
-    return await openai.beta.threads.runs.create(this.#thread.id, instructions);
-  }
-  async uploadFile(fileName) {
-    return await openai.files.create({
-      purpose: "answers",
-      file: file,
-    });
-  }
   get tools() {
     return this.#tools;
+  }
+  get openAIId() {
+    return this.#openAIId;
+  }
+  get gadgetId() {
+    return this.#gadgetId;
   }
 }
 
@@ -71,7 +91,33 @@ export class Thread {
       content,
     });
   }
+  async getMessages() {
+    return await openai.beta.threads.messages.list(this.#external_thread_id);
+  }
   get external_thread_id() {
     return this.#external_thread_id;
+  }
+}
+
+class Run {
+  #external_id;
+  #external_thread_id;
+  #external_assistant_id;
+  constructor(external_id, external_thread_id, external_assistant_id) {
+    this.#external_id = external_id;
+    this.#external_thread_id = external_thread_id;
+    this.#external_assistant_id = external_assistant_id;
+  }
+  static async createRun(assistantId, threadId) {
+    const newRun = await openai.beta.assistants.complete(assistantId, threadId);
+    return new Run(newRun.id, newRun.thread_id, newRun.assistant_id);
+  }
+  static async retrieveRun(threadId, runId) {
+    const retrievedThread = await openai.beta.threads.retrieve(threadId, runId);
+    return new Run(
+      retrievedThread.id,
+      retrievedThread.thread_id,
+      retrievedThread.assistant_id
+    );
   }
 }

@@ -17,10 +17,10 @@ declare module "fastify" {
     /** The current request's session ID, if it has one. Requests made by browsers are given sessions, but requests made using Gadget API Keys are not. */
     sessionID: string | null;
 
-    /** All Doc Inspector configuration values */
+    /** All doc-inspector configuration values */
     config: AppConfiguration;
 
-    /** A map of connection name to instantiated connection objects for Doc Inspector */
+    /** A map of connection name to instantiated connection objects for doc-inspector */
     connections: AppConnections;
 
     /** A high performance structured logger which writes logs to the Logs Viewer in the Gadget Editor. */
@@ -30,7 +30,7 @@ declare module "fastify" {
     gadgetContext: Record<string, any>;
 
     /**
-     * An instance of the API client for Doc Inspector.
+     * An instance of the API client for doc-inspector.
      *
      * __Note__: This client is authorized using a superuser internal api token and has permission to invoke any action in the system using normal API mutations or the Internal API.
      **/

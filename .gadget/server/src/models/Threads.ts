@@ -9,7 +9,10 @@ export type DefaultThreadsServerSelection = {
       readonly createdAt: true;
       readonly updatedAt: true;
       readonly metadata: true;
-      readonly external_id: true;
+      readonly external_assistant_idId: true;
+    readonly external_assistant_id: false;
+      readonly openAiId: true;
+      readonly runs: false;
   };
 
   

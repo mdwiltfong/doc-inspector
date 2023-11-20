@@ -3,9 +3,9 @@ import { Query, Select, DeepFilterNever, IDsList, Threads, ThreadsSort, ThreadsF
 export declare const DefaultThreadsSelection: {
     readonly __typename: true;
     readonly createdAt: true;
-    readonly external_id: true;
     readonly id: true;
     readonly metadata: true;
+    readonly openAiId: true;
     readonly updatedAt: true;
 };
 /**
