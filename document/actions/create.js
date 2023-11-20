@@ -28,7 +28,6 @@ export async function onSuccess({ params, record, logger, api, connections }) {
     );
 
     const document = await api.document.get(fileId);
-    document;
     // @Jamesllllllllll This document will only have the URL of the file stored in the cloud. `.createReadStream` might not be able to inherently conver the documewnt into a stream by just passing the URL.
     assistant.uploadFile(fs.createReadStream(document));
   } catch (error) {}
