@@ -8,7 +8,7 @@
 *   \__,_|\___/ \___|    |_|_| |_|___/ .__/ \___|\___|\__\___/|_|
 *                                    |_|
 *
-* Built for environment "Development" at version 1410
+* Built for environment "Development" at version 1610
 * API docs: https://docs.gadget.dev/api/doc-inspector
 * Edit this app here: https://doc-inspector.gadget.app/edit
 */

@@ -21,19 +21,31 @@ export async function run({ params, record, logger, api, connections }) {
  */
 export async function onSuccess({ params, record, logger, api, connections }) {
   try {
-    const { assistantId, fileId } = record;
-    const gadgetAssistant = await api.assistants.get(assistantId);
+    const { assistantId, id } = record;
+    const gadgetAssistant = await api.assistants.findById(assistantId);
+    console.log("Gadget Assistant", gadgetAssistant);
     const assistant = await OpenAIAssistant.retrieveAssistant(
-      gadgetAssistant.external_id
+      gadgetAssistant.openAiId
     );
+    const document = await api.document.findById(id);
+    console.log("Document", document);
 
-    const document = await api.document.get(fileId);
-    // @Jamesllllllllll This document will only have the URL of the file stored in the cloud. `.createReadStream` might not be able to inherently conver the documewnt into a stream by just passing the URL.
-    assistant.uploadFile(fs.createReadStream(document));
-  } catch (error) {}
+    assistant.uploadFile(fetchURLDoc(document.file.url));
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 /** @type { ActionOptions } */
 export const options = {
   actionType: "create",
 };
+
+async function fetchURLDoc(url) {
+  try {
+    const response = await fetch(url);
+    return response.arrayBuffer();
+  } catch (error) {
+    console.log(error);
+  }
+}

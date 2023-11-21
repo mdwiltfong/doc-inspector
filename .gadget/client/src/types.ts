@@ -49,6 +49,9 @@ export enum GadgetFieldType {
 /** A sort order for a field. Can be Ascending or Descending. */
 export type SortOrder = "Ascending"|"Descending";
 
+/** Represents the possible values of the role enum. */
+export type DocumentRoleEnum = "resource" | "template";
+
 /** Represents one user result record in internal api calls. Returns a JSON blob of all the record's fields. */
 export type InternalUserRecord = Scalars["JSONObject"];
 
@@ -244,37 +247,6 @@ export type BooleanFilter = {
 
 
 
-export type DocumentSort = {
-
-  /** Sort the results by the id field. Defaults to ascending (smallest value first). */
-  id?: SortOrder | null;
-
-  /** Sort the results by the createdAt field. Defaults to ascending (smallest value first). */
-  createdAt?: SortOrder | null;
-
-  /** Sort the results by the updatedAt field. Defaults to ascending (smallest value first). */
-  updatedAt?: SortOrder | null;
-};
-
-
-
-export type DocumentFilter = {
-
-  AND?: (DocumentFilter | null)[];
-
-  OR?: (DocumentFilter | null)[];
-
-  NOT?: (DocumentFilter | null)[];
-
-  id?: IDFilter | null;
-
-  createdAt?: DateTimeFilter | null;
-
-  updatedAt?: DateTimeFilter | null;
-};
-
-
-
 export type ThreadsSort = {
 
   /** Sort the results by the id field. Defaults to ascending (smallest value first). */
@@ -333,6 +305,59 @@ export type JSONFilter = {
   notEquals?: (Scalars['JSON'] | null) | null;
 
   matches?: (Scalars['JSON'] | null) | null;
+};
+
+
+
+export type DocumentSort = {
+
+  /** Sort the results by the id field. Defaults to ascending (smallest value first). */
+  id?: SortOrder | null;
+
+  /** Sort the results by the createdAt field. Defaults to ascending (smallest value first). */
+  createdAt?: SortOrder | null;
+
+  /** Sort the results by the updatedAt field. Defaults to ascending (smallest value first). */
+  updatedAt?: SortOrder | null;
+
+  /** Sort the results by the role field. Defaults to ascending (smallest value first). */
+  role?: SortOrder | null;
+};
+
+
+
+export type DocumentFilter = {
+
+  AND?: (DocumentFilter | null)[];
+
+  OR?: (DocumentFilter | null)[];
+
+  NOT?: (DocumentFilter | null)[];
+
+  id?: IDFilter | null;
+
+  createdAt?: DateTimeFilter | null;
+
+  updatedAt?: DateTimeFilter | null;
+
+  assistant?: IDFilter | null;
+
+  assistantId?: IDFilter | null;
+
+  role?: SingleEnumFilter | null;
+};
+
+
+
+export type SingleEnumFilter = {
+
+  isSet?: (Scalars['Boolean'] | null) | null;
+
+  equals?: (Scalars['String'] | null) | null;
+
+  notEquals?: (Scalars['String'] | null) | null;
+
+  in?: ((Scalars['String'] | null) | null)[];
 };
 
 
@@ -409,9 +434,6 @@ export type AssistantsSort = {
   /** Sort the results by the updatedAt field. Defaults to ascending (smallest value first). */
   updatedAt?: SortOrder | null;
 
-  /** Sort the results by the file_ids field. Defaults to ascending (smallest value first). */
-  file_ids?: SortOrder | null;
-
   /** Sort the results by the openAiId field. Defaults to ascending (smallest value first). */
   openAiId?: SortOrder | null;
 
@@ -437,8 +459,6 @@ export type AssistantsFilter = {
   createdAt?: DateTimeFilter | null;
 
   updatedAt?: DateTimeFilter | null;
-
-  file_ids?: StringFilter | null;
 
   openAiId?: StringFilter | null;
 
@@ -552,6 +572,10 @@ export type BulkChangePasswordUsersInput = {
 export type CreateDocumentInput = {
 
   file?: StoredFileInput | null;
+
+  assistant?: AssistantsBelongsToInput | null;
+
+  role?: DocumentRoleEnum | null;
 };
 
 
@@ -579,43 +603,6 @@ export type StoredFileInput = {
 
 
 
-export type BulkCreateDocumentsInput = {
-
-  document?: CreateDocumentInput | null;
-};
-
-
-
-export type UpdateDocumentInput = {
-
-  file?: StoredFileInput | null;
-};
-
-
-
-export type BulkUpdateDocumentsInput = {
-
-  document?: UpdateDocumentInput | null;
-
-  id: (Scalars['GadgetID'] | null);
-};
-
-
-
-export type CreateThreadsInput = {
-
-  metadata?: (Scalars['JSON'] | null) | null;
-
-  external_assistant_id?: AssistantsBelongsToInput | null;
-
-  openAiId?: (Scalars['String'] | null) | null;
-
-  /** The field runs is misconfigured and can't be given as input. Please correct any problems with the field in order to access it. */
-  runs?: (Scalars['GadgetMisconfiguredField'] | null) | null;
-};
-
-
-
 export type AssistantsBelongsToInput = {
 
   create?: NestedAssistantsCreateInput | null;
@@ -632,8 +619,6 @@ export type AssistantsBelongsToInput = {
 
 export type NestedAssistantsCreateInput = {
 
-  file_ids?: (Scalars['String'] | null) | null;
-
   openAiId?: (Scalars['String'] | null) | null;
 
   thread_id?: (ThreadsHasManyInput | null)[];
@@ -641,6 +626,8 @@ export type NestedAssistantsCreateInput = {
   name?: (Scalars['String'] | null) | null;
 
   instructions?: (Scalars['String'] | null) | null;
+
+  documents?: (DocumentHasManyInput | null)[];
 };
 
 
@@ -737,9 +724,76 @@ export type ConvergeActionMap = {
 
 
 
-export type NestedAssistantsUpdateInput = {
+export type DocumentHasManyInput = {
 
-  file_ids?: (Scalars['String'] | null) | null;
+  create?: NestedDocumentCreateInput | null;
+
+  update?: NestedDocumentUpdateInput | null;
+
+  delete?: NestedDocumentDeleteInput | null;
+
+  /** Creates, updates, or deletes existing records in the database as needed to arrive at the list of records specified. */
+  _converge?: ConvergeDocumentInput | null;
+};
+
+
+
+export type NestedDocumentCreateInput = {
+
+  file?: StoredFileInput | null;
+
+  assistant?: AssistantsBelongsToInput | null;
+
+  role?: DocumentRoleEnum | null;
+};
+
+
+
+export type NestedDocumentUpdateInput = {
+
+  file?: StoredFileInput | null;
+
+  assistant?: AssistantsBelongsToInput | null;
+
+  role?: DocumentRoleEnum | null;
+
+  id: (Scalars['GadgetID'] | null);
+};
+
+
+
+export type NestedDocumentDeleteInput = {
+
+  id: (Scalars['GadgetID'] | null);
+};
+
+
+
+export type ConvergeDocumentInput = {
+
+  /** The new list of records to converge to */
+  values: (ConvergeDocumentValues | null)[];
+
+  /** An optional partial set of action api identifiers to use when creating, updating, and deleting records to converge to the new list. */
+  actions?: ConvergeActionMap | null;
+};
+
+
+
+export type ConvergeDocumentValues = {
+
+  id?: (Scalars['GadgetID'] | null) | null;
+
+  file?: StoredFileInput | null;
+
+  assistant?: AssistantsBelongsToInput | null;
+
+  role?: DocumentRoleEnum | null;
+};
+
+
+
+export type NestedAssistantsUpdateInput = {
 
   openAiId?: (Scalars['String'] | null) | null;
 
@@ -749,6 +803,8 @@ export type NestedAssistantsUpdateInput = {
 
   instructions?: (Scalars['String'] | null) | null;
 
+  documents?: (DocumentHasManyInput | null)[];
+
   id: (Scalars['GadgetID'] | null);
 };
 
@@ -757,6 +813,47 @@ export type NestedAssistantsUpdateInput = {
 export type NestedAssistantsDeleteInput = {
 
   id: (Scalars['GadgetID'] | null);
+};
+
+
+
+export type BulkCreateDocumentsInput = {
+
+  document?: CreateDocumentInput | null;
+};
+
+
+
+export type UpdateDocumentInput = {
+
+  file?: StoredFileInput | null;
+
+  assistant?: AssistantsBelongsToInput | null;
+
+  role?: DocumentRoleEnum | null;
+};
+
+
+
+export type BulkUpdateDocumentsInput = {
+
+  document?: UpdateDocumentInput | null;
+
+  id: (Scalars['GadgetID'] | null);
+};
+
+
+
+export type CreateThreadsInput = {
+
+  metadata?: (Scalars['JSON'] | null) | null;
+
+  external_assistant_id?: AssistantsBelongsToInput | null;
+
+  openAiId?: (Scalars['String'] | null) | null;
+
+  /** The field runs is misconfigured and can't be given as input. Please correct any problems with the field in order to access it. */
+  runs?: (Scalars['GadgetMisconfiguredField'] | null) | null;
 };
 
 
@@ -793,8 +890,6 @@ export type BulkUpdateThreadsInput = {
 
 export type CreateAssistantsInput = {
 
-  file_ids?: (Scalars['String'] | null) | null;
-
   openAiId?: (Scalars['String'] | null) | null;
 
   thread_id?: (ThreadsHasManyInput | null)[];
@@ -802,6 +897,8 @@ export type CreateAssistantsInput = {
   name?: (Scalars['String'] | null) | null;
 
   instructions?: (Scalars['String'] | null) | null;
+
+  documents?: (DocumentHasManyInput | null)[];
 };
 
 
@@ -815,8 +912,6 @@ export type BulkCreateAssistantsInput = {
 
 export type UpdateAssistantsInput = {
 
-  file_ids?: (Scalars['String'] | null) | null;
-
   openAiId?: (Scalars['String'] | null) | null;
 
   thread_id?: (ThreadsHasManyInput | null)[];
@@ -824,6 +919,8 @@ export type UpdateAssistantsInput = {
   name?: (Scalars['String'] | null) | null;
 
   instructions?: (Scalars['String'] | null) | null;
+
+  documents?: (DocumentHasManyInput | null)[];
 };
 
 
@@ -928,6 +1025,10 @@ export type InternalDocumentInput = {
   updatedAt?: Date | Scalars['ISO8601DateString'] | null;
 
   file?: InternalStoredFileInput | null;
+
+  assistant?: InternalBelongsToInput | null;
+
+  role?: DocumentRoleEnum | null;
 };
 
 
@@ -1014,8 +1115,6 @@ export type InternalAssistantsInput = {
   createdAt?: Date | Scalars['ISO8601DateString'] | null;
 
   updatedAt?: Date | Scalars['ISO8601DateString'] | null;
-
-  file_ids?: (Scalars['String'] | null) | null;
 
   openAiId?: (Scalars['String'] | null) | null;
 
@@ -2198,6 +2297,12 @@ export type Document = {
 
   file: StoredFile;
 
+  assistant: Assistants;
+
+  assistantId: Scalars['GadgetID'];
+
+  role: DocumentRoleEnum;
+
   /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
   _all: Scalars['JSONObject'];
 };
@@ -2218,6 +2323,12 @@ export type AvailableDocumentSelection = {
   updatedAt?: boolean | null | undefined;
 
   file?: AvailableStoredFileSelection;
+
+  assistant?: AvailableAssistantsSelection;
+
+  assistantId?: boolean | null | undefined;
+
+  role?: boolean | null | undefined;
 
   /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
   _all?: boolean | null | undefined;
@@ -2268,13 +2379,71 @@ export type AvailableStoredFileSelection = {
 };
 
 
-/** A connection to a list of Document items. */
-export type DocumentConnection = {
 
-  __typename: 'DocumentConnection';
+export type Assistants = {
+
+  __typename: 'Assistants';
+
+  /** The globally unique, unchanging identifier for this record. Assigned and managed by Gadget. */
+  id: Scalars['GadgetID'];
+
+  /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
+  createdAt: Scalars['DateTime'];
+
+  /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
+  updatedAt: Scalars['DateTime'];
+
+  openAiId: (Scalars['String'] | null);
+
+  thread_id: ThreadsConnection;
+
+  name: (Scalars['String'] | null);
+
+  instructions: (Scalars['String'] | null);
+
+  documents: DocumentConnection;
+
+  /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
+  _all: Scalars['JSONObject'];
+};
+
+
+
+export type AvailableAssistantsSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** The globally unique, unchanging identifier for this record. Assigned and managed by Gadget. */
+  id?: boolean | null | undefined;
+
+  /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
+  createdAt?: boolean | null | undefined;
+
+  /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
+  updatedAt?: boolean | null | undefined;
+
+  openAiId?: boolean | null | undefined;
+
+  thread_id?: AvailableThreadsConnectionSelection;
+
+  name?: boolean | null | undefined;
+
+  instructions?: boolean | null | undefined;
+
+  documents?: AvailableDocumentConnectionSelection;
+
+  /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
+  _all?: boolean | null | undefined;
+};
+
+
+/** A connection to a list of Threads items. */
+export type ThreadsConnection = {
+
+  __typename: 'ThreadsConnection';
 
   /** A list of edges. */
-  edges: DocumentEdge[];
+  edges: ThreadsEdge[];
 
   /** Information to aid in pagination. */
   pageInfo: PageInfo;
@@ -2282,25 +2451,25 @@ export type DocumentConnection = {
 
 
 
-export type AvailableDocumentConnectionSelection = {
+export type AvailableThreadsConnectionSelection = {
 
   __typename?: boolean | null | undefined;
 
   /** A list of edges. */
-  edges?: AvailableDocumentEdgeSelection;
+  edges?: AvailableThreadsEdgeSelection;
 
   /** Information to aid in pagination. */
   pageInfo?: AvailablePageInfoSelection;
 };
 
 
-/** An edge in a Document connection. */
-export type DocumentEdge = {
+/** An edge in a Threads connection. */
+export type ThreadsEdge = {
 
-  __typename: 'DocumentEdge';
+  __typename: 'ThreadsEdge';
 
   /** The item at the end of the edge */
-  node: Document;
+  node: Threads;
 
   /** A cursor for use in pagination */
   cursor: Scalars['String'];
@@ -2308,12 +2477,12 @@ export type DocumentEdge = {
 
 
 
-export type AvailableDocumentEdgeSelection = {
+export type AvailableThreadsEdgeSelection = {
 
   __typename?: boolean | null | undefined;
 
   /** The item at the end of the edge */
-  node?: AvailableDocumentSelection;
+  node?: AvailableThreadsSelection;
 
   /** A cursor for use in pagination */
   cursor?: boolean | null | undefined;
@@ -2380,71 +2549,13 @@ export type AvailableThreadsSelection = {
 };
 
 
+/** A connection to a list of Document items. */
+export type DocumentConnection = {
 
-export type Assistants = {
-
-  __typename: 'Assistants';
-
-  /** The globally unique, unchanging identifier for this record. Assigned and managed by Gadget. */
-  id: Scalars['GadgetID'];
-
-  /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
-  createdAt: Scalars['DateTime'];
-
-  /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
-  updatedAt: Scalars['DateTime'];
-
-  file_ids: (Scalars['String'] | null);
-
-  openAiId: (Scalars['String'] | null);
-
-  thread_id: ThreadsConnection;
-
-  name: (Scalars['String'] | null);
-
-  instructions: (Scalars['String'] | null);
-
-  /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
-  _all: Scalars['JSONObject'];
-};
-
-
-
-export type AvailableAssistantsSelection = {
-
-  __typename?: boolean | null | undefined;
-
-  /** The globally unique, unchanging identifier for this record. Assigned and managed by Gadget. */
-  id?: boolean | null | undefined;
-
-  /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
-  createdAt?: boolean | null | undefined;
-
-  /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
-  updatedAt?: boolean | null | undefined;
-
-  file_ids?: boolean | null | undefined;
-
-  openAiId?: boolean | null | undefined;
-
-  thread_id?: AvailableThreadsConnectionSelection;
-
-  name?: boolean | null | undefined;
-
-  instructions?: boolean | null | undefined;
-
-  /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
-  _all?: boolean | null | undefined;
-};
-
-
-/** A connection to a list of Threads items. */
-export type ThreadsConnection = {
-
-  __typename: 'ThreadsConnection';
+  __typename: 'DocumentConnection';
 
   /** A list of edges. */
-  edges: ThreadsEdge[];
+  edges: DocumentEdge[];
 
   /** Information to aid in pagination. */
   pageInfo: PageInfo;
@@ -2452,25 +2563,25 @@ export type ThreadsConnection = {
 
 
 
-export type AvailableThreadsConnectionSelection = {
+export type AvailableDocumentConnectionSelection = {
 
   __typename?: boolean | null | undefined;
 
   /** A list of edges. */
-  edges?: AvailableThreadsEdgeSelection;
+  edges?: AvailableDocumentEdgeSelection;
 
   /** Information to aid in pagination. */
   pageInfo?: AvailablePageInfoSelection;
 };
 
 
-/** An edge in a Threads connection. */
-export type ThreadsEdge = {
+/** An edge in a Document connection. */
+export type DocumentEdge = {
 
-  __typename: 'ThreadsEdge';
+  __typename: 'DocumentEdge';
 
   /** The item at the end of the edge */
-  node: Threads;
+  node: Document;
 
   /** A cursor for use in pagination */
   cursor: Scalars['String'];
@@ -2478,12 +2589,12 @@ export type ThreadsEdge = {
 
 
 
-export type AvailableThreadsEdgeSelection = {
+export type AvailableDocumentEdgeSelection = {
 
   __typename?: boolean | null | undefined;
 
   /** The item at the end of the edge */
-  node?: AvailableThreadsSelection;
+  node?: AvailableDocumentSelection;
 
   /** A cursor for use in pagination */
   cursor?: boolean | null | undefined;
