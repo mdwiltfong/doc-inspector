@@ -13,7 +13,7 @@ export default async function route({
   logger,
   connections,
 }) {
-  const { instructions, model } = request.body;
+  const { instructions } = request.body;
   const newAssistant = await api.assistants.create({
     name: "DocInspector",
     instructions: instructions,

@@ -5,8 +5,8 @@ import {
   CreateDocumentActionContext,
 } from "gadget-server";
 import { OpenAIAssistant } from "../../helpers/OpenAIHelper";
+import fetch from "node-fetch";
 import fs from "fs";
-
 /**
  * @param { CreateDocumentActionContext } context
  */
@@ -30,7 +30,11 @@ export async function onSuccess({ params, record, logger, api, connections }) {
     const document = await api.document.findById(id);
     console.log("Document", document);
 
-    assistant.uploadFile(fetchURLDoc(document.file.url));
+    assistant.uploadFile(
+      await fetch(
+        "https://storage.gadget.dev/files/71570/141755/document/file/p7AMiwpZT5yBc6m-6kK1M/donQui.pdf"
+      )
+    );
   } catch (error) {
     console.log(error);
   }
@@ -42,10 +46,7 @@ export const options = {
 };
 
 async function fetchURLDoc(url) {
-  try {
-    const response = await fetch(url);
-    return response.arrayBuffer();
-  } catch (error) {
-    console.log(error);
-  }
+  const response = await fetch(url);
+  fs.writeFileSync("test.txt", await response.buffer());
+  return response.text();
 }

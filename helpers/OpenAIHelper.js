@@ -16,6 +16,7 @@ export class OpenAIAssistant {
   constructor(model = "gpt-3.5-turbo-1106", instructions = "", openAIId = "") {
     this.#model = model;
     this.#instructions = instructions;
+    this.#openAIId = openAIId;
   }
   static async createAssistant(
     assistantName = "DocInspector",
@@ -37,6 +38,7 @@ export class OpenAIAssistant {
   static async retrieveAssistant(assistantId) {
     try {
       const assistant = await openai.beta.assistants.retrieve(assistantId);
+      console.log(assistant);
       return new OpenAIAssistant(
         assistant.model,
         assistant.instructions,
@@ -49,11 +51,12 @@ export class OpenAIAssistant {
 
   async uploadFile(fileStream) {
     try {
+      console.log("File Stream", fileStream);
       const file = await openai.files.create({
         purpose: "assistants",
         file: fileStream,
       });
-      return await openai.beta.assistants.files.create(this.#openAIId, {
+      return await openai.beta.assistants.files.create(this.openAIId, {
         file_id: file.id,
       });
     } catch (error) {
