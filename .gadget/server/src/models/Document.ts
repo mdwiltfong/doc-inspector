@@ -9,6 +9,9 @@ export type DefaultDocumentServerSelection = {
       readonly createdAt: true;
       readonly updatedAt: true;
       readonly file: true;
+      readonly assistantId: true;
+    readonly assistant: false;
+      readonly role: true;
   };
 
   

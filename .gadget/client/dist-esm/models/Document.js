@@ -13,6 +13,7 @@ const DefaultDocumentSelection = {
     "url": true
   },
   "id": true,
+  "role": true,
   "updatedAt": true
 };
 ;

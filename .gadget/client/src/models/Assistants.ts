@@ -33,7 +33,6 @@ import { disambiguateActionParams } from "../support.js";
 export const DefaultAssistantsSelection = {
   "__typename": true,
   "createdAt": true,
-  "file_ids": true,
   "id": true,
   "instructions": true,
   "name": true,

@@ -27,7 +27,6 @@ var import_support = require("../support.js");
 const DefaultAssistantsSelection = {
   "__typename": true,
   "createdAt": true,
-  "file_ids": true,
   "id": true,
   "instructions": true,
   "name": true,

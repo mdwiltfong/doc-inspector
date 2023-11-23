@@ -8,6 +8,7 @@ export declare const DefaultDocumentSelection: {
         readonly url: true;
     };
     readonly id: true;
+    readonly role: true;
     readonly updatedAt: true;
 };
 /**
