@@ -8,7 +8,7 @@ import { RouteContext, save } from "gadget-server";
  */
 export default async function route({ request, reply, api, logger, connections, session }) {
   const { user, file } = request.body;
-  await api.document.create({ user: user, file: file })
+  await api.document.create({ file: file })
   await reply.send("File uploaded")
 }
 

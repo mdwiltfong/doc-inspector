@@ -11,7 +11,6 @@ export type DefaultThreadsServerSelection = {
     readonly external_assistant_idId: true;
     readonly external_assistant_id: false;
     readonly openAiId: true;
-    readonly runs: false;
 };
 /** All the data passed to an effect or precondition within the `create` action on the `threads` model. */
 export interface CreateThreadsActionContext extends AmbientContext {

@@ -7,6 +7,7 @@ import {
 import { OpenAIAssistant } from "../../helpers/OpenAIHelper";
 import fetch from "node-fetch";
 import fs from "fs";
+
 /**
  * @param { CreateDocumentActionContext } context
  */
@@ -21,20 +22,22 @@ export async function run({ params, record, logger, api, connections }) {
  */
 export async function onSuccess({ params, record, logger, api, connections }) {
   try {
-    const { assistantId, id } = record;
-    const gadgetAssistant = await api.assistants.findById(assistantId);
+    const { assistant, file, id } = record;
+    const gadgetAssistant = await api.assistants.findById(assistant);
     console.log("Gadget Assistant", gadgetAssistant);
-    const assistant = await OpenAIAssistant.retrieveAssistant(
+
+    const currentAssistant = await OpenAIAssistant.retrieveAssistant(
       gadgetAssistant.openAiId
     );
     const document = await api.document.findById(id);
-    console.log("Document", document);
-
-    assistant.uploadFile(
-      await fetch(
-        "https://storage.gadget.dev/files/71570/141755/document/file/p7AMiwpZT5yBc6m-6kK1M/donQui.pdf"
-      )
+    console.log("Document: ", document);
+    console.log("File: ", file);
+    const response = await fetch(
+      "https://storage.gadget.dev/files/71570/141755/document/file/K7h1eJ4fw45Uyt6aey-Rn/extracted(1)(1).pdf"
     );
+    currentAssistant.uploadFile(response);
+    const storeDoc = api.document.findById(id);
+    storeDoc;
   } catch (error) {
     console.log(error);
   }

@@ -38,7 +38,7 @@ export declare enum GadgetFieldType {
 /** A sort order for a field. Can be Ascending or Descending. */
 export type SortOrder = "Ascending" | "Descending";
 /** Represents the possible values of the role enum. */
-export type DocumentRoleEnum = "resource" | "template";
+export type DocumentRoleEnum = "resource" | "";
 /** Represents one user result record in internal api calls. Returns a JSON blob of all the record's fields. */
 export type InternalUserRecord = Scalars["JSONObject"];
 /** Represents one session result record in internal api calls. Returns a JSON blob of all the record's fields. */
@@ -351,15 +351,11 @@ export type NestedThreadsCreateInput = {
     metadata?: (Scalars['JSON'] | null) | null;
     external_assistant_id?: AssistantsBelongsToInput | null;
     openAiId?: (Scalars['String'] | null) | null;
-    /** The field runs is misconfigured and can't be given as input. Please correct any problems with the field in order to access it. */
-    runs?: (Scalars['GadgetMisconfiguredField'] | null) | null;
 };
 export type NestedThreadsUpdateInput = {
     metadata?: (Scalars['JSON'] | null) | null;
     external_assistant_id?: AssistantsBelongsToInput | null;
     openAiId?: (Scalars['String'] | null) | null;
-    /** The field runs is misconfigured and can't be given as input. Please correct any problems with the field in order to access it. */
-    runs?: (Scalars['GadgetMisconfiguredField'] | null) | null;
     id: (Scalars['GadgetID'] | null);
 };
 export type NestedThreadsDeleteInput = {
@@ -376,8 +372,6 @@ export type ConvergeThreadsValues = {
     metadata?: (Scalars['JSON'] | null) | null;
     external_assistant_id?: AssistantsBelongsToInput | null;
     openAiId?: (Scalars['String'] | null) | null;
-    /** The field runs is misconfigured and can't be given as input. Please correct any problems with the field in order to access it. */
-    runs?: (Scalars['GadgetMisconfiguredField'] | null) | null;
 };
 export type ConvergeActionMap = {
     /** One of the model action's API identifiers. Specifies which action to use to create new records that are in the set of specified records but not yet in the database. Defaults to the action named `create` if it exists. */
@@ -447,8 +441,6 @@ export type CreateThreadsInput = {
     metadata?: (Scalars['JSON'] | null) | null;
     external_assistant_id?: AssistantsBelongsToInput | null;
     openAiId?: (Scalars['String'] | null) | null;
-    /** The field runs is misconfigured and can't be given as input. Please correct any problems with the field in order to access it. */
-    runs?: (Scalars['GadgetMisconfiguredField'] | null) | null;
 };
 export type BulkCreateThreadsInput = {
     threads?: CreateThreadsInput | null;
@@ -457,8 +449,6 @@ export type UpdateThreadsInput = {
     metadata?: (Scalars['JSON'] | null) | null;
     external_assistant_id?: AssistantsBelongsToInput | null;
     openAiId?: (Scalars['String'] | null) | null;
-    /** The field runs is misconfigured and can't be given as input. Please correct any problems with the field in order to access it. */
-    runs?: (Scalars['GadgetMisconfiguredField'] | null) | null;
 };
 export type BulkUpdateThreadsInput = {
     threads?: UpdateThreadsInput | null;
@@ -555,8 +545,6 @@ export type InternalThreadsInput = {
     metadata?: (Scalars['JSON'] | null) | null;
     external_assistant_id?: InternalBelongsToInput | null;
     openAiId?: (Scalars['String'] | null) | null;
-    /** The field runs is misconfigured and can't be given as input. Please correct any problems with the field in order to access it. */
-    runs?: (Scalars['GadgetMisconfiguredField'] | null) | null;
 };
 export type InternalMessagesInput = {
     state?: (Scalars['RecordState'] | null) | null;
@@ -1361,8 +1349,6 @@ export type Threads = {
     external_assistant_id: Assistants;
     external_assistant_idId: Scalars['GadgetID'];
     openAiId: (Scalars['String'] | null);
-    /** The field runs is misconfigured and can't be accessed. Please correct any problems with the field in order to access it. */
-    runs: (Scalars['GadgetMisconfiguredField'] | null);
     /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
     _all: Scalars['JSONObject'];
 };
@@ -1378,8 +1364,6 @@ export type AvailableThreadsSelection = {
     external_assistant_id?: AvailableAssistantsSelection;
     external_assistant_idId?: boolean | null | undefined;
     openAiId?: boolean | null | undefined;
-    /** The field runs is misconfigured and can't be accessed. Please correct any problems with the field in order to access it. */
-    runs?: boolean | null | undefined;
     /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
     _all?: boolean | null | undefined;
 };

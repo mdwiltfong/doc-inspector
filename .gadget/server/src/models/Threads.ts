@@ -12,7 +12,6 @@ export type DefaultThreadsServerSelection = {
       readonly external_assistant_idId: true;
     readonly external_assistant_id: false;
       readonly openAiId: true;
-      readonly runs: false;
   };
 
   
