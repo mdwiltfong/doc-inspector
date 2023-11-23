@@ -32,9 +32,7 @@ export async function onSuccess({ params, record, logger, api, connections }) {
     const document = await api.document.findById(id);
     console.log("Document: ", document);
     console.log("File: ", file);
-    const response = await fetch(
-      "https://storage.gadget.dev/files/71570/141755/document/file/K7h1eJ4fw45Uyt6aey-Rn/extracted(1)(1).pdf"
-    );
+    const response = await fetch(document.file.url);
     currentAssistant.uploadFile(response);
     const storeDoc = api.document.findById(id);
     storeDoc;
