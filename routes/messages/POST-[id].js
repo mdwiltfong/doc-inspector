@@ -21,13 +21,19 @@ export default async function route({
       id: true,
       openAiId: true,
       external_assistant_id: {
-        openAiId: true
-      }
-    }
+        openAiId: true,
+      },
+    },
   });
-  console.log("Stored Thread", storedThread)
+  console.log("Stored Thread", storedThread);
   await Thread.addMessageToThread(storedThread.openAiId, message);
-  console.log("stored thread", storedThread)
-  const newRun = await Run.createRun(storedThread.openAiId, storedThread.external_assistant_id.openAiId);
-  await reply.status(200).send({ message: "Message added", run: {"externalId":newRun.external_id,"status":newRun.status} });
+  console.log("stored thread", storedThread);
+  const newRun = await Run.createRun(
+    storedThread.external_assistant_id.openAiId,
+    storedThread.openAiId
+  );
+  await reply.status(200).send({
+    message: "Message added",
+    run: { externalId: newRun.external_id, status: newRun.status },
+  });
 }

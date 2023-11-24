@@ -102,18 +102,30 @@ export class Thread {
   }
 }
 
-class Run {
+export class Run {
   #external_id;
   #external_thread_id;
   #external_assistant_id;
-  constructor(external_id, external_thread_id, external_assistant_id) {
+  #status;
+  constructor(external_id, external_thread_id, external_assistant_id, status) {
     this.#external_id = external_id;
     this.#external_thread_id = external_thread_id;
     this.#external_assistant_id = external_assistant_id;
+    this.#status = status;
   }
   static async createRun(assistantId, threadId) {
-    const newRun = await openai.beta.assistants.complete(assistantId, threadId);
-    return new Run(newRun.id, newRun.thread_id, newRun.assistant_id);
+    console.log("Run.createRun");
+    console.log("assistant id", assistantId);
+    console.log("thread id", threadId);
+    const newRun = await openai.beta.threads.runs.create(threadId, {
+      assistant_id: assistantId,
+    });
+    return new Run(
+      newRun.id,
+      newRun.thread_id,
+      newRun.assistant_id,
+      newRun.status
+    );
   }
   static async retrieveRun(threadId, runId) {
     const retrievedThread = await openai.beta.threads.retrieve(threadId, runId);
@@ -122,5 +134,17 @@ class Run {
       retrievedThread.thread_id,
       retrievedThread.assistant_id
     );
+  }
+  get external_id() {
+    return this.#external_id;
+  }
+  get external_thread_id() {
+    return this.#external_thread_id;
+  }
+  get external_assistant_id() {
+    return this.#external_assistant_id;
+  }
+  get status() {
+    return this.#status;
   }
 }
