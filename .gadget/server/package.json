@@ -16,7 +16,7 @@
   "gadget": {
     "applicationName": "doc-inspector",
     "environmentName": "Development",
-    "environmentVersion": "1410"
+    "environmentVersion": "1699"
   },
   "main": "dist/index.js",
   "name": "gadget-server",
@@ -26,5 +26,5 @@
   "private": true,
   "scripts": {},
   "types": "dist/index.d.ts",
-  "version": "1.1410.0"
+  "version": "1.1699.0"
 }
