@@ -24,8 +24,13 @@ export async function onSuccess({ params, record, logger, api, connections }) {
   console.log("assistant", assistant);
   await api.assistants.update(record.id, { openAiId: assistant.openAIId });
 
+
   console.log("openai assistant id", assistant.openAIId);
-  console.log("assistant", assistant);
+
+  await api.assistants.update(record.id, { openAiId: assistant.openAIId });
+
+  console.log("openai assistant id", assistant.id);
+
 }
 
 /** @type { ActionOptions } */

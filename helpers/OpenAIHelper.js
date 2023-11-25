@@ -38,6 +38,7 @@ export class OpenAIAssistant {
   static async retrieveAssistant(assistantId) {
     try {
       const assistant = await openai.beta.assistants.retrieve(assistantId);
+      console.log(assistant);
       return new OpenAIAssistant(
         assistant.model,
         assistant.instructions,
@@ -50,11 +51,12 @@ export class OpenAIAssistant {
 
   async uploadFile(fileStream) {
     try {
+      console.log("File Stream", fileStream);
       const file = await openai.files.create({
         purpose: "assistants",
         file: fileStream,
       });
-      return await openai.beta.assistants.files.create(this.#openAIId, {
+      return await openai.beta.assistants.files.create(this.openAIId, {
         file_id: file.id,
       });
     } catch (error) {
@@ -126,7 +128,7 @@ export class Run {
     );
   }
   static async retrieveRun(threadId, runId) {
-    const retrievedThread = await openai.beta.threads.retrieve(threadId, runId);
+    const retrievedThread = await openai.beta.threads.runs.retrieve(threadId, runId);
     return new Run(
       retrievedThread.id,
       retrievedThread.thread_id,

@@ -14,7 +14,8 @@ export default async function route({
   connections,
 }) {
   const { thread_id, message } = request.body;
+  console.log(`Thread ID in /threads/POST-message.js: ${thread_id}`)
   const storedThread = await api.threads.findById(thread_id);
-  await Thread.addMessageToThread(storedThread.external_id, message);
+  await Thread.addMessageToThread(storedThread.openAiId, message);   // [James] Switched (storedThread.external_id, message) with (storedThread.openAiId, message) -- it works!
   await reply.status(200).send({ message: "Message added" });
 }
