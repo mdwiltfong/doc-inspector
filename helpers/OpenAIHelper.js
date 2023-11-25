@@ -135,7 +135,8 @@ export class Run {
     return new Run(
       retrievedThread.id,
       retrievedThread.thread_id,
-      retrievedThread.assistant_id
+      retrievedThread.assistant_id,
+      retrievedThread.status
     );
   }
   get external_id() {
