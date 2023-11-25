@@ -35,7 +35,6 @@ export async function onSuccess({ params, record, logger, api, connections }) {
     const response = await fetch(document.file.url);
     currentAssistant.uploadFile(response);
     const storeDoc = api.document.findById(id);
-    storeDoc;
   } catch (error) {
     console.log(error);
   }
