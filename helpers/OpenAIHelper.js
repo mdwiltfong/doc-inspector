@@ -128,7 +128,7 @@ export class Run {
     );
   }
   static async retrieveRun(threadId, runId) {
-    const retrievedThread = await openai.beta.threads.retrieve(threadId, runId);
+    const retrievedThread = await openai.beta.threads.runs.retrieve(threadId, runId);
     return new Run(
       retrievedThread.id,
       retrievedThread.thread_id,
