@@ -16,6 +16,7 @@ export class OpenAIAssistant {
   constructor(model = "gpt-3.5-turbo-1106", instructions = "", openAIId = "") {
     this.#model = model;
     this.#instructions = instructions;
+    this.#openAIId = openAIId;
   }
   static async createAssistant(
     assistantName = "DocInspector",
