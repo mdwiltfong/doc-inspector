@@ -13,10 +13,11 @@ export default async function route({
   logger,
   connections,
 }) {
-  const { name, description } = request.body;
+  const { name, description, role, assistantId } = request.body;
   const data = {
     name,
-    description,
+    role,
+    assistantId,
   };
   console.log(data);
 
@@ -26,9 +27,13 @@ export default async function route({
   const newDocument = await api.document.create({
     file: {
       // set the filename
-      fileName: "example.json",
+      fileName: data.name,
       // base64 encode the file contents to pass to Gadget
       base64: bufferedContent,
+    },
+    role: data.role,
+    assistant: {
+      _link: data.assistantId,
     },
   });
   await reply.status(200).send({ document: newDocument });
