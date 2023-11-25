@@ -21,11 +21,16 @@ export async function run({ params, record, logger, api, connections }) {
 export async function onSuccess({ params, record, logger, api, connections }) {
   const { instructions, model } = record;
   const assistant = await OpenAIAssistant.createAssistant(model, instructions);
+  console.log("assistant", assistant);
+  await api.assistants.update(record.id, { openAiId: assistant.openAIId });
+
+
+  console.log("openai assistant id", assistant.openAIId);
 
   await api.assistants.update(record.id, { openAiId: assistant.openAIId });
 
   console.log("openai assistant id", assistant.id);
-  console.log("assistant", assistant);
+
 }
 
 /** @type { ActionOptions } */

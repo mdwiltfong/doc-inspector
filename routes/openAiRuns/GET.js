@@ -15,6 +15,6 @@ export default async function route({
 }) {
   const { runId, threadId } = request.query;
   const storedThread = await api.threads.findById(threadId);
-  const retrievedRun=await Run.retrieveRunStatus(runId, storedThread.openAiId)
-  await reply.status(200).send({ runStatus:retrievedRun.status  });
+  const retrievedRun = await Run.retrieveRun(storedThread.openAiId, runId);
+  await reply.status(200).send({ runStatus: retrievedRun.status });
 }
